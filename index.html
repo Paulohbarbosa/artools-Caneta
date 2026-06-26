@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Artools Precision Pen - A caneta mais tecnológica do mundo</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind & Iconify -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            400: '#a8a29e',
+                            500: '#78716c',
+                            600: '#57534e',
+                            700: '#44403c',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        'surface-light': '#EAEAE5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Typography Variables & Utilities */
+        :root {
+            --bg-color: #EAEAE5;
+            --text-main: #1C1917;
+            --text-secondary: #78716C;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        /* Headline Outline Effect */
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--text-main);
+        }
+
+        /* Initial States for GSAP Animations */
+        .hero-element-text {
+            transform: translateY(110%);
+            visibility: hidden;
+        }
+
+        .hero-element {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Scroll Indicator Animation */
+        .scroll-line {
+            width: 1px;
+            height: 30px;
+            background-color: #d6d3d1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--text-main);
+            animation: scrollLine 1.5s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+        }
+
+        @keyframes scrollLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #EAEAE5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e;
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen selection:bg-stone-800 selection:text-white">
+
+    <!-- HEADER (Navigation) -->
+    <header class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center hero-element pointer-events-none">
+        <div class="flex items-center gap-3 text-stone-900 pointer-events-auto cursor-pointer">
+            <div class="w-7 h-7 bg-stone-900 text-white flex items-center justify-center rounded-sm">
+                <iconify-icon icon="solar:pen-bold"></iconify-icon>
+            </div>
+            <span class="font-display font-bold tracking-tight text-xl">ARTOOLS<span class="text-stone-500 font-light text-[1rem]">.PRO</span></span>
+        </div>
+        
+        <nav class="hidden md:flex gap-10 text-[10px] font-mono uppercase tracking-[0.15em] text-stone-500 pointer-events-auto">
+            <a href="#" class="hover:text-stone-900 transition-colors duration-300">Design</a>
+            <a href="#" class="hover:text-stone-900 transition-colors duration-300">Technology</a>
+            <a href="#" class="hover:text-stone-900 transition-colors duration-300">Specs</a>
+        </nav>
+
+        <div class="flex items-center gap-6 text-stone-900 pointer-events-auto">
+            <button class="hover:text-stone-500 transition-colors duration-300 flex items-center justify-center">
+                <iconify-icon icon="solar:bag-3-linear" class="text-xl"></iconify-icon>
+            </button>
+            <div class="w-[1px] h-4 bg-stone-300 hidden md:block"></div>
+        </div>
+    </header>
+
+    <!-- MAIN SCROLL CONTAINER -->
+    <main>
+        <!-- HERO SEQUENCE (Pinned Section) -->
+        <section id="hero-sequence" class="relative h-screen w-full overflow-hidden bg-[#EAEAE5]">
+            
+            <!-- Video Canvas Layer (Background) -->
+            <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
+                <!-- Hidden Video Source -->
+                <video id="hero-video" src="assets/raw_files/video2.mp4" class="hidden" playsinline muted preload="auto"></video>
+                <!-- Canvas for scrubbing -->
+                <canvas id="hero-canvas" class="w-full h-full object-cover opacity-90"></canvas>
+                
+                <!-- Subtle gradient to ensure text legibility -->
+                <div class="absolute inset-0 bg-gradient-to-r from-[#EAEAE5] via-[#EAEAE5]/40 to-transparent w-full h-full"></div>
+            </div>
+
+            <!-- Content Grid (Foreground) -->
+            <div class="container mx-auto px-6 md:px-12 relative z-10 h-full flex flex-col justify-center">
+                
+                <div class="grid grid-cols-12 gap-8 w-full">
+                    <div class="col-span-12 md:col-span-8 lg:col-span-6 flex flex-col justify-center">
+                        
+                        <!-- Headline -->
+                        <h1 class="font-display text-[3.5rem] md:text-7xl lg:text-[5.5rem] font-bold leading-[1.05] tracking-tighter mb-6 text-stone-900 mix-blend-darken">
+                            <div class="overflow-hidden"><div class="hero-element-text">A caneta</div></div>
+                            <div class="overflow-hidden py-1"><div class="hero-element-text outline-text">mais tecnológica</div></div>
+                            <div class="overflow-hidden"><div class="hero-element-text">do mundo.</div></div>
+                        </h1>
+                        
+                        <!-- Paragraph -->
+                        <p class="text-lg md:text-xl text-stone-600 font-sans font-light leading-relaxed mb-10 max-w-lg hero-element text-balance">
+                            A Artools Precision Pen redefine o equilíbrio entre peso, fluxo e design. Feita para criadores que exigem perfeição em cada traço.
+                        </p>
+                        
+                        <!-- CTAs -->
+                        <div class="flex flex-wrap items-center gap-4 hero-element">
+                            <button class="px-8 py-4 bg-stone-900 text-white rounded-full text-sm font-medium hover:bg-stone-700 transition-all shadow-xl shadow-stone-900/10 hover:-translate-y-1">
+                                Comprar Agora
+                            </button>
+                            <button class="px-8 py-4 bg-white/70 backdrop-blur-md text-stone-900 border border-stone-200 rounded-full text-sm font-medium hover:bg-white transition-all shadow-sm flex items-center gap-2 hover:-translate-y-1 group">
+                                Explorar 
+                                <iconify-icon icon="solar:arrow-down-linear" class="text-lg group-hover:translate-y-1 transition-transform"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side Peripheral Marker -->
+                <div class="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4 hero-element">
+                    <span class="text-[10px] font-mono text-stone-500">01</span>
+                    <div class="w-[1px] h-16 bg-stone-300"></div>
+                </div>
+
+                <!-- Bottom Scroll Indicator -->
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 hero-element">
+                    <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-stone-400">Scroll to Control</span>
+                    <div class="scroll-line"></div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Spacer Section (To demonstrate scroll leaving the pin) -->
+        <section class="h-[50vh] w-full bg-white flex flex-col items-center justify-center border-t border-stone-200 relative z-20">
+            <p class="text-sm font-mono uppercase tracking-widest text-stone-400 mb-4">Fim do Canvas Scrubbing</p>
+            <h2 class="text-4xl font-display font-medium text-stone-900">Explore os Detalhes</h2>
+        </section>
+    </main>
+
+    <!-- Interactions & Video Canvas Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. GSAP ENTRANCE ANIMATIONS
+            const tl = gsap.timeline();
+            
+            // Header fade in
+            tl.fromTo("header", 
+                { y: -20, autoAlpha: 0 },
+                { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }
+            );
+            
+            // Headline staggered reveal
+            tl.fromTo(".hero-element-text",
+                { y: "110%", autoAlpha: 0 },
+                { y: "0%", autoAlpha: 1, duration: 1.2, stagger: 0.15, ease: "power4.out" },
+                "-=0.6"
+            );
+            
+            // Paragraph, Buttons, and Peripherals reveal
+            tl.fromTo(".hero-element",
+                { y: 20, autoAlpha: 0 },
+                { y: 0, autoAlpha: 1, duration: 1, stagger: 0.1, ease: "power3.out" },
+                "-=0.8"
+            );
+
+
+            // 2. VIDEO CANVAS SCRUBBING (APPLE EFFECT)
+            gsap.registerPlugin(ScrollTrigger);
+
+            const video = document.getElementById("hero-video");
+            const canvas = document.getElementById("hero-canvas");
+            const ctx = canvas.getContext("2d", { alpha: false }); // Optimization
+            
+            // Handles responsive canvas sizing (Cover behavior)
+            function resizeCanvas() {
+                if (!video.videoWidth) return;
+                const aspect = video.videoWidth / video.videoHeight;
+                const windowAspect = window.innerWidth / window.innerHeight;
+                
+                if (windowAspect > aspect) {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerWidth / aspect;
+                } else {
+                    canvas.height = window.innerHeight;
+                    canvas.width = window.innerHeight * aspect;
+                }
+                drawFrame();
+            }
+            
+            window.addEventListener("resize", resizeCanvas);
+
+            // Once video metadata loads, set up canvas and draw first frame
+            video.addEventListener("loadedmetadata", () => {
+                resizeCanvas();
+            });
+            
+            // Draw function mimicking object-fit: cover
+            function drawFrame() {
+                if (video.readyState >= 2) {
+                    const hRatio = canvas.width / video.videoWidth;
+                    const vRatio = canvas.height / video.videoHeight;
+                    const ratio = Math.max(hRatio, vRatio);
+                    const centerShift_x = (canvas.width - video.videoWidth * ratio) / 2;
+                    const centerShift_y = (canvas.height - video.videoHeight * ratio) / 2;  
+                    
+                    // Clear canvas before drawing (though alpha: false makes this less critical, it's good practice)
+                    ctx.fillStyle = '#EAEAE5'; 
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight,
+                                  centerShift_x, centerShift_y, video.videoWidth * ratio, video.videoHeight * ratio);
+                }
+            }
+            
+            // When seeking completes, draw the frame (Essential for scrubbing precision)
+            video.addEventListener("seeked", drawFrame);
+
+            // Keep drawing continuously for smoothness (Optional, but helps on some devices)
+            gsap.ticker.add(() => {
+                if(video.readyState >= 2) {
+                    drawFrame();
+                }
+            });
+
+            // The Core ScrollTrigger
+            ScrollTrigger.create({
+                trigger: "#hero-sequence",
+                start: "top top",
+                end: "+=3000", // The user scrolls 3000px to complete the video
+                pin: true,
+                scrub: 0.5, // Smooth scrubbing factor (0.5s catchup)
+                onUpdate: (self) => {
+                    if (video.duration) {
+                        // Update video time based on scroll progress
+                        video.currentTime = self.progress * video.duration;
+                    }
+                }
+            });
+            
+            // Force load video to ensure it's ready for scrubbing
+            video.load();
+        });
+    </script>
+</body>
+</html>
