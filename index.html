@@ -170,7 +170,7 @@
             <!-- Content Grid (Foreground) -->
             <div class="container mx-auto px-6 md:px-12 relative z-10 h-full flex flex-col justify-center">
                 
-                <div class="grid grid-cols-12 gap-8 w-full">
+                <div class="grid grid-cols-12 gap-8 w-full scroll-fade-out">
                     <div class="col-span-12 md:col-span-8 lg:col-span-6 flex flex-col justify-center">
                         
                         <!-- Headline -->
@@ -199,13 +199,13 @@
                 </div>
 
                 <!-- Right Side Peripheral Marker -->
-                <div class="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4 hero-element">
+                <div class="absolute right-8 md:right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-4 hero-element scroll-fade-out">
                     <span class="text-[10px] font-mono text-stone-500">01</span>
                     <div class="w-[1px] h-16 bg-stone-300"></div>
                 </div>
 
                 <!-- Bottom Scroll Indicator -->
-                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 hero-element">
+                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 hero-element scroll-fade-out">
                     <span class="text-[9px] font-mono uppercase tracking-[0.2em] text-stone-400">Scroll to Control</span>
                     <div class="scroll-line"></div>
                 </div>
@@ -248,14 +248,13 @@
             );
 
 
-            // 2. VIDEO CANVAS SCRUBBING (APPLE EFFECT)
+            // 2. VIDEO CANVAS SCRUBBING (OPTIMIZED)
             gsap.registerPlugin(ScrollTrigger);
 
             const video = document.getElementById("hero-video");
             const canvas = document.getElementById("hero-canvas");
-            const ctx = canvas.getContext("2d", { alpha: false }); // Optimization
+            const ctx = canvas.getContext("2d", { alpha: false }); 
             
-            // Handles responsive canvas sizing (Cover behavior)
             function resizeCanvas() {
                 if (!video.videoWidth) return;
                 const aspect = video.videoWidth / video.videoHeight;
@@ -273,12 +272,6 @@
             
             window.addEventListener("resize", resizeCanvas);
 
-            // Once video metadata loads, set up canvas and draw first frame
-            video.addEventListener("loadedmetadata", () => {
-                resizeCanvas();
-            });
-            
-            // Draw function mimicking object-fit: cover
             function drawFrame() {
                 if (video.readyState >= 2) {
                     const hRatio = canvas.width / video.videoWidth;
@@ -287,42 +280,62 @@
                     const centerShift_x = (canvas.width - video.videoWidth * ratio) / 2;
                     const centerShift_y = (canvas.height - video.videoHeight * ratio) / 2;  
                     
-                    // Clear canvas before drawing (though alpha: false makes this less critical, it's good practice)
                     ctx.fillStyle = '#EAEAE5'; 
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
                     ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight,
                                   centerShift_x, centerShift_y, video.videoWidth * ratio, video.videoHeight * ratio);
                 }
             }
             
-            // When seeking completes, draw the frame (Essential for scrubbing precision)
-            video.addEventListener("seeked", drawFrame);
-
-            // Keep drawing continuously for smoothness (Optional, but helps on some devices)
-            gsap.ticker.add(() => {
-                if(video.readyState >= 2) {
+            // Render loop otimizado
+            if ('requestVideoFrameCallback' in video) {
+                const updateCanvas = function(now, metadata) {
                     drawFrame();
-                }
-            });
+                    video.requestVideoFrameCallback(updateCanvas);
+                };
+                video.requestVideoFrameCallback(updateCanvas);
+            } else {
+                gsap.ticker.add(drawFrame);
+            }
 
-            // The Core ScrollTrigger
-            ScrollTrigger.create({
-                trigger: "#hero-sequence",
-                start: "top top",
-                end: "+=3000", // The user scrolls 3000px to complete the video
-                pin: true,
-                scrub: 0.5, // Smooth scrubbing factor (0.5s catchup)
-                onUpdate: (self) => {
-                    if (video.duration) {
-                        // Update video time based on scroll progress
-                        video.currentTime = self.progress * video.duration;
+            let scrollInitialized = false;
+
+            video.addEventListener("loadedmetadata", () => {
+                resizeCanvas();
+                
+                if (scrollInitialized) return;
+                scrollInitialized = true;
+                
+                // Usando uma Timeline do GSAP para animar o currentTime e opacidade
+                let tlScroll = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#hero-sequence",
+                        start: "top top",
+                        end: "+=3500", // Área de scroll
+                        pin: true,
+                        scrub: 1, // Smoothing no scroll
                     }
-                }
+                });
+
+                // 1. Fade out suave dos textos logo no início do scroll (ex: primeiros 15% do scroll)
+                tlScroll.to(".scroll-fade-out", {
+                    opacity: 0,
+                    y: -30,
+                    duration: 0.15,
+                    ease: "power2.inOut"
+                }, 0);
+
+                // 2. Anima do tempo 0 até a duração máxima do vídeo
+                tlScroll.fromTo(video, 
+                    { currentTime: 0.01 }, 
+                    { currentTime: video.duration || 1, ease: "none", duration: 1 },
+                    0 // Inicia no tempo 0 junto com o fade out
+                );
             });
             
-            // Force load video to ensure it's ready for scrubbing
+            // Força o carregamento padrão
             video.load();
+            
         });
     </script>
 </body>
