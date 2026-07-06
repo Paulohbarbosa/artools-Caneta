@@ -124,6 +124,38 @@
             background: #a8a29e;
         }
 
+        /* Delays Personalizados */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+        .delay-700 { transition-delay: 0.7s; }
+
+        /* Efeito de Lanterna (Hover) */
+        .flashlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            inset: 0px;
+            background: radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+                    rgba(255, 255, 255, 0.8),
+                    transparent 40%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .flashlight-card:hover::before {
+            opacity: 1;
+        }
+
         /* Animações de Revelação (Scroll) */
         .reveal-up {
             opacity: 0;
@@ -323,6 +355,75 @@
                 </div>
             </div>
         </section>
+
+        <!-- 3. SEÇÃO DE EXPERIÊNCIA DE ESCRITA (FLASHLIGHT CARDS) -->
+        <section class="relative z-20 bg-[#EAEAE5] py-24 md:py-32 overflow-hidden border-t border-stone-300">
+            <div class="max-w-[1440px] mx-auto px-6 md:px-24">
+
+                <div class="text-center mb-24 reveal-up">
+                    <span class="text-xs font-mono uppercase tracking-[0.2em] text-stone-500 mb-6 block">
+                        Architecture of Thought
+                    </span>
+                    <h2 class="font-display text-5xl md:text-6xl font-medium tracking-tight text-stone-900 max-w-3xl mx-auto">
+                        A ferramenta invisível para<br>
+                        <span class="text-stone-400">ideias tangíveis.</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Card 1 -->
+                    <div class="flashlight-card h-[400px] border border-stone-300 bg-white p-8 flex flex-col justify-between rounded-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group reveal-up delay-200"
+                        onmousemove="updateFlashlight(event, this)">
+                        <div class="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center text-stone-900 mb-6 group-hover:bg-stone-900 group-hover:text-white transition-colors duration-500">
+                            <iconify-icon icon="solar:pen-new-square-linear" class="text-2xl"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-display font-medium mb-3">Fluxo Contínuo</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">A tinta flui sem interrupções, permitindo que seus pensamentos corram livremente para o papel sem fricção.</p>
+                        </div>
+                        <div class="h-1 w-full bg-stone-100 mt-8 overflow-hidden">
+                            <div class="h-full bg-stone-900 w-0 group-hover:w-full transition-all duration-700 ease-out"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="flashlight-card h-[400px] border border-stone-300 bg-white p-8 flex flex-col justify-between rounded-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group reveal-up delay-400"
+                        onmousemove="updateFlashlight(event, this)">
+                        <div class="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center text-stone-900 mb-6 group-hover:bg-stone-900 group-hover:text-white transition-colors duration-500">
+                            <iconify-icon icon="solar:soundwave-square-linear" class="text-2xl"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-display font-medium mb-3">Silêncio Absoluto</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">Mecanismo de clique silencioso e ponta amortecida. Escreva em qualquer ambiente sem distrações.</p>
+                        </div>
+                        <div class="h-1 w-full bg-stone-100 mt-8 overflow-hidden">
+                            <div class="h-full bg-stone-900 w-0 group-hover:w-full transition-all duration-700 ease-out delay-100"></div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="flashlight-card h-[400px] border border-stone-300 bg-white p-8 flex flex-col justify-between rounded-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group reveal-up delay-600"
+                        onmousemove="updateFlashlight(event, this)">
+                        <div class="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center text-stone-900 mb-6 group-hover:bg-stone-900 group-hover:text-white transition-colors duration-500">
+                            <iconify-icon icon="solar:scale-linear" class="text-2xl"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-display font-medium mb-3">Equilíbrio Neutro</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed">Centro de gravidade estudado para repousar na junção da mão, reduzindo a fadiga em 40%.</p>
+                        </div>
+                        <div class="h-1 w-full bg-stone-100 mt-8 overflow-hidden">
+                            <div class="h-full bg-stone-900 w-0 group-hover:w-full transition-all duration-700 ease-out delay-200"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Fundo decorativo sutil -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-stone-200/50 rounded-full blur-3xl -z-10 animate-pulse pointer-events-none mix-blend-multiply">
+            </div>
+        </section>
     </main>
 
     <!-- Interactions & Video Canvas Logic -->
@@ -461,6 +562,17 @@
                     }
                 });
             });
+
+            // 4. FUNÇÃO DO EFEITO FLASHLIGHT
+            // Esta função atualiza as variáveis CSS customizadas (--mouse-x e --mouse-y)
+            // com as coordenadas exatas do mouse sobre os cards da nova seção.
+            window.updateFlashlight = function (e, card) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
             
         });
     </script>
