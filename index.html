@@ -176,7 +176,7 @@
 <body class="antialiased min-h-screen selection:bg-stone-800 selection:text-white">
 
     <!-- HEADER (Navigation) -->
-    <header class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center hero-element pointer-events-none">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex justify-between items-center hero-element pointer-events-auto bg-white transition-all duration-300">
         <div class="flex items-center gap-3 text-stone-900 pointer-events-auto cursor-pointer">
             <div class="w-7 h-7 bg-stone-900 text-white flex items-center justify-center rounded-sm">
                 <iconify-icon icon="solar:pen-bold"></iconify-icon>
@@ -736,6 +736,20 @@
                 card.style.setProperty("--mouse-x", `${x}px`);
                 card.style.setProperty("--mouse-y", `${y}px`);
             }
+            
+            // 5. EFEITO DE SCROLL NO HEADER (Fundo branco para 30% transparente)
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    // Quando descer (outras partes do site), fica transparente (bg-white/70) com blur
+                    header.classList.remove('bg-white', 'py-6');
+                    header.classList.add('bg-white/70', 'backdrop-blur-md', 'py-4', 'shadow-sm');
+                } else {
+                    // No topo, volta ao fundo branco sólido
+                    header.classList.add('bg-white', 'py-6');
+                    header.classList.remove('bg-white/70', 'backdrop-blur-md', 'py-4', 'shadow-sm');
+                }
+            });
             
         });
     </script>
