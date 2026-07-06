@@ -156,14 +156,12 @@
         <!-- HERO SEQUENCE (Pinned Section) -->
         <section id="hero-sequence" class="relative h-screen w-full overflow-hidden bg-[#EAEAE5]">
             
-            <!-- Video Canvas Layer (Background) -->
+            <!-- Camada do Canvas de Imagens (Fundo) -->
             <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
-                <!-- Hidden Video Source -->
-                <video id="hero-video" src="assets/raw_files/video2.mp4" class="hidden" playsinline muted preload="auto"></video>
-                <!-- Canvas for scrubbing -->
-                <canvas id="hero-canvas" class="w-full h-full object-cover opacity-90"></canvas>
+                <!-- Canvas que renderizará a sequência de imagens no lugar do vídeo -->
+                <canvas id="hero-canvas" width="1280" height="720" class="w-full h-full object-cover opacity-90"></canvas>
                 
-                <!-- Subtle gradient to ensure text legibility -->
+                <!-- Gradiente suave para garantir a legibilidade do texto -->
                 <div class="absolute inset-0 bg-gradient-to-r from-[#EAEAE5] via-[#EAEAE5]/40 to-transparent w-full h-full"></div>
             </div>
 
@@ -248,93 +246,101 @@
             );
 
 
-            // 2. VIDEO CANVAS SCRUBBING (OPTIMIZED)
+            // 2. ANIMAÇÃO DE SCROLL COM SEQUÊNCIA DE IMAGENS (MAIS EFICIENTE)
+            // Esta abordagem carrega imagens invés de decodificar um vídeo real, sendo muito mais leve e fluido
+            // Registramos o plugin ScrollTrigger do GSAP para atrelar a animação ao scroll
             gsap.registerPlugin(ScrollTrigger);
 
-            const video = document.getElementById("hero-video");
             const canvas = document.getElementById("hero-canvas");
             const ctx = canvas.getContext("2d", { alpha: false }); 
             
-            function resizeCanvas() {
-                if (!video.videoWidth) return;
-                const aspect = video.videoWidth / video.videoHeight;
-                const windowAspect = window.innerWidth / window.innerHeight;
-                
-                if (windowAspect > aspect) {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerWidth / aspect;
-                } else {
-                    canvas.height = window.innerHeight;
-                    canvas.width = window.innerHeight * aspect;
-                }
-                drawFrame();
-            }
-            
-            window.addEventListener("resize", resizeCanvas);
+            // Configuração da sequência de imagens
+            const frameCount = 192; // Quantidade total de frames (imagens) disponíveis (baseado no Exemplo)
+            const currentFrame = { index: 0 }; // Objeto para armazenar o estado do frame atual que será animado pelo GSAP
+            const images = []; // Array que guardará as imagens em memória
 
-            function drawFrame() {
-                if (video.readyState >= 2) {
-                    const hRatio = canvas.width / video.videoWidth;
-                    const vRatio = canvas.height / video.videoHeight;
-                    const ratio = Math.max(hRatio, vRatio);
-                    const centerShift_x = (canvas.width - video.videoWidth * ratio) / 2;
-                    const centerShift_y = (canvas.height - video.videoHeight * ratio) / 2;  
+            // Função para pré-carregar as imagens
+            // Isso evita travamentos durante o scroll, pois as imagens já estarão na memória RAM
+            const preloadImages = () => {
+                for (let i = 1; i <= frameCount; i++) {
+                    const img = new Image();
+                    // O nome dos arquivos segue o padrão frame_0001.jpg, frame_0002.jpg...
+                    // Usamos padStart(4, '0') para garantir que o número tenha sempre 4 dígitos
+                    const frameNumber = i.toString().padStart(4, '0');
+                    img.src = `assets/video_frames/frame_${frameNumber}.jpg`;
+                    images.push(img);
+                }
+            };
+
+            // Função responsável por desenhar a imagem correta no canvas
+            const render = () => {
+                // Arredondamos o valor de index para pegar sempre um número inteiro (referente ao frame)
+                const frameIndex = Math.floor(currentFrame.index);
+                const img = images[frameIndex];
+
+                if (img && img.complete) {
+                    // Limpamos o canvas antes de desenhar o novo frame
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                     
-                    ctx.fillStyle = '#EAEAE5'; 
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight,
-                                  centerShift_x, centerShift_y, video.videoWidth * ratio, video.videoHeight * ratio);
+                    // Lógica para manter a proporção (aspect ratio) da imagem ao preencher o canvas
+                    // Como nosso CSS usa "object-cover", o navegador lidará com a visualização,
+                    // desenhamos a imagem usando o tamanho 1280x720 para ter a resolução base
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 }
-            }
-            
-            // Render loop otimizado
-            if ('requestVideoFrameCallback' in video) {
-                const updateCanvas = function(now, metadata) {
-                    drawFrame();
-                    video.requestVideoFrameCallback(updateCanvas);
-                };
-                video.requestVideoFrameCallback(updateCanvas);
-            } else {
-                gsap.ticker.add(drawFrame);
+            };
+
+            // Iniciamos o pré-carregamento das imagens
+            preloadImages();
+
+            // Desenhamos o primeiro frame assim que ele for carregado para não deixar o canvas vazio
+            if (images[0]) {
+                images[0].onload = render;
             }
 
+            // Variável de controle para não iniciar múltiplos ScrollTriggers
             let scrollInitialized = false;
 
-            video.addEventListener("loadedmetadata", () => {
-                resizeCanvas();
-                
+            // Inicialização da animação ligada ao Scroll
+            const initScrollAnimation = () => {
                 if (scrollInitialized) return;
                 scrollInitialized = true;
                 
-                // Usando uma Timeline do GSAP para animar o currentTime e opacidade
+                // Criamos uma Timeline do GSAP para orquestrar múltiplas animações juntas
                 let tlScroll = gsap.timeline({
                     scrollTrigger: {
-                        trigger: "#hero-sequence",
-                        start: "top top",
-                        end: "+=3500", // Área de scroll
-                        pin: true,
-                        scrub: 1, // Smoothing no scroll
+                        trigger: "#hero-sequence", // A seção que será pinada (fixada) na tela
+                        start: "top top", // Inicia quando o topo da seção encosta no topo da tela
+                        end: "+=3500", // Distância (em pixels) que o usuário precisará dar scroll. Controla a velocidade da caneta.
+                        pin: true, // Fixa a tela (impede o scroll de descer a página) enquanto executamos a animação
+                        scrub: 1, // Aplica um "smoothing" (suavização) de 1 segundo no scroll, para a animação não ser brusca
+                        onUpdate: () => {
+                            // Sempre que houver um scroll, chamamos a função render para atualizar o frame desenhado no canvas
+                            // Usamos requestAnimationFrame para garantir o melhor desempenho (geralmente 60fps)
+                            requestAnimationFrame(render);
+                        }
                     }
                 });
 
-                // 1. Fade out suave dos textos logo no início do scroll (ex: primeiros 15% do scroll)
+                // 1. Oculta suavemente os textos e elementos (fade out) logo no início do scroll
+                // Isso faz com que os elementos textuais sumam para dar destaque apenas à caneta
                 tlScroll.to(".scroll-fade-out", {
                     opacity: 0,
                     y: -30,
-                    duration: 0.15,
+                    duration: 0.15, // Duração bem curta relativa à timeline total (some rápido nos primeiros 15% do scroll)
                     ease: "power2.inOut"
                 }, 0);
 
-                // 2. Anima do tempo 0 até a duração máxima do vídeo
-                tlScroll.fromTo(video, 
-                    { currentTime: 0.01 }, 
-                    { currentTime: video.duration || 1, ease: "none", duration: 1 },
-                    0 // Inicia no tempo 0 junto com o fade out
-                );
-            });
-            
-            // Força o carregamento padrão
-            video.load();
+                // 2. Anima a propriedade 'index' do objeto 'currentFrame' de 0 até o último frame (frameCount - 1)
+                tlScroll.to(currentFrame, {
+                    index: frameCount - 1,
+                    ease: "none", // Usamos "none" (linear) para que a velocidade do vídeo acompanhe exatamente o scroll do mouse sem acelerações
+                    duration: 1
+                }, 0); // O "0" indica que essa animação começa exatamente no início do scroll (junto com o fade out dos textos)
+            };
+
+            // Inicia a animação imediatamente
+            initScrollAnimation();
+
             
         });
     </script>
