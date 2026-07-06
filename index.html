@@ -424,6 +424,102 @@
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-stone-200/50 rounded-full blur-3xl -z-10 animate-pulse pointer-events-none mix-blend-multiply">
             </div>
         </section>
+
+        <!-- 4. SEÇÃO DE COMPRA / ASSINATURA -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden py-24 z-20">
+            <!-- Background Video em Loop -->
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-luminosity">
+                <source src="assets/raw_files/video.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Overlay Escuro para Legibilidade -->
+            <div class="absolute inset-0 bg-[#111111]/70 z-10 backdrop-blur-[2px]"></div>
+
+            <div class="container mx-auto px-6 md:px-12 relative z-20">
+                
+                <div class="text-center mb-16 reveal-up">
+                    <span class="text-xs font-mono uppercase tracking-[0.2em] text-white/50 mb-4 block">
+                        Evolua sua Escrita
+                    </span>
+                    <h2 class="font-display text-4xl md:text-5xl font-medium tracking-tight text-white max-w-3xl mx-auto">
+                        Escolha sua Ferramenta
+                    </h2>
+                </div>
+
+                <!-- Grid de Cards de Compra -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
+                    
+                    <!-- Card 1: Produto Padrão -->
+                    <div class="bg-[#1c1c1c]/80 backdrop-blur-md border border-white/10 p-8 rounded-2xl flex flex-col justify-between h-[420px] hover:border-white/30 transition-colors reveal-up delay-200">
+                        <div>
+                            <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white mb-6">
+                                <iconify-icon icon="solar:pen-linear" class="text-xl"></iconify-icon>
+                            </div>
+                            <h3 class="text-2xl font-display font-medium text-white mb-2">Standard Edition</h3>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-stone-400 mb-6">Apenas a Caneta</div>
+                            <p class="text-stone-400 text-sm leading-relaxed mb-8">
+                                A Precision Pen original, feita em alumínio de grau aeroespacial. Perfeita para quem busca o essencial com qualidade impecável.
+                            </p>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="text-3xl font-display text-white mb-4">$89<span class="text-xs text-stone-500 font-mono ml-1 uppercase">usd</span></div>
+                            <button class="w-full py-3 px-6 border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white hover:text-[#111] transition-colors">
+                                Comprar Agora
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Premium (Central - Baseado na Imagem) -->
+                    <div class="bg-[#111111]/90 backdrop-blur-xl border border-white/10 p-10 rounded-2xl flex flex-col justify-center items-center h-[480px] shadow-2xl shadow-black/80 relative transform md:-translate-y-6 hover:scale-[1.02] transition-transform duration-500 reveal-up delay-300 w-full">
+                        
+                        <!-- Glow Effect -->
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="text-center w-full flex-grow flex flex-col justify-center items-center">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#111] mb-6 shadow-lg">
+                                <iconify-icon icon="solar:crown-bold" class="text-xl"></iconify-icon>
+                            </div>
+                            
+                            <h3 class="text-[2.5rem] font-display text-white mb-6 tracking-tight leading-none">Artools<span class="font-light">Pro</span></h3>
+                            
+                            <div class="w-6 h-[1px] bg-stone-600 mb-4"></div>
+                            
+                            <div class="text-[9px] font-mono uppercase tracking-[0.3em] text-stone-400 mb-10">
+                                Signature Series • 2026
+                            </div>
+                        </div>
+                        
+                        <div class="w-full mt-auto">
+                            <button class="w-full py-3.5 px-6 bg-white text-[#111] rounded-full text-[13px] font-medium hover:bg-stone-200 transition-colors flex items-center justify-center gap-2 group">
+                                Get Early Access
+                                <iconify-icon icon="solar:arrow-right-linear" class="text-lg group-hover:translate-x-1 transition-transform"></iconify-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Assinatura -->
+                    <div class="bg-[#1c1c1c]/80 backdrop-blur-md border border-white/10 p-8 rounded-2xl flex flex-col justify-between h-[420px] hover:border-white/30 transition-colors reveal-up delay-500">
+                        <div>
+                            <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white mb-6">
+                                <iconify-icon icon="solar:infinity-bold" class="text-xl"></iconify-icon>
+                            </div>
+                            <h3 class="text-2xl font-display font-medium text-white mb-2">Creator Club</h3>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-stone-400 mb-6">Assinatura Anual</div>
+                            <p class="text-stone-400 text-sm leading-relaxed mb-8">
+                                Refis de tinta ilimitados entregues na sua porta. Garantia estendida vitalícia e acesso antecipado a novos produtos da linha Artools.
+                            </p>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="text-3xl font-display text-white mb-4">$29<span class="text-xs text-stone-500 font-mono ml-1 uppercase">/ano</span></div>
+                            <button class="w-full py-3 px-6 border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white hover:text-[#111] transition-colors">
+                                Assinar Agora
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Interactions & Video Canvas Logic -->
