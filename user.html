@@ -1,0 +1,707 @@
+<!doctype html>
+<html class="scroll-smooth" lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Minha Conta - Artools Precision Pen</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind & Iconify & Alpine & GSAP -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+              display: ["Space Grotesk", "sans-serif"],
+            },
+            colors: {
+              stone: {
+                50: "#fafaf9",
+                100: "#f5f5f4",
+                200: "#e7e5e4",
+                300: "#d6d3d1",
+                400: "#a8a29e",
+                500: "#78716c",
+                600: "#57534e",
+                700: "#44403c",
+                800: "#292524",
+                900: "#1c1917",
+                950: "#0c0a09",
+              },
+              dark: {
+                bg: "#111111",
+                card: "#1B1B1B",
+                hover: "#252525"
+              }
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      :root {
+        --bg-color: #111111; 
+        --text-main: #FFFFFF; 
+        --text-secondary: #9CA3AF;
+        --border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #111111; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #252525; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #333333; 
+      }
+      
+      .hide-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scroll {
+        scrollbar-width: none;
+      }
+
+      /* Floating Inputs Customizados para Dark Mode */
+      .input-group {
+        position: relative;
+        width: 100%;
+      }
+
+      .floating-input {
+        width: 100%;
+        padding: 1.5rem 1rem 0.5rem 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        color: #FFFFFF;
+        outline: none;
+        transition: all 0.3s ease;
+        font-size: 0.875rem;
+      }
+
+      .floating-input:focus {
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .floating-label {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #9CA3AF;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        font-size: 0.875rem;
+      }
+
+      .floating-input:focus ~ .floating-label,
+      .floating-input:not(:placeholder-shown) ~ .floating-label {
+        top: 0.75rem;
+        font-size: 0.65rem;
+        color: #FFFFFF;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Glass Panel Dark */
+      .glass-panel-dark {
+        background: rgba(27, 27, 27, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border-color);
+      }
+
+      .reveal-up {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Toast Notification */
+      .toast {
+        transform: translateY(100%);
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body x-data="userApp()" class="relative text-white min-h-screen flex flex-col">
+
+    <!-- OVERLAY BACKGROUND (Glow & Noise) -->
+    <div class="fixed inset-0 z-[-2] bg-[radial-gradient(circle_at_50%_0%,_rgba(255,255,255,0.05)_0%,_transparent_60%)] pointer-events-none"></div>
+    <div class="fixed inset-0 z-[-1] opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E');"></div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="fixed bottom-6 right-6 z-[9999] toast flex items-center gap-3 px-6 py-4 rounded-xl glass-panel-dark border-white/20 shadow-2xl" :class="{'show': toast.show}">
+        <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">
+            <iconify-icon icon="solar:bell-bing-bold"></iconify-icon>
+        </div>
+        <div>
+            <h4 class="text-sm font-medium text-white" x-text="toast.title"></h4>
+            <p class="text-xs text-stone-400" x-text="toast.message"></p>
+        </div>
+    </div>
+
+    <!-- GLOBAL HEADER -->
+    <header class="w-full z-50 px-6 md:px-12 py-4 flex justify-between items-center bg-[#111111]/80 backdrop-blur-md border-b border-white/10 sticky top-0 transition-all">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 text-white hover:opacity-80 transition-opacity">
+            <div class="w-6 h-6 bg-white text-[#111] flex items-center justify-center rounded-sm">
+                <iconify-icon icon="solar:pen-bold" class="text-sm"></iconify-icon>
+            </div>
+            <span class="font-display font-bold tracking-tight text-lg">ARTOOLS<span class="text-stone-500 font-light">.PRO</span></span>
+        </a>
+
+        <!-- Right Side Nav -->
+        <div class="flex items-center gap-6">
+            <a href="compra.html" class="text-white hover:text-stone-400 transition-colors flex items-center justify-center">
+                <iconify-icon icon="solar:bag-3-linear" class="text-xl"></iconify-icon>
+            </a>
+            
+            <template x-if="isAuthenticated">
+                <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/5 transition-colors border border-transparent hover:border-white/10 md:hidden">
+                    <div class="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center text-sm font-medium">P</div>
+                </button>
+            </template>
+            <template x-if="isAuthenticated">
+                <div class="hidden md:flex items-center gap-3 pl-6 border-l border-white/10 cursor-pointer group">
+                    <div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center text-sm font-medium group-hover:bg-white group-hover:text-black transition-colors">
+                        P
+                    </div>
+                    <span class="text-sm font-medium text-stone-300 group-hover:text-white transition-colors">Paulo</span>
+                </div>
+            </template>
+        </div>
+    </header>
+
+    <!-- ESTADO 1: DESLOGADO (LOGIN / CADASTRO) -->
+    <div x-show="!isAuthenticated" x-transition.opacity.duration.500ms class="flex-grow flex items-center justify-center p-6 relative">
+        
+        <!-- MODAL LOGIN -->
+        <div x-show="authModal === 'login'" x-transition.opacity.scale.95.duration.400ms class="w-full max-w-md glass-panel-dark rounded-[28px] p-8 md:p-10 shadow-2xl relative z-10">
+            <div class="text-center mb-8">
+                <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white">
+                    <iconify-icon icon="solar:user-bold" class="text-2xl"></iconify-icon>
+                </div>
+                <h1 class="text-2xl font-display font-medium text-white">Bem-vindo novamente</h1>
+                <p class="text-sm text-stone-400 mt-2">Acesse seu ecossistema Artools.</p>
+            </div>
+
+            <form @submit.prevent="login()" class="space-y-4">
+                <div class="input-group">
+                    <input type="email" id="login-email" class="floating-input" placeholder=" " required>
+                    <label for="login-email" class="floating-label">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="login-password" class="floating-input" placeholder=" " required>
+                    <label for="login-password" class="floating-label">Senha</label>
+                </div>
+                
+                <div class="flex items-center justify-between text-sm py-2">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input type="checkbox" class="w-4 h-4 rounded border-white/20 bg-white/5 text-white focus:ring-0 focus:ring-offset-0 cursor-pointer accent-white">
+                        <span class="text-stone-400 group-hover:text-white transition-colors">Permanecer conectado</span>
+                    </label>
+                    <a href="#" class="text-white hover:underline decoration-white/30 underline-offset-4">Esqueci minha senha</a>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-white text-black rounded-xl text-sm font-medium hover:bg-stone-200 transition-all active:scale-[0.98]">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="flex items-center gap-4 my-8">
+                <div class="h-[1px] flex-grow bg-white/10"></div>
+                <span class="text-xs font-mono uppercase tracking-widest text-stone-500">ou</span>
+                <div class="h-[1px] flex-grow bg-white/10"></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <button class="flex items-center justify-center gap-2 py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all text-sm font-medium">
+                    <iconify-icon icon="flat-color-icons:google" class="text-lg"></iconify-icon> Google
+                </button>
+                <button class="flex items-center justify-center gap-2 py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all text-sm font-medium">
+                    <iconify-icon icon="ic:baseline-apple" class="text-lg"></iconify-icon> Apple
+                </button>
+            </div>
+
+            <div class="text-center text-sm text-stone-400">
+                Não possui conta? <button type="button" @click="authModal = 'register'" class="text-white hover:underline underline-offset-4 decoration-white/30 ml-1">Criar Conta &rarr;</button>
+            </div>
+        </div>
+
+        <!-- MODAL CADASTRO -->
+        <div x-show="authModal === 'register'" style="display:none;" x-transition.opacity.scale.95.duration.400ms class="w-full max-w-lg glass-panel-dark rounded-[28px] p-8 md:p-10 shadow-2xl relative z-10">
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-display font-medium text-white">Criar Conta</h1>
+                <p class="text-sm text-stone-400 mt-2">Junte-se à elite dos criadores.</p>
+            </div>
+
+            <form @submit.prevent="register()" class="space-y-4">
+                <div class="input-group">
+                    <input type="text" id="reg-name" class="floating-input" placeholder=" " required>
+                    <label for="reg-name" class="floating-label">Nome Completo</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="reg-email" class="floating-input" placeholder=" " required>
+                    <label for="reg-email" class="floating-label">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="tel" id="reg-phone" class="floating-input" placeholder=" " required>
+                    <label for="reg-phone" class="floating-label">Telefone</label>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="input-group">
+                        <input type="password" id="reg-pass" class="floating-input" placeholder=" " required>
+                        <label for="reg-pass" class="floating-label">Senha</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="reg-pass-confirm" class="floating-input" placeholder=" " required>
+                        <label for="reg-pass-confirm" class="floating-label">Confirmar Senha</label>
+                    </div>
+                </div>
+
+                <div class="py-2">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="w-4 h-4 mt-0.5 rounded border-white/20 bg-white/5 text-white focus:ring-0 focus:ring-offset-0 cursor-pointer accent-white" required>
+                        <span class="text-sm text-stone-400 group-hover:text-white transition-colors">Li e aceito os Termos de Uso e a Política de Privacidade.</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-white text-black rounded-xl text-sm font-medium hover:bg-stone-200 transition-all active:scale-[0.98] mt-2">
+                    Criar minha conta
+                </button>
+            </form>
+
+            <div class="text-center text-sm text-stone-400 mt-8">
+                Já possui conta? <button type="button" @click="authModal = 'login'" class="text-white hover:underline underline-offset-4 decoration-white/30 ml-1">Entrar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ESTADO 2: LOGADO (PAINEL MINHA CONTA) -->
+    <div x-show="isAuthenticated" style="display:none;" x-transition.opacity.duration.600ms class="flex-grow flex w-full relative">
+        
+        <!-- SIDEBAR (Desktop Fixo / Mobile Drawer) -->
+        <div class="md:w-72 flex-shrink-0 relative z-40">
+            <!-- Mobile Backdrop -->
+            <div x-show="isMobileMenuOpen" @click="isMobileMenuOpen = false" x-transition.opacity class="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden z-30"></div>
+            
+            <aside class="fixed md:sticky top-[73px] md:top-[73px] left-0 h-[calc(100vh-73px)] w-72 md:w-full bg-dark-card/50 md:bg-transparent backdrop-blur-xl md:backdrop-blur-none border-r border-white/10 md:border-none p-6 transform transition-transform duration-300 md:translate-x-0 z-40"
+                   :class="isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'">
+                
+                <div class="md:glass-panel-dark md:rounded-2xl md:p-6 md:h-full md:border md:border-white/10 overflow-y-auto hide-scroll">
+                    
+                    <!-- User Mini Profile -->
+                    <div class="flex items-center gap-4 mb-10">
+                        <div class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center text-lg font-bold shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                            PB
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-white leading-tight">Paulo Barbosa</h3>
+                            <p class="text-xs text-stone-400 mt-0.5">Cliente desde 2026</p>
+                        </div>
+                    </div>
+
+                    <!-- Navegação -->
+                    <nav class="space-y-1">
+                        <button @click="setTab('dashboard')" :class="activeTab === 'dashboard' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:widget-5-linear" class="text-lg"></iconify-icon> Dashboard
+                        </button>
+                        <button @click="setTab('orders')" :class="activeTab === 'orders' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:box-minimalistic-linear" class="text-lg"></iconify-icon> Meus Pedidos
+                        </button>
+                        <button @click="setTab('favorites')" :class="activeTab === 'favorites' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:heart-linear" class="text-lg"></iconify-icon> Favoritos
+                        </button>
+                        <button @click="setTab('addresses')" :class="activeTab === 'addresses' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:map-point-linear" class="text-lg"></iconify-icon> Endereços
+                        </button>
+                        <button @click="setTab('payments')" :class="activeTab === 'payments' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:card-linear" class="text-lg"></iconify-icon> Pagamentos
+                        </button>
+                    </nav>
+
+                    <div class="h-[1px] w-full bg-white/10 my-6"></div>
+
+                    <nav class="space-y-1">
+                        <button @click="setTab('profile')" :class="activeTab === 'profile' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:user-linear" class="text-lg"></iconify-icon> Perfil
+                        </button>
+                        <button @click="setTab('security')" :class="activeTab === 'security' ? 'bg-white/10 text-white' : 'text-stone-400 hover:bg-white/5 hover:text-white'" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left">
+                            <iconify-icon icon="solar:shield-keyhole-linear" class="text-lg"></iconify-icon> Segurança
+                        </button>
+                        <button @click="logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left text-red-400 hover:bg-red-500/10 hover:text-red-300 mt-4">
+                            <iconify-icon icon="solar:logout-2-linear" class="text-lg"></iconify-icon> Sair
+                        </button>
+                    </nav>
+                </div>
+            </aside>
+        </div>
+
+        <!-- MAIN CONTENT AREA -->
+        <div class="flex-grow p-6 md:p-10 w-full max-w-[1200px] mx-auto min-h-full">
+            
+            <!-- ABA: DASHBOARD -->
+            <div id="tab-dashboard" class="tab-content" :class="{ 'active': activeTab === 'dashboard' }">
+                <div class="reveal-content">
+                    <h2 class="text-3xl font-display font-medium text-white mb-2">Olá, Paulo.</h2>
+                    <p class="text-stone-400 mb-10">Bem-vindo novamente ao seu ecossistema Artools.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                        <div class="glass-panel-dark rounded-2xl p-6 border border-white/10 flex flex-col justify-between hover:bg-white/[0.02] transition-colors cursor-pointer" @click="setTab('orders')">
+                            <iconify-icon icon="solar:box-minimalistic-linear" class="text-3xl text-stone-500 mb-4"></iconify-icon>
+                            <div>
+                                <div class="text-3xl font-display text-white mb-1">2</div>
+                                <div class="text-xs font-mono uppercase tracking-widest text-stone-400">Pedidos</div>
+                            </div>
+                        </div>
+                        <div class="glass-panel-dark rounded-2xl p-6 border border-white/10 flex flex-col justify-between hover:bg-white/[0.02] transition-colors cursor-pointer" @click="setTab('favorites')">
+                            <iconify-icon icon="solar:heart-linear" class="text-3xl text-stone-500 mb-4"></iconify-icon>
+                            <div>
+                                <div class="text-3xl font-display text-white mb-1">4</div>
+                                <div class="text-xs font-mono uppercase tracking-widest text-stone-400">Favoritos</div>
+                            </div>
+                        </div>
+                        <div class="glass-panel-dark rounded-2xl p-6 border border-white/10 flex flex-col justify-between hover:bg-white/[0.02] transition-colors cursor-pointer">
+                            <iconify-icon icon="solar:star-fall-linear" class="text-3xl text-stone-500 mb-4"></iconify-icon>
+                            <div>
+                                <div class="text-3xl font-display text-white mb-1">450</div>
+                                <div class="text-xs font-mono uppercase tracking-widest text-stone-400">Pontos Artools</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel-dark rounded-2xl p-8 border border-white/10">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-display text-white">Último Pedido</h3>
+                            <button @click="setTab('orders')" class="text-sm text-stone-400 hover:text-white transition-colors">Ver todos</button>
+                        </div>
+                        <div class="flex flex-col md:flex-row md:items-center gap-6 p-4 rounded-xl bg-white/5 border border-white/5">
+                            <img src="assets/raw_files/caneta.jpeg" alt="ArtoolsPro" class="w-20 h-20 object-cover rounded-lg">
+                            <div class="flex-grow">
+                                <div class="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">Entregue</div>
+                                <h4 class="text-lg font-medium text-white">ArtoolsPro Signature Series</h4>
+                                <p class="text-sm text-stone-400 mt-1">Pedido #AR-2026-892 • 05 Jul 2026</p>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <button class="px-6 py-2.5 bg-white text-black rounded-full text-sm font-medium hover:bg-stone-200 transition-colors">Comprar novamente</button>
+                                <button class="px-6 py-2.5 border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white/10 transition-colors">Rastreio</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: PEDIDOS -->
+            <div id="tab-orders" class="tab-content" :class="{ 'active': activeTab === 'orders' }">
+                <div class="reveal-content">
+                    <h2 class="text-3xl font-display font-medium text-white mb-2">Meus Pedidos</h2>
+                    <p class="text-stone-400 mb-10">Histórico completo das suas aquisições tecnológicas.</p>
+
+                    <div class="space-y-6">
+                        <!-- Pedido 1 -->
+                        <div class="glass-panel-dark rounded-2xl p-6 border border-white/10">
+                            <div class="flex flex-wrap items-center justify-between border-b border-white/10 pb-4 mb-4 gap-4">
+                                <div>
+                                    <span class="text-xs font-mono text-stone-500 uppercase tracking-widest mr-2">Pedido</span>
+                                    <span class="font-mono text-white">#AR-2026-892</span>
+                                </div>
+                                <div class="flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-xs font-medium uppercase tracking-widest">
+                                    <iconify-icon icon="solar:check-circle-bold"></iconify-icon> Entregue
+                                </div>
+                            </div>
+                            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+                                <img src="assets/raw_files/caneta.jpeg" alt="Artools" class="w-24 h-24 object-cover rounded-xl border border-white/10">
+                                <div class="flex-grow">
+                                    <h4 class="text-lg font-medium text-white">ArtoolsPro Signature Series</h4>
+                                    <p class="text-sm text-stone-400 mt-1">Qtde: 1 • Data: 05 Jul 2026</p>
+                                    <p class="text-lg font-display text-white mt-2">$149.00</p>
+                                </div>
+                                <div class="flex flex-col gap-2 w-full md:w-auto mt-4 md:mt-0">
+                                    <button class="w-full md:w-auto px-6 py-2.5 bg-white text-black rounded-full text-sm font-medium hover:bg-stone-200 transition-colors">Comprar novamente</button>
+                                    <button class="w-full md:w-auto px-6 py-2.5 border border-white/20 text-white rounded-full text-sm font-medium hover:bg-white/10 transition-colors">Baixar Nota Fiscal</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pedido 2 -->
+                        <div class="glass-panel-dark rounded-2xl p-6 border border-white/10">
+                            <div class="flex flex-wrap items-center justify-between border-b border-white/10 pb-4 mb-4 gap-4">
+                                <div>
+                                    <span class="text-xs font-mono text-stone-500 uppercase tracking-widest mr-2">Pedido</span>
+                                    <span class="font-mono text-white">#AR-2025-104</span>
+                                </div>
+                                <div class="flex items-center gap-2 px-3 py-1 bg-white/5 text-stone-400 border border-white/10 rounded-full text-xs font-medium uppercase tracking-widest">
+                                    <iconify-icon icon="solar:box-bold"></iconify-icon> Entregue
+                                </div>
+                            </div>
+                            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+                                <div class="w-24 h-24 rounded-xl border border-white/10 bg-white/5 flex items-center justify-center text-stone-500">
+                                    <iconify-icon icon="solar:pen-linear" class="text-4xl"></iconify-icon>
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="text-lg font-medium text-white">Artools Standard Edition</h4>
+                                    <p class="text-sm text-stone-400 mt-1">Qtde: 2 • Data: 12 Dez 2025</p>
+                                    <p class="text-lg font-display text-white mt-2">$178.00</p>
+                                </div>
+                                <div class="flex flex-col gap-2 w-full md:w-auto mt-4 md:mt-0">
+                                    <button class="w-full md:w-auto px-6 py-2.5 bg-white text-black rounded-full text-sm font-medium hover:bg-stone-200 transition-colors">Comprar novamente</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: FAVORITOS -->
+            <div id="tab-favorites" class="tab-content" :class="{ 'active': activeTab === 'favorites' }">
+                <div class="reveal-content">
+                    <h2 class="text-3xl font-display font-medium text-white mb-2">Favoritos</h2>
+                    <p class="text-stone-400 mb-10">Produtos que você separou para o futuro.</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Fav 1 -->
+                        <div class="glass-panel-dark rounded-2xl border border-white/10 overflow-hidden group">
+                            <div class="relative aspect-square overflow-hidden bg-stone-900">
+                                <img src="assets/raw_files/caneta.jpeg" alt="Caneta" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+                                <button class="absolute top-4 right-4 w-8 h-8 bg-black/50 backdrop-blur rounded-full flex items-center justify-center text-white hover:bg-red-500/20 hover:text-red-400 transition-colors">
+                                    <iconify-icon icon="solar:trash-bin-trash-linear"></iconify-icon>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h4 class="text-lg font-medium text-white mb-1">Creator Club Refill</h4>
+                                <p class="text-xl font-display text-white mb-4">$29.00</p>
+                                <button class="w-full py-3 bg-white text-black rounded-xl text-sm font-medium hover:bg-stone-200 transition-all flex items-center justify-center gap-2">
+                                    Adicionar ao carrinho <iconify-icon icon="solar:cart-plus-linear"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: PERFIL -->
+            <div id="tab-profile" class="tab-content" :class="{ 'active': activeTab === 'profile' }">
+                <div class="reveal-content">
+                    <h2 class="text-3xl font-display font-medium text-white mb-2">Meu Perfil</h2>
+                    <p class="text-stone-400 mb-10">Gerencie suas informações pessoais.</p>
+
+                    <div class="glass-panel-dark rounded-2xl p-8 border border-white/10 max-w-3xl">
+                        <form @submit.prevent="saveProfile()" class="space-y-6">
+                            
+                            <div class="flex items-center gap-6 mb-8">
+                                <div class="relative group cursor-pointer">
+                                    <div class="w-20 h-20 rounded-full bg-white text-black flex items-center justify-center text-2xl font-bold shadow-lg">PB</div>
+                                    <div class="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                                        <iconify-icon icon="solar:camera-linear" class="text-xl text-white"></iconify-icon>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button type="button" class="px-4 py-2 bg-white/10 text-white rounded-lg text-sm font-medium hover:bg-white/20 transition-colors border border-white/10">Alterar Foto</button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="input-group">
+                                    <input type="text" id="prof-name" class="floating-input" placeholder=" " value="Paulo Barbosa" required>
+                                    <label for="prof-name" class="floating-label">Nome Completo</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="email" id="prof-email" class="floating-input" placeholder=" " value="paulo@email.com" required>
+                                    <label for="prof-email" class="floating-label">Email</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="tel" id="prof-phone" class="floating-input" placeholder=" " value="(11) 99999-9999">
+                                    <label for="prof-phone" class="floating-label">Telefone</label>
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" id="prof-cpf" class="floating-input" placeholder=" " value="123.456.789-00">
+                                    <label for="prof-cpf" class="floating-label">CPF</label>
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-white/10 flex justify-end">
+                                <button type="submit" class="px-8 py-3 bg-white text-black rounded-xl text-sm font-medium hover:bg-stone-200 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                                    Salvar Alterações
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ABA: ENDEREÇOS E PAGAMENTOS E SEGURANÇA -->
+            <div id="tab-addresses" class="tab-content" :class="{ 'active': activeTab === 'addresses' }">
+                <div class="reveal-content text-center py-20">
+                    <iconify-icon icon="solar:map-point-linear" class="text-6xl text-stone-600 mb-4"></iconify-icon>
+                    <h3 class="text-xl text-white font-display mb-2">Nenhum endereço cadastrado</h3>
+                    <p class="text-stone-400 mb-6">Adicione um endereço para facilitar suas futuras compras.</p>
+                    <button class="px-6 py-3 bg-white/10 text-white rounded-xl text-sm font-medium hover:bg-white/20 transition-colors border border-white/10">Adicionar Endereço</button>
+                </div>
+            </div>
+
+            <div id="tab-payments" class="tab-content" :class="{ 'active': activeTab === 'payments' }">
+                <div class="reveal-content text-center py-20">
+                    <iconify-icon icon="solar:card-linear" class="text-6xl text-stone-600 mb-4"></iconify-icon>
+                    <h3 class="text-xl text-white font-display mb-2">Nenhuma forma de pagamento</h3>
+                    <p class="text-stone-400 mb-6">Guarde seus cartões de forma criptografada para checkout em 1 clique.</p>
+                    <button class="px-6 py-3 bg-white/10 text-white rounded-xl text-sm font-medium hover:bg-white/20 transition-colors border border-white/10">Adicionar Cartão</button>
+                </div>
+            </div>
+
+            <div id="tab-security" class="tab-content" :class="{ 'active': activeTab === 'security' }">
+                <div class="reveal-content max-w-2xl">
+                    <h2 class="text-3xl font-display font-medium text-white mb-2">Segurança</h2>
+                    <p class="text-stone-400 mb-10">Proteja o seu ecossistema.</p>
+
+                    <div class="glass-panel-dark rounded-2xl p-8 border border-white/10 mb-6">
+                        <h3 class="text-lg font-medium text-white mb-4">Alterar Senha</h3>
+                        <div class="space-y-4 mb-6">
+                            <div class="input-group">
+                                <input type="password" id="sec-current" class="floating-input" placeholder=" ">
+                                <label for="sec-current" class="floating-label">Senha Atual</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="sec-new" class="floating-input" placeholder=" ">
+                                <label for="sec-new" class="floating-label">Nova Senha</label>
+                            </div>
+                        </div>
+                        <button class="px-6 py-3 bg-white/10 text-white rounded-xl text-sm font-medium hover:bg-white/20 transition-colors border border-white/10" @click="showToast('Segurança', 'Senha atualizada com sucesso.')">Atualizar Senha</button>
+                    </div>
+
+                    <div class="glass-panel-dark rounded-2xl p-8 border border-white/10 flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-white mb-1">Sessões Ativas</h3>
+                            <p class="text-sm text-stone-400">Você está logado em 1 dispositivo.</p>
+                        </div>
+                        <button class="px-4 py-2 bg-red-500/10 text-red-400 rounded-lg text-sm font-medium hover:bg-red-500/20 transition-colors border border-red-500/20" @click="logout()">Encerrar Todas</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('userApp', () => ({
+                isAuthenticated: false,
+                authModal: 'login', // 'login' ou 'register'
+                activeTab: 'dashboard',
+                isMobileMenuOpen: false,
+                toast: {
+                    show: false,
+                    title: '',
+                    message: ''
+                },
+                toastTimeout: null,
+
+                init() {
+                    // Iniciar GSAP quando a página carrega
+                    gsap.registerPlugin(ScrollTrigger);
+                },
+
+                login() {
+                    // Simular Login
+                    this.showToast('Bem-vindo', 'Login realizado com sucesso.');
+                    setTimeout(() => {
+                        this.isAuthenticated = true;
+                        this.animateReveal();
+                    }, 500);
+                },
+
+                register() {
+                    // Simular Cadastro
+                    this.showToast('Sucesso', 'Conta tecnológica criada. Bem-vindo!');
+                    setTimeout(() => {
+                        this.isAuthenticated = true;
+                        this.animateReveal();
+                    }, 500);
+                },
+
+                logout() {
+                    this.isAuthenticated = false;
+                    this.authModal = 'login';
+                    this.isMobileMenuOpen = false;
+                    this.showToast('Sessão encerrada', 'Você saiu da sua conta.');
+                },
+
+                setTab(tab) {
+                    if (this.activeTab === tab) return;
+                    this.activeTab = tab;
+                    this.isMobileMenuOpen = false;
+                    this.animateReveal();
+                },
+
+                saveProfile() {
+                    this.showToast('Perfil Atualizado', 'Seus dados foram salvos com sucesso.');
+                },
+
+                showToast(title, message) {
+                    this.toast.title = title;
+                    this.toast.message = message;
+                    this.toast.show = true;
+                    
+                    clearTimeout(this.toastTimeout);
+                    this.toastTimeout = setTimeout(() => {
+                        this.toast.show = false;
+                    }, 4000);
+                },
+
+                animateReveal() {
+                    // Dá um tempinho pro Alpine trocar a classe active e depois roda o GSAP
+                    setTimeout(() => {
+                        gsap.fromTo(".active .reveal-content", 
+                            { opacity: 0, y: 30, filter: "blur(10px)" },
+                            { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }
+                        );
+                    }, 50);
+                }
+            }))
+        });
+    </script>
+  </body>
+</html>
