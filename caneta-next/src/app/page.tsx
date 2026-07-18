@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Define que este arquivo é um Client Component (roda do lado do cliente para poder usar hooks de estado e efeito)
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
@@ -9,22 +9,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Header from "@/components/Header";
 
+// Registra o plugin ScrollTrigger no GSAP para possibilitar animações atreladas ao scroll da página
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  // Cria referências (Refs) para acessar elementos da DOM diretamente sem re-renderizar o React
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const customScrollbarRef = useRef<HTMLDivElement>(null);
 
+  // Hook especializado do GSAP para React. Garante que as animações sejam limpas e canceladas automaticamente no desmonte do componente.
   useGSAP(() => {
-    // 1. GSAP ENTRANCE ANIMATIONS
-    const tl = gsap.timeline();
+    // ==========================================
+    // 1. ANIMAÇÕES DE ENTRADA (HERO ENTRANCE)
+    // ==========================================
+    const tl = gsap.timeline(); // Cria uma linha do tempo (timeline) para encadear animações sequenciais
 
+    // Animação de entrada do Header: surge do topo (-20px) com opacidade progressiva (autoAlpha)
     tl.fromTo(
       "header",
       { y: -20, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 1, ease: "power3.out" }
     );
 
+    // Animação do título principal (Headline): os pedaços do texto sobem do overflow oculto com efeito stagger (escalonado)
     tl.fromTo(
       ".hero-element-text",
       { y: "110%", autoAlpha: 0 },
@@ -32,71 +39,79 @@ export default function Home() {
         y: "0%",
         autoAlpha: 1,
         duration: 1.2,
-        stagger: 0.15,
+        stagger: 0.15, // Atraso de 0.15s entre a animação de cada linha do título
         ease: "power4.out",
       },
-      "-=0.6"
+      "-=0.6" // Inicia essa animação 0.6s antes do término da animação do Header
     );
 
+    // Animação de revelação dos parágrafos, botões e indicadores periféricos da Hero
     tl.fromTo(
       ".hero-element",
       { y: 20, autoAlpha: 0 },
       { y: 0, autoAlpha: 1, duration: 1, stagger: 0.1, ease: "power3.out" },
-      "-=0.8"
+      "-=0.8" // Inicia 0.8s antes da linha do tempo terminar
     );
 
-    // 2. CANVAS SEQUENCE SCROLL ANIMATION
+    // ==========================================
+    // 2. ANIMAÇÃO DO CANVAS DE IMAGENS (SCROLL 3D)
+    // ==========================================
     const canvas = canvasRef.current;
     if (canvas) {
-      const ctx = canvas.getContext("2d", { alpha: false });
-      const frameCount = 192;
-      const currentFrame = { index: 0 };
+      const ctx = canvas.getContext("2d", { alpha: false }); // Pega o contexto 2D otimizado sem suporte a transparência (melhora performance)
+      const frameCount = 192; // Quantidade total de imagens (frames) na sequência de rotação
+      const currentFrame = { index: 0 }; // Objeto reativo simulado cujo valor do index será incrementado pelo GSAP
       const images: HTMLImageElement[] = [];
 
+      // Função para pré-carregar todos os frames em memória RAM, evitando travamento visual no scroll
       const preloadImages = () => {
         for (let i = 1; i <= frameCount; i++) {
           const img = window.document.createElement("img");
-          const frameNumber = i.toString().padStart(4, "0");
+          const frameNumber = i.toString().padStart(4, "0"); // Transforma 1 em "0001", 12 em "0012", etc.
           img.src = `/assets/video_frames/frame_${frameNumber}.jpg`;
           images.push(img);
         }
       };
 
+      // Função que redesenha a imagem correspondente no canvas a cada atualização de frame
       const render = () => {
-        const frameIndex = Math.floor(currentFrame.index);
+        const frameIndex = Math.floor(currentFrame.index); // Arredonda o index progressivo para obter o frame inteiro correspondente
         const img = images[frameIndex];
 
         if (img && ctx) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas anterior
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // Desenha a imagem preenchendo a tela
         }
       };
 
       preloadImages();
 
+      // Quando a primeira imagem terminar de carregar, executa o render inicial para o canvas não iniciar em branco
       if (images[0]) {
         images[0].onload = render;
       }
 
       let scrollInitialized = false;
 
+      // Inicializa a timeline vinculada ao scroll para animar o canvas
       const initScrollAnimation = () => {
         if (scrollInitialized) return;
         scrollInitialized = true;
 
         let tlScroll = gsap.timeline({
           scrollTrigger: {
-            trigger: "#hero-sequence",
-            start: "top top",
-            end: "+=3500",
-            pin: true,
-            scrub: 1,
+            trigger: "#hero-sequence", // Elemento que ativa a fixação da tela e o monitoramento do scroll
+            start: "top top", // Inicia quando o topo da seção encosta no topo da tela
+            end: "+=3500", // Extensão da área de rolagem (3500px), determina a velocidade da animação do scroll
+            pin: true, // Fixa a tela impedindo o rolamento da página enquanto executa a sequência de imagens
+            scrub: 1, // Suaviza a animação aplicando um delay de 1s para acompanhar o scroll do usuário
             onUpdate: () => {
-              requestAnimationFrame(render);
+              requestAnimationFrame(render); // Desenha o frame usando o motor de frames nativo do navegador para máxima performance
             },
           },
         });
 
+        // Efeito de fade-out (sumir) dos textos da Hero logo nos primeiros 15% de rolagem
         tlScroll.to(
           ".scroll-fade-out",
           {
@@ -108,11 +123,12 @@ export default function Home() {
           0
         );
 
+        // Anima a variável 'index' do frame atual de 0 a 191 sincronizado com o scroll
         tlScroll.to(
           currentFrame,
           {
             index: frameCount - 1,
-            ease: "none",
+            ease: "none", // Velocidade linear para que a rotação da caneta seja diretamente proporcional ao scroll do mouse
             duration: 1,
           },
           0
@@ -122,30 +138,37 @@ export default function Home() {
       initScrollAnimation();
     }
 
-    // 3. REVEAL UP ANIMATIONS
+    // ==========================================
+    // 3. ANIMAÇÕES DE REVELAÇÃO AO ROLAR (REVEAL UP)
+    // ==========================================
+    // Cria um gatilho individual para cada elemento que possui a classe '.reveal-up'
     gsap.utils.toArray(".reveal-up").forEach((elem: any) => {
       ScrollTrigger.create({
         trigger: elem,
-        start: "top 85%",
+        start: "top 85%", // Dispara quando o topo do elemento chega a 85% de altura da tela
         onEnter: () => {
-          elem.classList.add("active");
+          elem.classList.add("active"); // Adiciona a classe 'active' para ativar a transição CSS definida no globals.css
         },
       });
     });
   }, []);
 
-  // 4. CUSTOM SCROLLBAR LOGIC
+  // ==========================================
+  // 4. LÓGICA DA SCROLLBAR CUSTOMIZADA
+  // ==========================================
   useEffect(() => {
     const customScrollbar = customScrollbarRef.current;
     if (!customScrollbar) return;
 
     let scrollTimeout: NodeJS.Timeout;
 
+    // Função que atualiza a altura e a posição vertical do indicador visual da barra de rolagem customizada
     const updateScrollbar = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = document.documentElement.clientHeight;
-      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight; // Altura total rolável do documento
+      const clientHeight = document.documentElement.clientHeight; // Altura visível da janela do navegador
+      const scrollTop = window.scrollY; // Distância rolada a partir do topo
 
+      // Se a página for menor ou igual à janela, oculta a scrollbar
       if (scrollHeight <= clientHeight) {
         customScrollbar.style.display = "none";
         return;
@@ -153,17 +176,21 @@ export default function Home() {
         customScrollbar.style.display = "block";
       }
 
+      // Calcula a proporção da altura da barra baseada no tamanho da página (regra de 3)
       const scrollRatio = clientHeight / scrollHeight;
-      const thumbHeight = Math.max(scrollRatio * clientHeight, 40);
+      const thumbHeight = Math.max(scrollRatio * clientHeight, 40); // Define altura do indicador (mínimo de 40px)
 
+      // Calcula a posição do indicador com base na porcentagem de rolagem da página
       const maxScrollTop = scrollHeight - clientHeight;
       const scrollProgress = scrollTop / maxScrollTop;
       const thumbTop = scrollProgress * (clientHeight - thumbHeight);
 
+      // Atualiza os estilos CSS diretamente na DOM por motivos de performance (evita re-renderizações lentas do React)
       customScrollbar.style.height = `${thumbHeight}px`;
       customScrollbar.style.transform = `translateY(${thumbTop}px)`;
-      customScrollbar.style.opacity = "1";
+      customScrollbar.style.opacity = "1"; // Torna visível ao rolar
 
+      // Esconde a scrollbar após 2 segundos de inatividade
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         customScrollbar.style.opacity = "0";
@@ -174,21 +201,25 @@ export default function Home() {
     window.addEventListener("resize", updateScrollbar);
     updateScrollbar();
 
-    // Dragging logic
+    // ==========================================
+    // LÓGICA DE ARRASTAR A SCROLLBAR COM O MOUSE
+    // ==========================================
     let isDragging = false;
     let startY = 0;
     let startScrollTop = 0;
 
+    // Início do clique na barra de rolagem customizada
     const handleMouseDown = (e: MouseEvent) => {
       isDragging = true;
-      startY = e.clientY;
-      startScrollTop = window.scrollY;
-      document.body.style.userSelect = "none";
+      startY = e.clientY; // Coordenada Y inicial do clique do mouse
+      startScrollTop = window.scrollY; // Posição atual de rolagem da janela
+      document.body.style.userSelect = "none"; // Desativa a seleção de texto para não atrapalhar o arrasto
     };
 
+    // Atualiza a posição de rolagem da janela enquanto o usuário arrasta a barra
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
-      const deltaY = e.clientY - startY;
+      const deltaY = e.clientY - startY; // Distância vertical percorrida pelo mouse
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = document.documentElement.clientHeight;
       const thumbHeight = Math.max(
@@ -196,20 +227,24 @@ export default function Home() {
         40
       );
 
+      // Converte o deslocamento vertical do mouse na barra de volta para pixels de rolagem na página
       const scrollRatio =
         (scrollHeight - clientHeight) / (clientHeight - thumbHeight);
       window.scrollTo(0, startScrollTop + deltaY * scrollRatio);
     };
 
+    // Finaliza o arrasto
     const handleMouseUp = () => {
       isDragging = false;
-      document.body.style.userSelect = "";
+      document.body.style.userSelect = ""; // Restaura a seleção de texto
     };
 
+    // Adiciona escutadores de eventos para arrasto manual
     customScrollbar.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
 
+    // Função de limpeza (cleanup) executada quando o componente é desmontado
     return () => {
       window.removeEventListener("scroll", updateScrollbar);
       window.removeEventListener("resize", updateScrollbar);
@@ -219,11 +254,15 @@ export default function Home() {
     };
   }, []);
 
+  // ==========================================
+  // EFEITO FLASHLIGHT (LANTERNA RADIAL NOS CARDS)
+  // ==========================================
+  // Atualiza as propriedades customizadas do CSS (--mouse-x e --mouse-y) com a posição do cursor relativa ao card
   const handleFlashlightMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const rect = card.getBoundingClientRect(); // Obtém dimensões e posição do card na tela
+    const x = e.clientX - rect.left; // Coordenada X do mouse relativa ao card
+    const y = e.clientY - rect.top;  // Coordenada Y do mouse relativa ao card
     card.style.setProperty("--mouse-x", `${x}px`);
     card.style.setProperty("--mouse-y", `${y}px`);
   };

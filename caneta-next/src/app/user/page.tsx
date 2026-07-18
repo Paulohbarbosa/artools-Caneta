@@ -20,22 +20,29 @@ interface Toast {
 }
 
 export default function UserPage() {
+  // Controle de autenticação (simulado)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // Alterna entre tela de 'login' e de 'register' (cadastro)
   const [authModal, setAuthModal] = useState<"login" | "register">("login");
+  // Aba ativa atual do painel administrativo
   const [activeTab, setActiveTab] = useState<Tab>("dashboard");
+  // Abre/fecha menu de navegação responsivo em dispositivos mobile
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Controle de exibição e conteúdo do balão de alerta (toast)
   const [toast, setToast] = useState<Toast>({
     show: false,
     title: "",
     message: "",
   });
 
+  // Estados locais do React para armazenar e sincronizar os inputs das telas de login/cadastro
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPass, setLoginPass] = useState("");
   const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
   const [regPass, setRegPass] = useState("");
 
+  // Funções rápidas para preencher formulários com dados de teste (facilitador de portfólio)
   const handleFillLoginDemo = () => {
     setLoginEmail("paulo@exemplo.com");
     setLoginPass("senhaSegura123");
@@ -47,17 +54,21 @@ export default function UserPage() {
     setRegPass("senhaSegura123");
   };
 
+  // Referência para aplicar animações de transição na aba ativa do painel
   const activeContentRef = useRef<HTMLDivElement>(null);
+  // Armazena a referência do timeout do Toast para limpá-lo caso um novo Toast seja disparado em sequência
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Dispara o Toast na tela e configura para desaparecer após 4 segundos
   const showToast = (title: string, message: string) => {
     setToast({ show: true, title, message });
-    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current); // Cancela o timer do toast anterior, se houver
     toastTimeoutRef.current = setTimeout(() => {
       setToast((prev) => ({ ...prev, show: false }));
     }, 4000);
   };
 
+  // Handler de Login (simulado): dispara sucesso e autentica o usuário
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     showToast("Bem-vindo", "Login realizado com sucesso.");
@@ -66,6 +77,7 @@ export default function UserPage() {
     }, 500);
   };
 
+  // Handler de Cadastro (simulado): dispara sucesso e autentica o usuário
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     showToast("Sucesso", "Conta tecnológica criada. Bem-vindo!");
@@ -74,6 +86,7 @@ export default function UserPage() {
     }, 500);
   };
 
+  // Reseta estados para deslogar
   const handleLogout = () => {
     setIsAuthenticated(false);
     setAuthModal("login");
@@ -86,8 +99,10 @@ export default function UserPage() {
     showToast("Perfil Atualizado", "Seus dados foram salvos com sucesso.");
   };
 
+  // Efeito responsável por animar a transição de conteúdo do painel administrativo
   useEffect(() => {
     if (isAuthenticated && activeContentRef.current) {
+      // Executa efeito GSAP de revelação suave (fade, translação Y e redução do desfoque) na aba recém-selecionada
       gsap.fromTo(
         activeContentRef.current,
         { opacity: 0, y: 30, filter: "blur(10px)" },
@@ -97,7 +112,7 @@ export default function UserPage() {
           filter: "blur(0px)",
           duration: 0.8,
           ease: "power3.out",
-        },
+        }
       );
     }
   }, [isAuthenticated, activeTab]);

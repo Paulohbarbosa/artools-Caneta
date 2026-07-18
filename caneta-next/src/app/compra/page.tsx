@@ -10,7 +10,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Compra() {
+  // Controle de etapa do checkout ('checkout' para preenchimento e 'success' para compra concluída)
   const [step, setStep] = useState<"checkout" | "success">("checkout");
+
+  // Estados locais do React vinculados individualmente a cada input do formulário
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [telefone, setTelefone] = useState("");
@@ -24,6 +27,7 @@ export default function Compra() {
   const successContentRef = useRef<HTMLDivElement>(null);
   const customScrollbarRef = useRef<HTMLDivElement>(null);
 
+  // Função auxiliar para fins de portfólio. Preenche todos os inputs do formulário com um único clique
   const handleAutoFill = () => {
     setNome("Paulo Silva");
     setEmail("paulo@exemplo.com");
@@ -36,33 +40,38 @@ export default function Compra() {
     setEstado("SP");
   };
 
+  // Processo simulado de finalização de compra (muda a etapa para 'success')
   const handleFinishCheckout = (e: React.FormEvent) => {
     e.preventDefault();
     setStep("success");
   };
 
+  // Efeito executado apenas quando a compra é finalizada com sucesso
   useEffect(() => {
     if (step === "success" && successContentRef.current) {
+      // Animação GSAP de entrada suave do recibo na tela preta cinematográfica
       gsap.fromTo(
         successContentRef.current,
         { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" }
       );
     }
   }, [step]);
 
+  // Efeito responsável por redefinir e re-inicializar as animações de scroll da página sempre que a etapa mudar
   useEffect(() => {
-    // GSAP Reveal Animations
+    // Busca todos os elementos do DOM com a classe .reveal-up e registra gatilhos de scroll
     const revealTriggers = gsap.utils.toArray(".reveal-up").map((elem: any) => {
       return ScrollTrigger.create({
         trigger: elem,
-        start: "top 90%",
+        start: "top 90%", // Dispara quando o elemento atinge 90% da altura da tela de cima para baixo
         onEnter: () => {
-          elem.classList.add("active");
+          elem.classList.add("active"); // Insere a classe '.active' para disparar as animações do globals.css
         },
       });
     });
 
+    // Função de cleanup: mata os gatilhos antigos do ScrollTrigger para evitar vazamento de performance
     return () => {
       revealTriggers.forEach((trigger: any) => trigger.kill());
     };
