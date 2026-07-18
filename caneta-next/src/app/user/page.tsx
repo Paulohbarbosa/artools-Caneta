@@ -30,6 +30,23 @@ export default function UserPage() {
     message: "",
   });
 
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPass, setLoginPass] = useState("");
+  const [regName, setRegName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regPass, setRegPass] = useState("");
+
+  const handleFillLoginDemo = () => {
+    setLoginEmail("paulo@exemplo.com");
+    setLoginPass("senhaSegura123");
+  };
+
+  const handleFillRegisterDemo = () => {
+    setRegName("Paulo Silva");
+    setRegEmail("paulo@exemplo.com");
+    setRegPass("senhaSegura123");
+  };
+
   const activeContentRef = useRef<HTMLDivElement>(null);
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -204,9 +221,18 @@ export default function UserPage() {
                 <h1 className="text-2xl font-display font-medium text-stone-900">
                   Bem-vindo novamente
                 </h1>
-                <p className="text-sm text-stone-500 mt-2">
-                  Acesse seu ecossistema Artools.
-                </p>
+                <div className="flex justify-between items-center mt-2 px-2">
+                  <p className="text-xs text-stone-500">
+                    Acesse seu ecossistema Artools.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleFillLoginDemo}
+                    className="px-3 py-1 bg-stone-900/10 hover:bg-stone-900/20 text-stone-900 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-colors"
+                  >
+                    Demo
+                  </button>
+                </div>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-4">
@@ -216,6 +242,9 @@ export default function UserPage() {
                     id="login-email"
                     className="floating-input"
                     placeholder=" "
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    required
                   />
                   <label htmlFor="login-email" className="floating-label">
                     E-mail
@@ -228,6 +257,9 @@ export default function UserPage() {
                     id="login-pass"
                     className="floating-input"
                     placeholder=" "
+                    value={loginPass}
+                    onChange={(e) => setLoginPass(e.target.value)}
+                    required
                   />
                   <label htmlFor="login-pass" className="floating-label">
                     Senha
@@ -280,9 +312,18 @@ export default function UserPage() {
                 <h1 className="text-2xl font-display font-medium text-stone-900">
                   Criar sua Conta
                 </h1>
-                <p className="text-sm text-stone-500 mt-2">
-                  Junte-se à Precision Network.
-                </p>
+                <div className="flex justify-between items-center mt-2 px-2">
+                  <p className="text-xs text-stone-500">
+                    Junte-se à Precision Network.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleFillRegisterDemo}
+                    className="px-3 py-1 bg-stone-900/10 hover:bg-stone-900/20 text-stone-900 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-colors"
+                  >
+                    Demo
+                  </button>
+                </div>
               </div>
 
               <form onSubmit={handleRegister} className="space-y-4">
@@ -292,6 +333,9 @@ export default function UserPage() {
                     id="reg-name"
                     className="floating-input"
                     placeholder=" "
+                    value={regName}
+                    onChange={(e) => setRegName(e.target.value)}
+                    required
                   />
                   <label htmlFor="reg-name" className="floating-label">
                     Nome Completo
@@ -304,6 +348,9 @@ export default function UserPage() {
                     id="reg-email"
                     className="floating-input"
                     placeholder=" "
+                    value={regEmail}
+                    onChange={(e) => setRegEmail(e.target.value)}
+                    required
                   />
                   <label htmlFor="reg-email" className="floating-label">
                     E-mail
@@ -316,6 +363,8 @@ export default function UserPage() {
                     id="reg-pass"
                     className="floating-input"
                     placeholder=" "
+                    value={regPass}
+                    onChange={(e) => setRegPass(e.target.value)}
                     required
                   />
                   <label htmlFor="reg-pass" className="floating-label">

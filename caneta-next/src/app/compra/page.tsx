@@ -288,6 +288,7 @@ export default function Compra() {
                           placeholder=" "
                           value={nome}
                           onChange={(e) => setNome(e.target.value)}
+                          required
                         />
                         <label htmlFor="nome" className="floating-label">
                           Nome Completo
@@ -303,6 +304,7 @@ export default function Compra() {
                             placeholder=" "
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                           />
                           <label htmlFor="email" className="floating-label">
                             E-mail
@@ -316,6 +318,7 @@ export default function Compra() {
                             placeholder=" "
                             value={telefone}
                             onChange={(e) => setTelefone(e.target.value)}
+                            required
                           />
                           <label htmlFor="telefone" className="floating-label">
                             Telefone
@@ -339,6 +342,7 @@ export default function Compra() {
                             placeholder=" "
                             value={cep}
                             onChange={(e) => setCep(e.target.value)}
+                            required
                           />
                           <label htmlFor="cep" className="floating-label">
                             CEP
@@ -352,6 +356,7 @@ export default function Compra() {
                             placeholder=" "
                             value={endereco}
                             onChange={(e) => setEndereco(e.target.value)}
+                            required
                           />
                           <label htmlFor="endereco" className="floating-label">
                             Endereço
@@ -368,6 +373,7 @@ export default function Compra() {
                             placeholder=" "
                             value={numero}
                             onChange={(e) => setNumero(e.target.value)}
+                            required
                           />
                           <label htmlFor="numero" className="floating-label">
                             Número
@@ -381,6 +387,7 @@ export default function Compra() {
                             placeholder=" "
                             value={complemento}
                             onChange={(e) => setComplemento(e.target.value)}
+                            required
                           />
                           <label
                             htmlFor="complemento"
@@ -400,6 +407,7 @@ export default function Compra() {
                             placeholder=" "
                             value={cidade}
                             onChange={(e) => setCidade(e.target.value)}
+                            required
                           />
                           <label htmlFor="cidade" className="floating-label">
                             Cidade
@@ -413,6 +421,7 @@ export default function Compra() {
                             placeholder=" "
                             value={estado}
                             onChange={(e) => setEstado(e.target.value)}
+                            required
                           />
                           <label htmlFor="estado" className="floating-label">
                             Estado / Província
@@ -437,6 +446,7 @@ export default function Compra() {
                         src="/assets/raw_files/caneta.jpeg"
                         alt="ArtoolsPro"
                         fill
+                        sizes="80px"
                         className="object-cover"
                       />
                     </div>

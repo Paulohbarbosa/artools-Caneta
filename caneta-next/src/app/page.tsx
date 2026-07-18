@@ -319,7 +319,10 @@ export default function Home() {
           className="relative z-20 bg-stone-50 text-stone-900 py-24 md:py-32 overflow-hidden border-t border-stone-200"
           id="tech-specs"
         >
-          <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div
+            className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
+            style={{ backgroundImage: `url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E')` }}
+          />
 
           <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="absolute top-0 right-0 -mr-24 -mt-24 pointer-events-none select-none opacity-[0.03] z-0 overflow-hidden hidden md:block">
@@ -355,6 +358,7 @@ export default function Home() {
                     src="/assets/raw_files/caneta.jpeg"
                     alt="Detalhe Tecnológico da Artools"
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 70vw, 50vw"
                     className="object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 mix-blend-multiply"
                   />
                   <div className="absolute top-8 left-8 p-4 border border-white/40 rounded-lg backdrop-blur-md bg-white/30 shadow-lg text-stone-800 hover:bg-white/50 transition-colors cursor-crosshair">
