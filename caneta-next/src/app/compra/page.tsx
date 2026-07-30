@@ -25,7 +25,6 @@ export default function Compra() {
   const [estado, setEstado] = useState("");
 
   const successContentRef = useRef<HTMLDivElement>(null);
-  const customScrollbarRef = useRef<HTMLDivElement>(null);
 
   // Função auxiliar para fins de portfólio. Preenche todos os inputs do formulário com um único clique
   const handleAutoFill = () => {
@@ -77,100 +76,10 @@ export default function Compra() {
     };
   }, [step]);
 
-  useEffect(() => {
-    const customScrollbar = customScrollbarRef.current;
-    if (!customScrollbar) return;
-
-    let scrollTimeout: NodeJS.Timeout;
-
-    const updateScrollbar = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = document.documentElement.clientHeight;
-      const scrollTop = window.scrollY;
-
-      if (scrollHeight <= clientHeight) {
-        customScrollbar.style.display = "none";
-        return;
-      } else {
-        customScrollbar.style.display = "block";
-      }
-
-      const scrollRatio = clientHeight / scrollHeight;
-      const thumbHeight = Math.max(scrollRatio * clientHeight, 40);
-
-      const maxScrollTop = scrollHeight - clientHeight;
-      const scrollProgress = scrollTop / maxScrollTop;
-      const thumbTop = scrollProgress * (clientHeight - thumbHeight);
-
-      customScrollbar.style.height = `${thumbHeight}px`;
-      customScrollbar.style.transform = `translateY(${thumbTop}px)`;
-      customScrollbar.style.opacity = "1";
-
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        customScrollbar.style.opacity = "0";
-      }, 2000);
-    };
-
-    window.addEventListener("scroll", updateScrollbar);
-    window.addEventListener("resize", updateScrollbar);
-    updateScrollbar();
-
-    let isDragging = false;
-    let startY = 0;
-    let startScrollTop = 0;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      isDragging = true;
-      startY = e.clientY;
-      startScrollTop = window.scrollY;
-      document.body.style.userSelect = "none";
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging) return;
-      const deltaY = e.clientY - startY;
-      const scrollHeight = document.documentElement.scrollHeight;
-      const clientHeight = document.documentElement.clientHeight;
-      const thumbHeight = Math.max(
-        (clientHeight / scrollHeight) * clientHeight,
-        40,
-      );
-
-      const scrollRatio =
-        (scrollHeight - clientHeight) / (clientHeight - thumbHeight);
-      window.scrollTo(0, startScrollTop + deltaY * scrollRatio);
-    };
-
-    const handleMouseUp = () => {
-      isDragging = false;
-      document.body.style.userSelect = "";
-    };
-
-    customScrollbar.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-
-    return () => {
-      window.removeEventListener("scroll", updateScrollbar);
-      window.removeEventListener("resize", updateScrollbar);
-      customScrollbar.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [step]);
-
   return (
     <>
       <div className="bg-glow" />
       <div className="bg-noise" />
-
-      {/* Indicador de Rolagem Customizado */}
-      <div
-        ref={customScrollbarRef}
-        id="custom-scrollbar"
-        className="fixed right-[5px] top-0 w-[6px] bg-stone-400/50 hover:bg-stone-400/80 rounded-full z-[9999] transition-opacity duration-300 opacity-0 pointer-events-auto cursor-pointer"
-      />
 
       {step === "checkout" ? (
         <div className="min-h-screen flex flex-col">
