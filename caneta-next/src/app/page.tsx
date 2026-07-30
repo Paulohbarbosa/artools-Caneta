@@ -176,14 +176,18 @@ export default function Home() {
         customScrollbar.style.display = "block";
       }
 
+      const headerOffset = 80; // Altura aproximada do menu (top-20)
+      const bottomOffset = 20; // Espaço do rodapé
+      const availableHeight = clientHeight - headerOffset - bottomOffset; // A área livre para a scrollbar
+
       // Calcula a proporção da altura da barra baseada no tamanho da página (regra de 3)
-      const scrollRatio = clientHeight / scrollHeight;
-      const thumbHeight = Math.max(scrollRatio * clientHeight, 40); // Define altura do indicador (mínimo de 40px)
+      const scrollRatio = availableHeight / scrollHeight;
+      const thumbHeight = Math.max(scrollRatio * availableHeight, 40); // Define altura do indicador (mínimo de 40px)
 
       // Calcula a posição do indicador com base na porcentagem de rolagem da página
       const maxScrollTop = scrollHeight - clientHeight;
       const scrollProgress = scrollTop / maxScrollTop;
-      const thumbTop = scrollProgress * (clientHeight - thumbHeight);
+      const thumbTop = scrollProgress * (availableHeight - thumbHeight);
 
       // Atualiza os estilos CSS diretamente na DOM por motivos de performance (evita re-renderizações lentas do React)
       customScrollbar.style.height = `${thumbHeight}px`;
@@ -222,14 +226,18 @@ export default function Home() {
       const deltaY = e.clientY - startY; // Distância vertical percorrida pelo mouse
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = document.documentElement.clientHeight;
+      const headerOffset = 80;
+      const bottomOffset = 20;
+      const availableHeight = clientHeight - headerOffset - bottomOffset;
+      
       const thumbHeight = Math.max(
-        (clientHeight / scrollHeight) * clientHeight,
+        (availableHeight / scrollHeight) * availableHeight,
         40,
       );
 
       // Converte o deslocamento vertical do mouse na barra de volta para pixels de rolagem na página
       const scrollRatio =
-        (scrollHeight - clientHeight) / (clientHeight - thumbHeight);
+        (scrollHeight - clientHeight) / (availableHeight - thumbHeight);
       window.scrollTo(0, startScrollTop + deltaY * scrollRatio);
     };
 
@@ -273,7 +281,7 @@ export default function Home() {
       <div
         ref={customScrollbarRef}
         id="custom-scrollbar"
-        className="fixed right-[5px] top-0 w-[6px] bg-stone-400/50 hover:bg-stone-400/80 rounded-full z-[9999] transition-opacity duration-300 opacity-0 pointer-events-auto cursor-pointer"
+        className="fixed right-[5px] top-20 w-[6px] bg-stone-400/50 hover:bg-stone-400/80 rounded-full z-[9999] transition-opacity duration-300 opacity-0 pointer-events-auto cursor-pointer"
       />
 
       <Header />
