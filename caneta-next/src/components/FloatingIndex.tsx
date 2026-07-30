@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -28,6 +29,31 @@ const sections = [
     title: "Edições",
     subtitle: "Escolha sua ferramenta",
     icon: "solar:bag-3-linear",
+    isPage: false,
+  },
+  {
+    id: "page-compra",
+    title: "Checkout",
+    subtitle: "Finalize seu pedido",
+    icon: "solar:cart-large-2-linear",
+    href: "/compra",
+    isPage: true,
+  },
+  {
+    id: "page-client",
+    title: "Área do Cliente",
+    subtitle: "Seus pedidos e perfil",
+    icon: "solar:user-linear",
+    href: "/user",
+    isPage: true,
+  },
+  {
+    id: "page-admin",
+    title: "Painel Admin",
+    subtitle: "Gestão do e-commerce",
+    icon: "solar:shield-keyhole-linear",
+    href: "/admin",
+    isPage: true,
   },
 ];
 
@@ -35,8 +61,32 @@ export default function FloatingIndex() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero-sequence");
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  const scrollToSection = (section: any) => {
+    if (section.isPage) {
+      window.location.href = section.href;
+      return;
+    }
+
+    // Se não estiver na home, redireciona para a home com a âncora
+    if (!isHomePage) {
+      if (section.id === "hero-sequence") {
+        window.location.href = "/";
+      } else {
+        window.location.href = `/#${section.id}`;
+      }
+      return;
+    }
+
+    if (section.id === "hero-sequence") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsOpen(false);
+      return;
+    }
+
+    const element = document.getElementById(section.id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
       setIsOpen(false);
@@ -44,24 +94,32 @@ export default function FloatingIndex() {
   };
 
   useEffect(() => {
+    if (!isHomePage) {
+      setActiveSection("");
+      return;
+    }
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
       let currentSection = sections[0].id;
 
       for (const section of sections) {
+        if (section.isPage) continue;
         const element = document.getElementById(section.id);
         if (element && element.offsetTop <= scrollPosition) {
           currentSection = section.id;
         }
       }
-      setActiveSection(currentSection);
+      if (currentSection !== activeSection) {
+        setActiveSection(currentSection);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage, activeSection]);
 
   return (
     <div className="fixed bottom-6 left-6 z-[9999]">
@@ -92,7 +150,7 @@ export default function FloatingIndex() {
                 return (
                   <button
                     key={section.id}
-                    onClick={() => scrollToSection(section.id)}
+                    onClick={() => scrollToSection(section)}
                     className={`flex items-center gap-4 w-full p-3 rounded-xl transition-all duration-300 text-left group
                       ${
                         isActive
