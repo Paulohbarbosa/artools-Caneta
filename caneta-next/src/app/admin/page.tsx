@@ -201,16 +201,16 @@ export default function AdminPanel() {
   const lowStockProducts = products.filter(p => p.stock <= 10).length;
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[#111111] text-white font-sans flex flex-col antialiased selection:bg-white selection:text-[#111111]">
+    <div ref={containerRef} className="min-h-screen bg-[#EAEAE5] text-stone-900 font-sans flex flex-col antialiased selection:bg-stone-900 selection:text-white">
       
       {/* TOAST SYSTEM */}
       <div className={`fixed bottom-6 right-6 z-[99999] flex items-center gap-3 px-5 py-4 rounded-xl border backdrop-blur-xl transition-all duration-300 ${
         toast.show ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-10 opacity-0 pointer-events-none"
       } ${
-        toast.type === "success" ? "bg-emerald-950/80 border-emerald-500/30 text-emerald-300" :
-        toast.type === "error" ? "bg-rose-950/80 border-rose-500/30 text-rose-300" :
-        toast.type === "warning" ? "bg-amber-950/80 border-amber-500/30 text-amber-300" :
-        "bg-stone-900/90 border-white/10 text-white"
+        toast.type === "success" ? "bg-emerald-50 border-emerald-200 text-emerald-700" :
+        toast.type === "error" ? "bg-rose-50 border-rose-200 text-rose-700" :
+        toast.type === "warning" ? "bg-amber-50 border-amber-200 text-amber-700" :
+        "bg-stone-900/90 border-stone-300 text-white"
       }`}>
         <Icon icon={
           toast.type === "success" ? "solar:check-circle-bold" :
@@ -225,19 +225,19 @@ export default function AdminPanel() {
 
       {/* CTRL + K SEARCH DIALOG */}
       {searchOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[9999] flex items-start justify-center pt-24 px-4" onClick={() => setSearchOpen(false)}>
-          <div className="bg-[#171717] border border-white/10 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl animate-in fade-in duration-200" onClick={e => e.stopPropagation()}>
-            <div className="p-4 border-b border-white/5 flex items-center gap-3">
-              <Icon icon="solar:magnifer-linear" className="text-stone-400 text-xl" />
+        <div className="fixed inset-0 bg-stone-900/40 backdrop-blur-md z-[9999] flex items-start justify-center pt-24 px-4" onClick={() => setSearchOpen(false)}>
+          <div className="bg-stone-50 border border-stone-300 rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl animate-in fade-in duration-200" onClick={e => e.stopPropagation()}>
+            <div className="p-4 border-b border-stone-200 flex items-center gap-3">
+              <Icon icon="solar:magnifer-linear" className="text-stone-500 text-xl" />
               <input
                 type="text"
                 placeholder="Pesquisar pedidos, produtos, clientes..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="bg-transparent text-white border-0 outline-none w-full text-base placeholder:text-stone-500"
+                className="bg-transparent text-stone-900 border-0 outline-none w-full text-base placeholder:text-stone-500"
                 autoFocus
               />
-              <span className="text-[10px] bg-stone-800 text-stone-400 px-2 py-1 rounded">ESC</span>
+              <span className="text-[10px] bg-stone-800 text-stone-500 px-2 py-1 rounded">ESC</span>
             </div>
             
             <div className="max-h-[300px] overflow-y-auto p-2">
@@ -246,28 +246,28 @@ export default function AdminPanel() {
                   <div className="text-[10px] text-stone-500 font-semibold px-3 py-2 uppercase font-mono">Resultados de busca</div>
                   {/* Filter products */}
                   {products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.sku.toLowerCase().includes(searchQuery.toLowerCase())).map(p => (
-                    <button key={p.id} className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-white/5 text-left transition" onClick={() => { setActiveTab("Produtos"); setSearchOpen(false); }}>
+                    <button key={p.id} className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-stone-100 text-left transition" onClick={() => { setActiveTab("Produtos"); setSearchOpen(false); }}>
                       <div className="flex items-center gap-3">
-                        <Icon icon="solar:box-linear" className="text-stone-400" />
+                        <Icon icon="solar:box-linear" className="text-stone-500" />
                         <div>
                           <div className="text-sm font-medium">{p.name}</div>
                           <div className="text-xs text-stone-500 font-mono">{p.sku}</div>
                         </div>
                       </div>
-                      <span className="text-xs text-stone-400 font-mono">R$ {p.price.toFixed(2)}</span>
+                      <span className="text-xs text-stone-500 font-mono">R$ {p.price.toFixed(2)}</span>
                     </button>
                   ))}
                   {/* Filter orders */}
                   {orders.filter(o => o.customerName.toLowerCase().includes(searchQuery.toLowerCase()) || o.id.toLowerCase().includes(searchQuery.toLowerCase())).map(o => (
-                    <button key={o.id} className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-white/5 text-left transition" onClick={() => { setActiveTab("Pedidos"); setSearchOpen(false); }}>
+                    <button key={o.id} className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-stone-100 text-left transition" onClick={() => { setActiveTab("Pedidos"); setSearchOpen(false); }}>
                       <div className="flex items-center gap-3">
-                        <Icon icon="solar:cart-large-linear" className="text-stone-400" />
+                        <Icon icon="solar:cart-large-linear" className="text-stone-500" />
                         <div>
                           <div className="text-sm font-medium">{o.customerName}</div>
                           <div className="text-xs text-stone-500 font-mono">{o.id}</div>
                         </div>
                       </div>
-                      <span className="text-xs text-stone-400 font-mono">R$ {o.value.toFixed(2)}</span>
+                      <span className="text-xs text-stone-500 font-mono">R$ {o.value.toFixed(2)}</span>
                     </button>
                   ))}
                 </div>
@@ -285,13 +285,13 @@ export default function AdminPanel() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* SIDEBAR */}
-        <aside className={`bg-[#171717] border-r border-white/5 transition-all duration-300 flex flex-col z-30 shrink-0 ${
+        <aside className={`bg-stone-50 border-r border-stone-200 transition-all duration-300 flex flex-col z-30 shrink-0 ${
           sidebarCollapsed ? "w-20" : "w-64"
         } ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"} fixed md:relative h-full`}>
           {/* Logo Section */}
-          <div className="p-6 border-b border-white/5 flex items-center justify-between">
+          <div className="p-6 border-b border-stone-200 flex items-center justify-between">
             {!sidebarCollapsed && (
-              <div className="font-display text-lg font-bold tracking-tight text-white flex items-center gap-2">
+              <div className="font-display text-lg font-bold tracking-tight text-stone-900 flex items-center gap-2">
                 ARTools<span className="text-xs bg-white text-black px-1.5 py-0.5 rounded font-mono font-normal">PRO</span>
               </div>
             )}
@@ -300,7 +300,7 @@ export default function AdminPanel() {
                 AT
               </div>
             )}
-            <button className="hidden md:block text-stone-400 hover:text-white" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+            <button className="hidden md:block text-stone-500 hover:text-stone-900" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
               <Icon icon={sidebarCollapsed ? "solar:double-alt-arrow-right-linear" : "solar:double-alt-arrow-left-linear"} className="text-lg" />
             </button>
           </div>
@@ -319,7 +319,7 @@ export default function AdminPanel() {
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition duration-200 ${
                     isActive
                       ? "bg-white text-black font-semibold"
-                      : "text-stone-400 hover:bg-[#292929] hover:text-white"
+                      : "text-stone-500 hover:bg-stone-100 hover:text-stone-900"
                   }`}
                 >
                   <Icon icon={item.icon} className="text-lg shrink-0" />
@@ -330,9 +330,9 @@ export default function AdminPanel() {
           </nav>
 
           {/* Footer User Profile (Sidebar) */}
-          <div className="p-4 border-t border-white/5">
+          <div className="p-4 border-t border-stone-200">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-stone-800 border border-white/10 flex items-center justify-center font-display font-semibold text-white">
+              <div className="w-10 h-10 rounded-full bg-stone-800 border border-stone-300 flex items-center justify-center font-display font-semibold text-stone-900">
                 JP
               </div>
               {!sidebarCollapsed && (
@@ -345,7 +345,7 @@ export default function AdminPanel() {
             {!sidebarCollapsed && (
               <button
                 onClick={() => triggerToast("Logout", "Sessão encerrada com sucesso.", "info")}
-                className="mt-4 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-stone-900 border border-white/5 text-xs text-stone-400 hover:bg-stone-800 hover:text-white transition"
+                className="mt-4 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-stone-900 border border-stone-200 text-xs text-stone-500 hover:bg-stone-800 hover:text-white transition"
               >
                 <Icon icon="solar:logout-linear" />
                 <span>Sair da conta</span>
@@ -358,28 +358,28 @@ export default function AdminPanel() {
         <div className="flex-1 flex flex-col overflow-y-auto min-w-0">
           
           {/* HEADER */}
-          <header className="sticky top-0 bg-[#111111]/85 backdrop-blur-md border-b border-white/5 z-20 px-6 py-4 flex items-center justify-between gap-4">
+          <header className="sticky top-0 bg-[#EAEAE5]/85 backdrop-blur-md border-b border-stone-200 z-20 px-6 py-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               {/* Mobile menu trigger */}
-              <button className="md:hidden text-stone-400 hover:text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              <button className="md:hidden text-stone-500 hover:text-stone-900" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                 <Icon icon="solar:hamburger-menu-linear" className="text-2xl" />
               </button>
               
               {/* Search trigger button */}
               <button
                 onClick={() => setSearchOpen(true)}
-                className="flex items-center gap-3 px-4 py-2 bg-[#171717] border border-white/5 rounded-full hover:border-white/10 transition text-stone-400 text-xs w-48 md:w-80"
+                className="flex items-center gap-3 px-4 py-2 bg-stone-50 border border-stone-200 rounded-full hover:border-stone-300 transition text-stone-500 text-xs w-48 md:w-80"
               >
                 <Icon icon="solar:magnifer-linear" className="text-sm shrink-0" />
                 <span>Pesquisar...</span>
-                <span className="hidden md:inline-block ml-auto font-mono text-[10px] text-stone-600 bg-[#292929] px-1.5 py-0.5 rounded">Ctrl + K</span>
+                <span className="hidden md:inline-block ml-auto font-mono text-[10px] text-stone-600 bg-stone-100 px-1.5 py-0.5 rounded">Ctrl + K</span>
               </button>
             </div>
 
             {/* Header Actions */}
             <div className="flex items-center gap-4">
               {/* Notifications dropdown trigger shortcut */}
-              <button className="relative p-2 bg-[#171717] border border-white/5 rounded-full hover:border-white/10 transition text-stone-300" onClick={() => setActiveTab("Notificações")}>
+              <button className="relative p-2 bg-stone-50 border border-stone-200 rounded-full hover:border-stone-300 transition text-stone-600" onClick={() => setActiveTab("Notificações")}>
                 <Icon icon="solar:bell-linear" className="text-lg" />
                 {notifications.some(n => n.unread) && (
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full" />
@@ -394,7 +394,7 @@ export default function AdminPanel() {
                   <div className="text-xs font-semibold">João P.</div>
                   <div className="text-[10px] text-stone-500 font-mono">Administrador</div>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-display font-medium text-xs">
+                <div className="w-8 h-8 rounded-full bg-white/10 border border-stone-400 flex items-center justify-center font-display font-medium text-xs">
                   JP
                 </div>
               </div>
@@ -410,13 +410,13 @@ export default function AdminPanel() {
                 <div className="flex items-center gap-2 text-xs text-stone-500 font-mono mb-1 uppercase tracking-wider">
                   <span>ARTOOLS.PRO</span>
                   <span>/</span>
-                  <span className="text-stone-300">{activeTab}</span>
+                  <span className="text-stone-600">{activeTab}</span>
                 </div>
-                <h1 className="text-2xl font-display font-bold text-white tracking-tight">{activeTab}</h1>
+                <h1 className="text-2xl font-display font-bold text-stone-900 tracking-tight">{activeTab}</h1>
               </div>
               
               {activeTab === "Dashboard" && (
-                <div className="text-xs text-stone-400 font-mono bg-[#171717] border border-white/5 px-4 py-2 rounded-xl flex items-center gap-2">
+                <div className="text-xs text-stone-500 font-mono bg-stone-50 border border-stone-200 px-4 py-2 rounded-xl flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span>Sistemas Operacionais 100% Online</span>
                 </div>
@@ -429,10 +429,10 @@ export default function AdminPanel() {
             {activeTab === "Dashboard" && (
               <div className="space-y-8">
                 {/* Welcome Message */}
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="bg-white border border-stone-200 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
                     <h2 className="text-xl font-display font-bold mb-1">Bom dia, João Pedro.</h2>
-                    <p className="text-sm text-stone-400">Aqui está o resumo operacional das últimas 24 horas.</p>
+                    <p className="text-sm text-stone-500">Aqui está o resumo operacional das últimas 24 horas.</p>
                   </div>
                   <div className="flex gap-2">
                     <button className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-stone-200 transition" onClick={() => triggerToast("Relatório Geral", "Relatório de vendas exportado com sucesso.", "success")}>
@@ -443,8 +443,8 @@ export default function AdminPanel() {
 
                 {/* KPI Metrics Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-2 hover:border-white/10 transition">
-                    <div className="flex items-center justify-between text-stone-400">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-2 hover:border-stone-300 transition">
+                    <div className="flex items-center justify-between text-stone-500">
                       <span className="text-xs font-medium">Pedidos Hoje</span>
                       <Icon icon="solar:cart-large-linear" className="text-lg text-stone-500" />
                     </div>
@@ -457,12 +457,12 @@ export default function AdminPanel() {
                     </div>
                   </div>
 
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-2 hover:border-white/10 transition">
-                    <div className="flex items-center justify-between text-stone-400">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-2 hover:border-stone-300 transition">
+                    <div className="flex items-center justify-between text-stone-500">
                       <span className="text-xs font-medium">Pedidos Pendentes</span>
                       <Icon icon="solar:clock-square-linear" className="text-lg text-amber-500" />
                     </div>
-                    <div className="text-2xl font-bold font-mono text-amber-400">
+                    <div className="text-2xl font-bold font-mono text-amber-600">
                       {pendingOrders}
                     </div>
                     <div className="text-[10px] text-stone-500 font-mono">
@@ -470,12 +470,12 @@ export default function AdminPanel() {
                     </div>
                   </div>
 
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-2 hover:border-white/10 transition">
-                    <div className="flex items-center justify-between text-stone-400">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-2 hover:border-stone-300 transition">
+                    <div className="flex items-center justify-between text-stone-500">
                       <span className="text-xs font-medium">Faturamento Hoje</span>
                       <Icon icon="solar:banknote-linear" className="text-lg text-emerald-500" />
                     </div>
-                    <div className="text-2xl font-bold font-mono text-emerald-400">
+                    <div className="text-2xl font-bold font-mono text-emerald-600">
                       R$ {totalSalesToday.toFixed(2)}
                     </div>
                     <div className="text-[10px] text-emerald-500 font-medium font-mono flex items-center gap-1">
@@ -484,15 +484,15 @@ export default function AdminPanel() {
                     </div>
                   </div>
 
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-2 hover:border-white/10 transition">
-                    <div className="flex items-center justify-between text-stone-400">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-2 hover:border-stone-300 transition">
+                    <div className="flex items-center justify-between text-stone-500">
                       <span className="text-xs font-medium">Baixo Estoque</span>
                       <Icon icon="solar:box-minimalistic-linear" className="text-lg text-rose-500" />
                     </div>
-                    <div className="text-2xl font-bold font-mono text-rose-400">
+                    <div className="text-2xl font-bold font-mono text-rose-600">
                       {lowStockProducts}
                     </div>
-                    <div className="text-[10px] text-rose-400 font-mono">
+                    <div className="text-[10px] text-rose-600 font-mono">
                       Produtos precisam de reposição
                     </div>
                   </div>
@@ -501,7 +501,7 @@ export default function AdminPanel() {
                 {/* Dashboard Charts & Recent Activity */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Sales progress card */}
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl p-6 lg:col-span-2 space-y-6">
+                  <div className="bg-white border border-stone-200 rounded-2xl p-6 lg:col-span-2 space-y-6">
                     <div className="flex justify-between items-center">
                       <h3 className="text-sm font-semibold">Volume de Vendas (Simulação Semanal)</h3>
                       <span className="text-xs font-mono text-stone-500">Julho 2026</span>
@@ -519,7 +519,7 @@ export default function AdminPanel() {
                       ].map((item, idx) => (
                         <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end">
                           <div className="w-full bg-white/5 hover:bg-white/20 transition rounded-t-lg relative group flex items-end justify-center" style={{ height: `${(item.val / 130) * 100}%` }}>
-                            <div className="absolute -top-8 bg-black border border-white/10 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition font-mono z-10 pointer-events-none">
+                            <div className="absolute -top-8 bg-black border border-stone-300 text-stone-900 text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition font-mono z-10 pointer-events-none">
                               R${(item.val * 35).toFixed(0)}
                             </div>
                             <div className="w-full bg-white rounded-t-lg transition duration-300" style={{ height: "4px" }} />
@@ -531,11 +531,11 @@ export default function AdminPanel() {
                   </div>
 
                   {/* Operational Status */}
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl p-6 space-y-6">
+                  <div className="bg-white border border-stone-200 rounded-2xl p-6 space-y-6">
                     <h3 className="text-sm font-semibold">Status Operacional</h3>
                     <div className="space-y-4">
                       <div>
-                        <div className="flex justify-between text-xs text-stone-400 mb-1">
+                        <div className="flex justify-between text-xs text-stone-500 mb-1">
                           <span>Pedidos Expedidos</span>
                           <span className="font-mono">{sentOrders}/{orders.length}</span>
                         </div>
@@ -545,7 +545,7 @@ export default function AdminPanel() {
                       </div>
 
                       <div>
-                        <div className="flex justify-between text-xs text-stone-400 mb-1">
+                        <div className="flex justify-between text-xs text-stone-500 mb-1">
                           <span>Estoque Abastecido</span>
                           <span className="font-mono">80%</span>
                         </div>
@@ -555,7 +555,7 @@ export default function AdminPanel() {
                       </div>
 
                       <div>
-                        <div className="flex justify-between text-xs text-stone-400 mb-1">
+                        <div className="flex justify-between text-xs text-stone-500 mb-1">
                           <span>Faturamento vs Meta Semanal</span>
                           <span className="font-mono">R$ 15.420 / R$ 20.000</span>
                         </div>
@@ -565,13 +565,13 @@ export default function AdminPanel() {
                       </div>
                     </div>
 
-                    <div className="border-t border-white/5 pt-4 space-y-3">
-                      <div className="text-xs text-stone-400 font-medium">Alertas Rápidos:</div>
-                      <div className="flex items-center gap-2 text-xs text-rose-400">
+                    <div className="border-t border-stone-200 pt-4 space-y-3">
+                      <div className="text-xs text-stone-500 font-medium">Alertas Rápidos:</div>
+                      <div className="flex items-center gap-2 text-xs text-rose-600">
                         <Icon icon="solar:danger-bold" className="shrink-0" />
                         <span>Produto "Precision Pen Gold Matte" está sem estoque.</span>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-amber-400">
+                      <div className="flex items-center gap-2 text-xs text-amber-600">
                         <Icon icon="solar:bell-bold" className="shrink-0" />
                         <span>Existem {pendingOrders} pedidos pendentes de aprovação.</span>
                       </div>
@@ -587,13 +587,13 @@ export default function AdminPanel() {
             {activeTab === "Produtos" && (
               <div className="space-y-6">
                 {/* Actions and filters */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1F1F1F] p-4 rounded-xl border border-white/5">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-stone-200">
                   <div className="flex flex-wrap items-center gap-3">
                     {/* Filter Category */}
                     <select
                       value={productFilter.category}
                       onChange={e => setProductFilter(prev => ({ ...prev, category: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-600 outline-none"
                     >
                       <option value="Todos">Todas Categorias</option>
                       <option value="Canetas">Canetas</option>
@@ -604,7 +604,7 @@ export default function AdminPanel() {
                     <select
                       value={productFilter.status}
                       onChange={e => setProductFilter(prev => ({ ...prev, status: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-600 outline-none"
                     >
                       <option value="Todos">Status (Todos)</option>
                       <option value="Ativo">Ativos</option>
@@ -616,7 +616,7 @@ export default function AdminPanel() {
                       placeholder="Pesquisar SKU ou Nome..."
                       value={productFilter.search}
                       onChange={e => setProductFilter(prev => ({ ...prev, search: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder:text-stone-500 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 placeholder:text-stone-500 outline-none"
                     />
                   </div>
 
@@ -633,11 +633,11 @@ export default function AdminPanel() {
                 </div>
 
                 {/* Products Table */}
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                        <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                           <th className="p-4">SKU</th>
                           <th className="p-4">Nome</th>
                           <th className="p-4">Categoria</th>
@@ -656,23 +656,23 @@ export default function AdminPanel() {
                             return true;
                           })
                           .map(p => (
-                            <tr key={p.id} className="hover:bg-white/[0.01] transition">
-                              <td className="p-4 font-mono text-xs font-semibold text-stone-400">{p.sku}</td>
-                              <td className="p-4 font-medium text-white">{p.name}</td>
-                              <td className="p-4 text-stone-400">{p.category}</td>
-                              <td className="p-4 font-mono text-white">R$ {p.price.toFixed(2)}</td>
+                            <tr key={p.id} className="hover:bg-stone-50 transition">
+                              <td className="p-4 font-mono text-xs font-semibold text-stone-500">{p.sku}</td>
+                              <td className="p-4 font-medium text-stone-900">{p.name}</td>
+                              <td className="p-4 text-stone-500">{p.category}</td>
+                              <td className="p-4 font-mono text-stone-900">R$ {p.price.toFixed(2)}</td>
                               <td className="p-4 font-mono">
                                 <span className={`px-2 py-0.5 rounded text-xs ${
-                                  p.stock === 0 ? "bg-rose-950/40 text-rose-400 border border-rose-500/20" :
-                                  p.stock <= 10 ? "bg-amber-950/40 text-amber-400 border border-amber-500/20" :
-                                  "text-stone-400"
+                                  p.stock === 0 ? "bg-rose-950/40 text-rose-600 border border-rose-500/20" :
+                                  p.stock <= 10 ? "bg-amber-950/40 text-amber-600 border border-amber-500/20" :
+                                  "text-stone-500"
                                 }`}>
                                   {p.stock} un
                                 </span>
                               </td>
                               <td className="p-4">
                                 <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                                  p.status === "Ativo" ? "bg-emerald-500/10 text-emerald-400" : "bg-stone-800 text-stone-500"
+                                  p.status === "Ativo" ? "bg-emerald-500/10 text-emerald-600" : "bg-stone-800 text-stone-500"
                                 }`}>
                                   <span className={`w-1.5 h-1.5 rounded-full ${p.status === "Ativo" ? "bg-emerald-400" : "bg-stone-500"}`} />
                                   {p.status}
@@ -686,7 +686,7 @@ export default function AdminPanel() {
                                       setProductForm(p);
                                       setProductFormOpen(true);
                                     }}
-                                    className="p-1.5 rounded bg-stone-900 border border-white/5 text-stone-400 hover:text-white hover:bg-stone-800 transition"
+                                    className="p-1.5 rounded bg-stone-900 border border-stone-200 text-stone-500 hover:text-white hover:bg-stone-800 transition"
                                   >
                                     <Icon icon="solar:pen-linear" />
                                   </button>
@@ -695,7 +695,7 @@ export default function AdminPanel() {
                                       setProducts(prev => prev.filter(prod => prod.id !== p.id));
                                       triggerToast("Produto Removido", `O produto ${p.name} foi removido.`, "success");
                                     }}
-                                    className="p-1.5 rounded bg-stone-900 border border-white/5 text-rose-500 hover:bg-rose-950/30 transition"
+                                    className="p-1.5 rounded bg-stone-900 border border-stone-200 text-rose-500 hover:bg-rose-950/30 transition"
                                   >
                                     <Icon icon="solar:trash-bin-trash-linear" />
                                   </button>
@@ -710,11 +710,11 @@ export default function AdminPanel() {
 
                 {/* MODAL: ADD / EDIT PRODUCT */}
                 {productFormOpen && (
-                  <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
-                    <div className="bg-[#1F1F1F] border border-white/10 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
-                      <div className="p-6 border-b border-white/5 flex items-center justify-between">
+                  <div className="fixed inset-0 bg-stone-900/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+                    <div className="bg-white border border-stone-300 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+                      <div className="p-6 border-b border-stone-200 flex items-center justify-between">
                         <h3 className="text-base font-semibold font-display">{selectedProduct ? "Editar Produto" : "Novo Produto"}</h3>
-                        <button className="text-stone-400 hover:text-white" onClick={() => { setProductFormOpen(false); setSelectedProduct(null); }}>
+                        <button className="text-stone-500 hover:text-stone-900" onClick={() => { setProductFormOpen(false); setSelectedProduct(null); }}>
                           <Icon icon="solar:close-circle-linear" className="text-xl" />
                         </button>
                       </div>
@@ -743,33 +743,33 @@ export default function AdminPanel() {
                       }} className="p-6 space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                           <div className="col-span-2">
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Nome do Produto</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Nome do Produto</label>
                             <input
                               type="text"
                               required
                               value={productForm.name}
                               onChange={e => setProductForm(prev => ({ ...prev, name: e.target.value }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">SKU</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">SKU</label>
                             <input
                               type="text"
                               required
                               value={productForm.sku}
                               onChange={e => setProductForm(prev => ({ ...prev, sku: e.target.value }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm font-mono text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm font-mono text-stone-900 outline-none focus:border-stone-400 transition"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Categoria</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Categoria</label>
                             <select
                               value={productForm.category}
                               onChange={e => setProductForm(prev => ({ ...prev, category: e.target.value }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                             >
                               <option value="Canetas">Canetas</option>
                               <option value="Acessórios">Acessórios</option>
@@ -777,34 +777,34 @@ export default function AdminPanel() {
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Preço (R$)</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Preço (R$)</label>
                             <input
                               type="number"
                               step="0.01"
                               required
                               value={productForm.price}
                               onChange={e => setProductForm(prev => ({ ...prev, price: Number(e.target.value) }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm font-mono text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm font-mono text-stone-900 outline-none focus:border-stone-400 transition"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Estoque inicial</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Estoque inicial</label>
                             <input
                               type="number"
                               required
                               value={productForm.stock}
                               onChange={e => setProductForm(prev => ({ ...prev, stock: Number(e.target.value) }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm font-mono text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm font-mono text-stone-900 outline-none focus:border-stone-400 transition"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Status</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Status</label>
                             <select
                               value={productForm.status}
                               onChange={e => setProductForm(prev => ({ ...prev, status: e.target.value as "Ativo" | "Inativo" }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                             >
                               <option value="Ativo">Ativo</option>
                               <option value="Inativo">Inativo</option>
@@ -812,18 +812,18 @@ export default function AdminPanel() {
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Marca</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Marca</label>
                             <input
                               type="text"
                               value={productForm.brand}
                               onChange={e => setProductForm(prev => ({ ...prev, brand: e.target.value }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                             />
                           </div>
                         </div>
 
-                        <div className="pt-4 border-t border-white/5 flex gap-2 justify-end">
-                          <button type="button" onClick={() => { setProductFormOpen(false); setSelectedProduct(null); }} className="px-4 py-2 rounded-xl bg-stone-900 border border-white/5 text-xs hover:bg-stone-800 transition">
+                        <div className="pt-4 border-t border-stone-200 flex gap-2 justify-end">
+                          <button type="button" onClick={() => { setProductFormOpen(false); setSelectedProduct(null); }} className="px-4 py-2 rounded-xl bg-stone-900 border border-stone-200 text-xs hover:bg-stone-800 transition">
                             Cancelar
                           </button>
                           <button type="submit" className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-stone-200 transition">
@@ -843,12 +843,12 @@ export default function AdminPanel() {
             {activeTab === "Pedidos" && (
               <div className="space-y-6">
                 {/* Filters */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1F1F1F] p-4 rounded-xl border border-white/5">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-stone-200">
                   <div className="flex flex-wrap items-center gap-3">
                     <select
                       value={orderFilter.status}
                       onChange={e => setOrderFilter(prev => ({ ...prev, status: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-600 outline-none"
                     >
                       <option value="Todos">Todos Status</option>
                       <option value="Aprovado">Aprovados</option>
@@ -862,17 +862,17 @@ export default function AdminPanel() {
                       placeholder="Pesquisar pedido ou cliente..."
                       value={orderFilter.search}
                       onChange={e => setOrderFilter(prev => ({ ...prev, search: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder:text-stone-500 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 placeholder:text-stone-500 outline-none"
                     />
                   </div>
                 </div>
 
                 {/* Orders table */}
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                        <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                           <th className="p-4">ID</th>
                           <th className="p-4">Cliente</th>
                           <th className="p-4">Valor</th>
@@ -890,29 +890,29 @@ export default function AdminPanel() {
                             return true;
                           })
                           .map(o => (
-                            <tr key={o.id} className="hover:bg-white/[0.01] transition">
-                              <td className="p-4 font-mono text-xs font-semibold text-white">{o.id}</td>
-                              <td className="p-4 font-medium text-white">{o.customerName}</td>
-                              <td className="p-4 font-mono text-white">R$ {o.value.toFixed(2)}</td>
+                            <tr key={o.id} className="hover:bg-stone-50 transition">
+                              <td className="p-4 font-mono text-xs font-semibold text-stone-900">{o.id}</td>
+                              <td className="p-4 font-medium text-stone-900">{o.customerName}</td>
+                              <td className="p-4 font-mono text-stone-900">R$ {o.value.toFixed(2)}</td>
                               <td className="p-4">
-                                <span className="px-2 py-0.5 bg-stone-900 border border-white/5 rounded text-xs font-mono text-stone-400">{o.paymentMethod}</span>
+                                <span className="px-2 py-0.5 bg-stone-900 border border-stone-200 rounded text-xs font-mono text-stone-500">{o.paymentMethod}</span>
                               </td>
                               <td className="p-4">
                                 <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                  o.status === "Aprovado" ? "bg-emerald-500/10 text-emerald-400" :
-                                  o.status === "Pendente" ? "bg-amber-500/10 text-amber-400" :
+                                  o.status === "Aprovado" ? "bg-emerald-500/10 text-emerald-600" :
+                                  o.status === "Pendente" ? "bg-amber-500/10 text-amber-600" :
                                   o.status === "Enviado" ? "bg-blue-500/10 text-blue-400" :
-                                  o.status === "Cancelado" ? "bg-rose-500/10 text-rose-400" :
-                                  "bg-stone-800 text-stone-400"
+                                  o.status === "Cancelado" ? "bg-rose-500/10 text-rose-600" :
+                                  "bg-stone-800 text-stone-500"
                                 }`}>
                                   {o.status}
                                 </span>
                               </td>
-                              <td className="p-4 font-mono text-xs text-stone-400">{o.date}</td>
+                              <td className="p-4 font-mono text-xs text-stone-500">{o.date}</td>
                               <td className="p-4 text-right">
                                 <button
                                   onClick={() => setSelectedOrder(o)}
-                                  className="px-3 py-1 bg-stone-900 border border-white/5 rounded-lg text-xs text-stone-400 hover:text-white hover:bg-stone-800 transition"
+                                  className="px-3 py-1 bg-stone-900 border border-stone-200 rounded-lg text-xs text-stone-500 hover:text-white hover:bg-stone-800 transition"
                                 >
                                   Ver Detalhes
                                 </button>
@@ -926,40 +926,40 @@ export default function AdminPanel() {
 
                 {/* DRAWER: ORDER DETAILS */}
                 {selectedOrder && (
-                  <div className="fixed inset-y-0 right-0 w-full max-w-md bg-[#1F1F1F] border-l border-white/10 z-[9999] shadow-2xl p-6 flex flex-col justify-between animate-in slide-in-from-right duration-300">
+                  <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white border-l border-stone-300 z-[9999] shadow-2xl p-6 flex flex-col justify-between animate-in slide-in-from-right duration-300">
                     <div className="space-y-6 overflow-y-auto pr-1">
                       <div className="flex items-center justify-between">
                         <div>
                           <h3 className="text-base font-semibold font-display">Detalhes do Pedido</h3>
                           <p className="text-xs text-stone-500 font-mono">{selectedOrder.id}</p>
                         </div>
-                        <button className="text-stone-400 hover:text-white" onClick={() => setSelectedOrder(null)}>
+                        <button className="text-stone-500 hover:text-stone-900" onClick={() => setSelectedOrder(null)}>
                           <Icon icon="solar:close-circle-linear" className="text-xl" />
                         </button>
                       </div>
 
-                      <div className="border-t border-white/5 pt-4 space-y-4">
+                      <div className="border-t border-stone-200 pt-4 space-y-4">
                         <div>
                           <h4 className="text-xs font-mono uppercase text-stone-500 mb-1">Cliente</h4>
-                          <p className="text-sm font-medium text-white">{selectedOrder.customerName}</p>
-                          <p className="text-xs text-stone-400">Entrega via {selectedOrder.deliveryCompany}</p>
+                          <p className="text-sm font-medium text-stone-900">{selectedOrder.customerName}</p>
+                          <p className="text-xs text-stone-500">Entrega via {selectedOrder.deliveryCompany}</p>
                         </div>
 
                         <div>
                           <h4 className="text-xs font-mono uppercase text-stone-500 mb-1">Endereço de Envio</h4>
-                          <p className="text-xs text-stone-300 leading-relaxed">{selectedOrder.address}</p>
+                          <p className="text-xs text-stone-600 leading-relaxed">{selectedOrder.address}</p>
                         </div>
 
                         <div>
                           <h4 className="text-xs font-mono uppercase text-stone-500 mb-2">Itens do Pedido</h4>
                           <div className="space-y-2">
                             {selectedOrder.items.map((item, idx) => (
-                              <div key={idx} className="flex justify-between items-center text-xs bg-stone-900/60 p-2.5 rounded-lg border border-white/5">
+                              <div key={idx} className="flex justify-between items-center text-xs bg-stone-900/60 p-2.5 rounded-lg border border-stone-200">
                                 <div>
-                                  <span className="font-semibold text-white">{item.name}</span>
+                                  <span className="font-semibold text-stone-900">{item.name}</span>
                                   <span className="text-stone-500 font-mono ml-2">x{item.qty}</span>
                                 </div>
-                                <span className="font-mono text-stone-400">R$ {(item.price * item.qty).toFixed(2)}</span>
+                                <span className="font-mono text-stone-500">R$ {(item.price * item.qty).toFixed(2)}</span>
                               </div>
                             ))}
                           </div>
@@ -968,15 +968,15 @@ export default function AdminPanel() {
                         <div>
                           <h4 className="text-xs font-mono uppercase text-stone-500 mb-1">Resumo Financeiro</h4>
                           <div className="space-y-1.5 text-xs font-mono">
-                            <div className="flex justify-between text-stone-400">
+                            <div className="flex justify-between text-stone-500">
                               <span>Subtotal</span>
                               <span>R$ {selectedOrder.value.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-stone-400">
+                            <div className="flex justify-between text-stone-500">
                               <span>Frete</span>
-                              <span className="text-emerald-400">Grátis</span>
+                              <span className="text-emerald-600">Grátis</span>
                             </div>
-                            <div className="flex justify-between text-white font-semibold border-t border-white/5 pt-1.5 text-sm">
+                            <div className="flex justify-between text-stone-900 font-semibold border-t border-stone-200 pt-1.5 text-sm">
                               <span>Total</span>
                               <span>R$ {selectedOrder.value.toFixed(2)}</span>
                             </div>
@@ -987,13 +987,13 @@ export default function AdminPanel() {
                           <h4 className="text-xs font-mono uppercase text-stone-500 mb-1">Status de Entrega</h4>
                           <div className="flex items-center gap-2">
                             <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-                            <span className="text-xs font-medium text-stone-300">Expedido via {selectedOrder.deliveryCompany}</span>
+                            <span className="text-xs font-medium text-stone-600">Expedido via {selectedOrder.deliveryCompany}</span>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="border-t border-white/5 pt-4 grid grid-cols-2 gap-2">
+                    <div className="border-t border-stone-200 pt-4 grid grid-cols-2 gap-2">
                       {selectedOrder.status !== "Enviado" && selectedOrder.status !== "Cancelado" && (
                         <button
                           onClick={() => {
@@ -1014,7 +1014,7 @@ export default function AdminPanel() {
                             setSelectedOrder(prev => prev ? { ...prev, status: "Cancelado" } : null);
                             triggerToast("Pedido Cancelado", "O pedido foi cancelado e devolvido.", "warning");
                           }}
-                          className="w-full py-2.5 rounded-xl bg-rose-950/50 border border-rose-500/20 text-rose-400 text-xs font-semibold hover:bg-rose-950 transition"
+                          className="w-full py-2.5 rounded-xl bg-rose-950/50 border border-rose-500/20 text-rose-600 text-xs font-semibold hover:bg-rose-950 transition"
                         >
                           Cancelar Pedido
                         </button>
@@ -1031,12 +1031,12 @@ export default function AdminPanel() {
             {activeTab === "Clientes" && (
               <div className="space-y-6">
                 {/* Header/Filters */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1F1F1F] p-4 rounded-xl border border-white/5">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-stone-200">
                   <div className="flex flex-wrap items-center gap-3">
                     <select
                       value={customerFilter.status}
                       onChange={e => setCustomerFilter(prev => ({ ...prev, status: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-600 outline-none"
                     >
                       <option value="Todos">Todos Status</option>
                       <option value="Ativo">Ativos</option>
@@ -1048,17 +1048,17 @@ export default function AdminPanel() {
                       placeholder="Pesquisar por nome ou e-mail..."
                       value={customerFilter.search}
                       onChange={e => setCustomerFilter(prev => ({ ...prev, search: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder:text-stone-500 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-900 placeholder:text-stone-500 outline-none"
                     />
                   </div>
                 </div>
 
                 {/* Table list */}
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                        <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                           <th className="p-4">Nome</th>
                           <th className="p-4">E-mail</th>
                           <th className="p-4">Cidade</th>
@@ -1076,15 +1076,15 @@ export default function AdminPanel() {
                             return true;
                           })
                           .map(c => (
-                            <tr key={c.id} className="hover:bg-white/[0.01] transition">
-                              <td className="p-4 font-medium text-white">{c.name}</td>
-                              <td className="p-4 text-stone-400 font-mono text-xs">{c.email}</td>
-                              <td className="p-4 text-stone-300">{c.city}</td>
+                            <tr key={c.id} className="hover:bg-stone-50 transition">
+                              <td className="p-4 font-medium text-stone-900">{c.name}</td>
+                              <td className="p-4 text-stone-500 font-mono text-xs">{c.email}</td>
+                              <td className="p-4 text-stone-600">{c.city}</td>
                               <td className="p-4 font-mono">{c.totalOrders}</td>
-                              <td className="p-4 font-mono text-white">R$ {c.totalSpent.toFixed(2)}</td>
+                              <td className="p-4 font-mono text-stone-900">R$ {c.totalSpent.toFixed(2)}</td>
                               <td className="p-4">
                                 <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                                  c.status === "Ativo" ? "bg-emerald-500/10 text-emerald-400" : "bg-rose-500/10 text-rose-400"
+                                  c.status === "Ativo" ? "bg-emerald-500/10 text-emerald-600" : "bg-rose-500/10 text-rose-600"
                                 }`}>
                                   <span className={`w-1.5 h-1.5 rounded-full ${c.status === "Ativo" ? "bg-emerald-400" : "bg-rose-400"}`} />
                                   {c.status}
@@ -1099,8 +1099,8 @@ export default function AdminPanel() {
                                   }}
                                   className={`px-3 py-1 rounded-lg text-xs font-medium border transition ${
                                     c.status === "Ativo"
-                                      ? "bg-rose-950/30 border-rose-500/10 text-rose-400 hover:bg-rose-950"
-                                      : "bg-emerald-950/30 border-emerald-500/10 text-emerald-400 hover:bg-emerald-950"
+                                      ? "bg-rose-950/30 border-rose-500/10 text-rose-600 hover:bg-rose-950"
+                                      : "bg-emerald-950/30 border-emerald-500/10 text-emerald-600 hover:bg-emerald-950"
                                   }`}
                                 >
                                   {c.status === "Ativo" ? "Bloquear" : "Desbloquear"}
@@ -1120,40 +1120,40 @@ export default function AdminPanel() {
             {/* ========================================================================= */}
             {activeTab === "Estoque" && (
               <div className="space-y-6">
-                <div className="bg-[#1F1F1F] p-6 rounded-2xl border border-white/5 space-y-4">
+                <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-4">
                   <h3 className="text-sm font-semibold">Painel de Reposição & Alertas</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-rose-950/20 border border-rose-500/15 p-4 rounded-xl space-y-1">
-                      <span className="text-[10px] uppercase font-mono text-rose-400">Crítico: Sem Estoque</span>
-                      <div className="text-2xl font-bold font-mono text-rose-400">
+                      <span className="text-[10px] uppercase font-mono text-rose-600">Crítico: Sem Estoque</span>
+                      <div className="text-2xl font-bold font-mono text-rose-600">
                         {products.filter(p => p.stock === 0).length}
                       </div>
-                      <p className="text-xs text-rose-300/80">Produtos fora de catálogo temporariamente.</p>
+                      <p className="text-xs text-rose-700/80">Produtos fora de catálogo temporariamente.</p>
                     </div>
 
                     <div className="bg-amber-950/20 border border-amber-500/15 p-4 rounded-xl space-y-1">
-                      <span className="text-[10px] uppercase font-mono text-amber-400">Atenção: Estoque Baixo</span>
-                      <div className="text-2xl font-bold font-mono text-amber-400">
+                      <span className="text-[10px] uppercase font-mono text-amber-600">Atenção: Estoque Baixo</span>
+                      <div className="text-2xl font-bold font-mono text-amber-600">
                         {products.filter(p => p.stock > 0 && p.stock <= 10).length}
                       </div>
-                      <p className="text-xs text-amber-300/80">Necessita emissão de ordem de compra.</p>
+                      <p className="text-xs text-amber-700/80">Necessita emissão de ordem de compra.</p>
                     </div>
 
                     <div className="bg-emerald-950/20 border border-emerald-500/15 p-4 rounded-xl space-y-1">
-                      <span className="text-[10px] uppercase font-mono text-emerald-400">Estoque Saudável</span>
-                      <div className="text-2xl font-bold font-mono text-emerald-400">
+                      <span className="text-[10px] uppercase font-mono text-emerald-600">Estoque Saudável</span>
+                      <div className="text-2xl font-bold font-mono text-emerald-600">
                         {products.filter(p => p.stock > 10).length}
                       </div>
-                      <p className="text-xs text-emerald-300/80">Nenhum risco de ruptura imediata.</p>
+                      <p className="text-xs text-emerald-700/80">Nenhum risco de ruptura imediata.</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Stock adjustments list */}
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                      <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                         <th className="p-4">Produto</th>
                         <th className="p-4">SKU</th>
                         <th className="p-4">Estoque Atual</th>
@@ -1162,10 +1162,10 @@ export default function AdminPanel() {
                     </thead>
                     <tbody className="divide-y divide-white/5 text-sm">
                       {products.map(p => (
-                        <tr key={p.id} className="hover:bg-white/[0.01] transition">
-                          <td className="p-4 font-medium text-white">{p.name}</td>
+                        <tr key={p.id} className="hover:bg-stone-50 transition">
+                          <td className="p-4 font-medium text-stone-900">{p.name}</td>
                           <td className="p-4 font-mono text-xs text-stone-500">{p.sku}</td>
-                          <td className="p-4 font-mono text-white font-semibold">{p.stock} un</td>
+                          <td className="p-4 font-mono text-stone-900 font-semibold">{p.stock} un</td>
                           <td className="p-4">
                             <div className="flex items-center gap-2">
                               <button
@@ -1175,7 +1175,7 @@ export default function AdminPanel() {
                                     triggerToast("Estoque Atualizado", `${p.name} (-1 un)`, "warning");
                                   }
                                 }}
-                                className="px-2.5 py-1 rounded bg-stone-900 border border-white/5 text-stone-400 hover:text-white transition"
+                                className="px-2.5 py-1 rounded bg-stone-900 border border-stone-200 text-stone-500 hover:text-white transition"
                               >
                                 -1
                               </button>
@@ -1184,7 +1184,7 @@ export default function AdminPanel() {
                                   setProducts(prev => prev.map(prod => prod.id === p.id ? { ...prod, stock: prod.stock + 1 } : prod));
                                   triggerToast("Estoque Atualizado", `${p.name} (+1 un)`, "success");
                                 }}
-                                className="px-2.5 py-1 rounded bg-stone-900 border border-white/5 text-stone-400 hover:text-white transition"
+                                className="px-2.5 py-1 rounded bg-stone-900 border border-stone-200 text-stone-500 hover:text-white transition"
                               >
                                 +1
                               </button>
@@ -1213,29 +1213,29 @@ export default function AdminPanel() {
             {activeTab === "Pagamentos" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-1">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-1">
                     <span className="text-xs text-stone-500 font-mono">PIX Aprovados</span>
-                    <div className="text-xl font-bold font-mono text-emerald-400">R$ {orders.filter(o => o.paymentMethod === "PIX" && o.status !== "Cancelado").reduce((acc, o) => acc + o.value, 0).toFixed(2)}</div>
+                    <div className="text-xl font-bold font-mono text-emerald-600">R$ {orders.filter(o => o.paymentMethod === "PIX" && o.status !== "Cancelado").reduce((acc, o) => acc + o.value, 0).toFixed(2)}</div>
                   </div>
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-1">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-1">
                     <span className="text-xs text-stone-500 font-mono">Cartão Aprovados</span>
-                    <div className="text-xl font-bold font-mono text-emerald-400">R$ {orders.filter(o => o.paymentMethod === "Cartão" && o.status !== "Cancelado").reduce((acc, o) => acc + o.value, 0).toFixed(2)}</div>
+                    <div className="text-xl font-bold font-mono text-emerald-600">R$ {orders.filter(o => o.paymentMethod === "Cartão" && o.status !== "Cancelado").reduce((acc, o) => acc + o.value, 0).toFixed(2)}</div>
                   </div>
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-1">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-1">
                     <span className="text-xs text-stone-500 font-mono">Boletos Pendentes</span>
-                    <div className="text-xl font-bold font-mono text-amber-400">R$ {orders.filter(o => o.paymentMethod === "Boleto" && o.status === "Pendente").reduce((acc, o) => acc + o.value, 0).toFixed(2)}</div>
+                    <div className="text-xl font-bold font-mono text-amber-600">R$ {orders.filter(o => o.paymentMethod === "Boleto" && o.status === "Pendente").reduce((acc, o) => acc + o.value, 0).toFixed(2)}</div>
                   </div>
-                  <div className="bg-[#1F1F1F] border border-white/5 rounded-xl p-5 space-y-1">
+                  <div className="bg-white border border-stone-200 rounded-xl p-5 space-y-1">
                     <span className="text-xs text-stone-500 font-mono">Total Reembolsos</span>
                     <div className="text-xl font-bold font-mono text-stone-500">R$ 0,00</div>
                   </div>
                 </div>
 
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
-                  <div className="p-4 border-b border-white/5 bg-white/[0.01] text-xs font-semibold text-stone-400 uppercase font-mono">Fluxo de Transações</div>
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
+                  <div className="p-4 border-b border-stone-200 bg-white/[0.01] text-xs font-semibold text-stone-500 uppercase font-mono">Fluxo de Transações</div>
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                      <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                         <th className="p-4">Transação</th>
                         <th className="p-4">Cliente</th>
                         <th className="p-4">Método</th>
@@ -1245,16 +1245,16 @@ export default function AdminPanel() {
                     </thead>
                     <tbody className="divide-y divide-white/5 text-sm">
                       {orders.map(o => (
-                        <tr key={o.id} className="hover:bg-white/[0.01] transition">
-                          <td className="p-4 font-mono text-xs font-semibold text-stone-400">TXN-{o.id}</td>
-                          <td className="p-4 text-white font-medium">{o.customerName}</td>
-                          <td className="p-4 text-stone-400 font-mono text-xs">{o.paymentMethod}</td>
-                          <td className="p-4 font-mono text-white">R$ {o.value.toFixed(2)}</td>
+                        <tr key={o.id} className="hover:bg-stone-50 transition">
+                          <td className="p-4 font-mono text-xs font-semibold text-stone-500">TXN-{o.id}</td>
+                          <td className="p-4 text-stone-900 font-medium">{o.customerName}</td>
+                          <td className="p-4 text-stone-500 font-mono text-xs">{o.paymentMethod}</td>
+                          <td className="p-4 font-mono text-stone-900">R$ {o.value.toFixed(2)}</td>
                           <td className="p-4">
                             <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                              o.status === "Cancelado" ? "bg-rose-500/10 text-rose-400" :
-                              o.status === "Pendente" ? "bg-amber-500/10 text-amber-400" :
-                              "bg-emerald-500/10 text-emerald-400"
+                              o.status === "Cancelado" ? "bg-rose-500/10 text-rose-600" :
+                              o.status === "Pendente" ? "bg-amber-500/10 text-amber-600" :
+                              "bg-emerald-500/10 text-emerald-600"
                             }`}>
                               {o.status === "Pendente" ? "Aguardando" : o.status === "Cancelado" ? "Recusado" : "Aprovado"}
                             </span>
@@ -1274,27 +1274,27 @@ export default function AdminPanel() {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Export Options */}
-                  <div className="bg-[#1F1F1F] p-6 rounded-2xl border border-white/5 space-y-4">
+                  <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-4">
                     <h3 className="text-sm font-semibold font-display">Exportação de Dados</h3>
-                    <p className="text-xs text-stone-400">Gere e baixe arquivos consolidados em múltiplos formatos para fins fiscais e de auditoria.</p>
+                    <p className="text-xs text-stone-500">Gere e baixe arquivos consolidados em múltiplos formatos para fins fiscais e de auditoria.</p>
                     <div className="grid grid-cols-3 gap-2">
                       <button
                         onClick={() => triggerToast("Relatório PDF", "Relatório PDF gerado e iniciado o download.", "success")}
-                        className="py-3 rounded-xl bg-stone-900 border border-white/5 text-stone-300 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
+                        className="py-3 rounded-xl bg-stone-900 border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
                       >
-                        <Icon icon="solar:file-text-linear" className="text-xl text-rose-400" />
+                        <Icon icon="solar:file-text-linear" className="text-xl text-rose-600" />
                         <span className="text-xs font-medium">PDF</span>
                       </button>
                       <button
                         onClick={() => triggerToast("Relatório Excel", "Relatório XLSX gerado e iniciado o download.", "success")}
-                        className="py-3 rounded-xl bg-stone-900 border border-white/5 text-stone-300 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
+                        className="py-3 rounded-xl bg-stone-900 border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
                       >
-                        <Icon icon="solar:document-text-linear" className="text-xl text-emerald-400" />
+                        <Icon icon="solar:document-text-linear" className="text-xl text-emerald-600" />
                         <span className="text-xs font-medium">Excel</span>
                       </button>
                       <button
                         onClick={() => triggerToast("Relatório CSV", "Exportação de CSV finalizada com sucesso.", "success")}
-                        className="py-3 rounded-xl bg-stone-900 border border-white/5 text-stone-300 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
+                        className="py-3 rounded-xl bg-stone-900 border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
                       >
                         <Icon icon="solar:code-file-linear" className="text-xl text-blue-400" />
                         <span className="text-xs font-medium">CSV</span>
@@ -1303,20 +1303,20 @@ export default function AdminPanel() {
                   </div>
 
                   {/* Quick stats summary */}
-                  <div className="bg-[#1F1F1F] p-6 rounded-2xl border border-white/5 space-y-4">
+                  <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-4">
                     <h3 className="text-sm font-semibold font-display">Resumo de Performance</h3>
                     <div className="space-y-3 font-mono text-xs">
-                      <div className="flex justify-between border-b border-white/5 pb-2">
+                      <div className="flex justify-between border-b border-stone-200 pb-2">
                         <span className="text-stone-500">Ticket Médio</span>
-                        <span className="text-white">R$ 571,25</span>
+                        <span className="text-stone-900">R$ 571,25</span>
                       </div>
-                      <div className="flex justify-between border-b border-white/5 pb-2">
+                      <div className="flex justify-between border-b border-stone-200 pb-2">
                         <span className="text-stone-500">Conversão de Carrinho</span>
-                        <span className="text-white">3.4%</span>
+                        <span className="text-stone-900">3.4%</span>
                       </div>
-                      <div className="flex justify-between border-b border-white/5 pb-2">
+                      <div className="flex justify-between border-b border-stone-200 pb-2">
                         <span className="text-stone-500">Taxa de Rejeição</span>
-                        <span className="text-white">22%</span>
+                        <span className="text-stone-900">22%</span>
                       </div>
                     </div>
                   </div>
@@ -1329,27 +1329,27 @@ export default function AdminPanel() {
             {/* ========================================================================= */}
             {activeTab === "Notificações" && (
               <div className="space-y-6">
-                <div className="flex justify-between items-center bg-[#1F1F1F] p-4 rounded-xl border border-white/5">
-                  <span className="text-xs text-stone-400">{notifications.filter(n => n.unread).length} notificações não lidas</span>
+                <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-stone-200">
+                  <span className="text-xs text-stone-500">{notifications.filter(n => n.unread).length} notificações não lidas</span>
                   <button
                     onClick={() => {
                       setNotifications(prev => prev.map(n => ({ ...n, unread: false })));
                       triggerToast("Notificações", "Todas as notificações foram marcadas como lidas.", "info");
                     }}
-                    className="text-xs text-white hover:underline font-semibold"
+                    className="text-xs text-stone-900 hover:underline font-semibold"
                   >
                     Marcar todas como lidas
                   </button>
                 </div>
 
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden divide-y divide-white/5">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden divide-y divide-white/5">
                   {notifications.map(notif => (
-                    <div key={notif.id} className={`p-5 flex items-center justify-between transition ${notif.unread ? "bg-white/[0.02]" : "opacity-60"}`}>
+                    <div key={notif.id} className={`p-5 flex items-center justify-between transition ${notif.unread ? "bg-stone-50" : "opacity-60"}`}>
                       <div className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                          notif.type === "order" ? "bg-emerald-500/10 text-emerald-400" :
-                          notif.type === "stock" ? "bg-rose-500/10 text-rose-400" :
-                          notif.type === "payment" ? "bg-blue-500/10 text-blue-400" : "bg-stone-800 text-stone-400"
+                          notif.type === "order" ? "bg-emerald-500/10 text-emerald-600" :
+                          notif.type === "stock" ? "bg-rose-500/10 text-rose-600" :
+                          notif.type === "payment" ? "bg-blue-500/10 text-blue-400" : "bg-stone-800 text-stone-500"
                         }`}>
                           <Icon icon={
                             notif.type === "order" ? "solar:cart-large-linear" :
@@ -1358,7 +1358,7 @@ export default function AdminPanel() {
                           } />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-white">{notif.text}</p>
+                          <p className="text-sm font-medium text-stone-900">{notif.text}</p>
                           <span className="text-[10px] text-stone-500 font-mono">{notif.time}</span>
                         </div>
                       </div>
@@ -1368,7 +1368,7 @@ export default function AdminPanel() {
                           onClick={() => {
                             setNotifications(prev => prev.map(n => n.id === notif.id ? { ...n, unread: false } : n));
                           }}
-                          className="px-2 py-1 bg-stone-900 border border-white/5 rounded text-[10px] text-stone-400 hover:text-white"
+                          className="px-2 py-1 bg-stone-900 border border-stone-200 rounded text-[10px] text-stone-500 hover:text-white"
                         >
                           Marcar como lida
                         </button>
@@ -1384,8 +1384,8 @@ export default function AdminPanel() {
             {/* ========================================================================= */}
             {activeTab === "Funcionários" && (
               <div className="space-y-6">
-                <div className="flex justify-between items-center bg-[#1F1F1F] p-4 rounded-xl border border-white/5">
-                  <span className="text-xs text-stone-400 font-mono">{employees.length} funcionários cadastrados</span>
+                <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-stone-200">
+                  <span className="text-xs text-stone-500 font-mono">{employees.length} funcionários cadastrados</span>
                   <button
                     onClick={() => {
                       setEmployeeForm({ name: "", cpf: "", email: "", phone: "", role: "Atendente", department: "", status: "Ativo" });
@@ -1398,10 +1398,10 @@ export default function AdminPanel() {
                   </button>
                 </div>
 
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                      <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                         <th className="p-4">Nome</th>
                         <th className="p-4">Cargo / Nível</th>
                         <th className="p-4">Departamento</th>
@@ -1412,14 +1412,14 @@ export default function AdminPanel() {
                     </thead>
                     <tbody className="divide-y divide-white/5 text-sm">
                       {employees.map(emp => (
-                        <tr key={emp.id} className="hover:bg-white/[0.01] transition">
-                          <td className="p-4 font-medium text-white">{emp.name}</td>
-                          <td className="p-4 text-white font-mono text-xs">{emp.role}</td>
-                          <td className="p-4 text-stone-400">{emp.department}</td>
+                        <tr key={emp.id} className="hover:bg-stone-50 transition">
+                          <td className="p-4 font-medium text-stone-900">{emp.name}</td>
+                          <td className="p-4 text-stone-900 font-mono text-xs">{emp.role}</td>
+                          <td className="p-4 text-stone-500">{emp.department}</td>
                           <td className="p-4 text-stone-500 font-mono text-xs">{emp.lastAccess}</td>
                           <td className="p-4">
                             <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                              emp.status === "Ativo" ? "bg-emerald-500/10 text-emerald-400" : "bg-stone-850 text-stone-500"
+                              emp.status === "Ativo" ? "bg-emerald-500/10 text-emerald-600" : "bg-stone-850 text-stone-500"
                             }`}>
                               <span className={`w-1.5 h-1.5 rounded-full ${emp.status === "Ativo" ? "bg-emerald-400" : "bg-stone-500"}`} />
                               {emp.status}
@@ -1432,7 +1432,7 @@ export default function AdminPanel() {
                                 setEmployees(prev => prev.map(e => e.id === emp.id ? { ...e, status: nextStatus } : e));
                                 triggerToast("Funcionário Modificado", `${emp.name} está agora ${nextStatus === "Ativo" ? "Ativo" : "Inativo"}.`, "info");
                               }}
-                              className="px-2.5 py-1 bg-stone-900 border border-white/5 rounded text-xs text-stone-400 hover:text-white"
+                              className="px-2.5 py-1 bg-stone-900 border border-stone-200 rounded text-xs text-stone-500 hover:text-white"
                             >
                               Tweak Status
                             </button>
@@ -1445,11 +1445,11 @@ export default function AdminPanel() {
 
                 {/* MODAL: ADD EMPLOYEE */}
                 {employeeFormOpen && (
-                  <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
-                    <div className="bg-[#1F1F1F] border border-white/10 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
-                      <div className="p-6 border-b border-white/5 flex items-center justify-between">
+                  <div className="fixed inset-0 bg-stone-900/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+                    <div className="bg-white border border-stone-300 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
+                      <div className="p-6 border-b border-stone-200 flex items-center justify-between">
                         <h3 className="text-base font-semibold font-display">Cadastrar Novo Funcionário</h3>
-                        <button className="text-stone-400 hover:text-white" onClick={() => setEmployeeFormOpen(false)}>
+                        <button className="text-stone-500 hover:text-stone-900" onClick={() => setEmployeeFormOpen(false)}>
                           <Icon icon="solar:close-circle-linear" className="text-xl" />
                         </button>
                       </div>
@@ -1472,35 +1472,35 @@ export default function AdminPanel() {
                         triggerToast("Funcionário Cadastrado", `${newEmp.name} cadastrado com sucesso.`, "success");
                       }} className="p-6 space-y-4">
                         <div>
-                          <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Nome Completo</label>
+                          <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Nome Completo</label>
                           <input
                             type="text"
                             required
                             value={employeeForm.name}
                             onChange={e => setEmployeeForm(prev => ({ ...prev, name: e.target.value }))}
-                            className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                           />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">CPF</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">CPF</label>
                             <input
                               type="text"
                               required
                               placeholder="000.000.000-00"
                               value={employeeForm.cpf}
                               onChange={e => setEmployeeForm(prev => ({ ...prev, cpf: e.target.value }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm font-mono text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm font-mono text-stone-900 outline-none focus:border-stone-400 transition"
                             />
                           </div>
 
                           <div>
-                            <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Cargo / Nível</label>
+                            <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Cargo / Nível</label>
                             <select
                               value={employeeForm.role}
                               onChange={e => setEmployeeForm(prev => ({ ...prev, role: e.target.value as any }))}
-                              className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                              className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                             >
                               <option value="Administrador">Administrador</option>
                               <option value="Gerente">Gerente</option>
@@ -1512,31 +1512,31 @@ export default function AdminPanel() {
                         </div>
 
                         <div>
-                          <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">E-mail Corporativo</label>
+                          <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">E-mail Corporativo</label>
                           <input
                             type="email"
                             required
                             placeholder="exemplo@artools.pro"
                             value={employeeForm.email}
                             onChange={e => setEmployeeForm(prev => ({ ...prev, email: e.target.value }))}
-                            className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                           />
                         </div>
 
                         <div>
-                          <label className="block text-xs text-stone-400 mb-1 font-mono uppercase">Departamento</label>
+                          <label className="block text-xs text-stone-500 mb-1 font-mono uppercase">Departamento</label>
                           <input
                             type="text"
                             required
                             placeholder="Ex: Comercial, Logística"
                             value={employeeForm.department}
                             onChange={e => setEmployeeForm(prev => ({ ...prev, department: e.target.value }))}
-                            className="w-full bg-[#171717] border border-white/5 rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-white/20 transition"
+                            className="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-900 outline-none focus:border-stone-400 transition"
                           />
                         </div>
 
-                        <div className="pt-4 border-t border-white/5 flex gap-2 justify-end">
-                          <button type="button" onClick={() => setEmployeeFormOpen(false)} className="px-4 py-2 rounded-xl bg-stone-900 border border-white/5 text-xs hover:bg-stone-800 transition">
+                        <div className="pt-4 border-t border-stone-200 flex gap-2 justify-end">
+                          <button type="button" onClick={() => setEmployeeFormOpen(false)} className="px-4 py-2 rounded-xl bg-stone-900 border border-stone-200 text-xs hover:bg-stone-800 transition">
                             Cancelar
                           </button>
                           <button type="submit" className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-stone-200 transition">
@@ -1555,24 +1555,24 @@ export default function AdminPanel() {
             {/* ========================================================================= */}
             {activeTab === "Configurações" && (
               <div className="space-y-6">
-                <div className="bg-[#1F1F1F] p-6 rounded-2xl border border-white/5 space-y-6">
+                <div className="bg-white p-6 rounded-2xl border border-stone-200 space-y-6">
                   <h3 className="text-sm font-semibold font-display">Configurações Gerais do Sistema</h3>
                   
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                    <div className="flex items-center justify-between border-b border-stone-200 pb-4">
                       <div>
                         <h4 className="text-xs font-semibold">Duplo Fator de Autenticação (2FA)</h4>
-                        <p className="text-[11px] text-stone-400">Forçar todos os funcionários a autenticar via app autenticador.</p>
+                        <p className="text-[11px] text-stone-500">Forçar todos os funcionários a autenticar via app autenticador.</p>
                       </div>
                       <span className="w-9 h-5 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex items-center justify-end">
                         <span className="w-4 h-4 bg-white rounded-full" />
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                    <div className="flex items-center justify-between border-b border-stone-200 pb-4">
                       <div>
                         <h4 className="text-xs font-semibold">Modo de Manutenção</h4>
-                        <p className="text-[11px] text-stone-400">Suspende o e-commerce externo para atualizações estruturais.</p>
+                        <p className="text-[11px] text-stone-500">Suspende o e-commerce externo para atualizações estruturais.</p>
                       </div>
                       <span className="w-9 h-5 bg-stone-800 rounded-full p-0.5 cursor-pointer flex items-center justify-start">
                         <span className="w-4 h-4 bg-stone-600 rounded-full" />
@@ -1582,7 +1582,7 @@ export default function AdminPanel() {
                     <div className="flex items-center justify-between">
                       <div>
                         <h4 className="text-xs font-semibold">Backups Diários Automáticos</h4>
-                        <p className="text-[11px] text-stone-400">Salvar snapshots de transações no bucket Amazon S3 de contingência.</p>
+                        <p className="text-[11px] text-stone-500">Salvar snapshots de transações no bucket Amazon S3 de contingência.</p>
                       </div>
                       <span className="w-9 h-5 bg-emerald-500 rounded-full p-0.5 cursor-pointer flex items-center justify-end">
                         <span className="w-4 h-4 bg-white rounded-full" />
@@ -1590,7 +1590,7 @@ export default function AdminPanel() {
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-white/5 flex justify-end">
+                  <div className="pt-4 border-t border-stone-200 flex justify-end">
                     <button
                       onClick={() => triggerToast("Configurações", "Configurações de sistema salvas com sucesso.", "success")}
                       className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-stone-200 transition"
@@ -1607,12 +1607,12 @@ export default function AdminPanel() {
             {/* ========================================================================= */}
             {activeTab === "Logs" && (
               <div className="space-y-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#1F1F1F] p-4 rounded-xl border border-white/5">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-xl border border-stone-200">
                   <div className="flex flex-wrap items-center gap-3">
                     <select
                       value={logFilter.module}
                       onChange={e => setLogFilter(prev => ({ ...prev, module: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-600 outline-none"
                     >
                       <option value="Todos">Todos Módulos</option>
                       <option value="Autenticação">Autenticação</option>
@@ -1623,7 +1623,7 @@ export default function AdminPanel() {
                     <select
                       value={logFilter.result}
                       onChange={e => setLogFilter(prev => ({ ...prev, result: e.target.value }))}
-                      className="bg-[#292929] border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300 outline-none"
+                      className="bg-stone-100 border border-stone-300 rounded-lg px-3 py-2 text-xs text-stone-600 outline-none"
                     >
                       <option value="Todos">Todos Resultados</option>
                       <option value="Sucesso">Sucessos</option>
@@ -1632,11 +1632,11 @@ export default function AdminPanel() {
                   </div>
                 </div>
 
-                <div className="bg-[#1F1F1F] border border-white/5 rounded-2xl overflow-hidden">
+                <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="border-b border-white/5 bg-white/[0.02] text-xs text-stone-400 font-mono uppercase">
+                        <tr className="border-b border-stone-200 bg-stone-50 text-xs text-stone-500 font-mono uppercase">
                           <th className="p-4">Timestamp</th>
                           <th className="p-4">Operador</th>
                           <th className="p-4">Ação</th>
@@ -1653,15 +1653,15 @@ export default function AdminPanel() {
                             return true;
                           })
                           .map(l => (
-                            <tr key={l.id} className="hover:bg-white/[0.01] transition">
-                              <td className="p-4 text-stone-400">{l.date}</td>
-                              <td className="p-4 font-semibold text-white">{l.employee}</td>
-                              <td className="p-4 text-stone-300 font-sans text-sm">{l.action}</td>
-                              <td className="p-4 text-stone-400">{l.module}</td>
+                            <tr key={l.id} className="hover:bg-stone-50 transition">
+                              <td className="p-4 text-stone-500">{l.date}</td>
+                              <td className="p-4 font-semibold text-stone-900">{l.employee}</td>
+                              <td className="p-4 text-stone-600 font-sans text-sm">{l.action}</td>
+                              <td className="p-4 text-stone-500">{l.module}</td>
                               <td className="p-4 text-stone-500">{l.ip}</td>
                               <td className="p-4">
                                 <span className={`px-2 py-0.5 rounded text-[10px] ${
-                                  l.result === "Sucesso" ? "bg-emerald-950/40 text-emerald-400 border border-emerald-500/20" : "bg-rose-950/40 text-rose-400 border border-rose-500/20"
+                                  l.result === "Sucesso" ? "bg-emerald-950/40 text-emerald-600 border border-emerald-500/20" : "bg-rose-950/40 text-rose-600 border border-rose-500/20"
                                 }`}>
                                   {l.result}
                                 </span>
@@ -1677,12 +1677,12 @@ export default function AdminPanel() {
           </main>
 
           {/* DISCRETE FOOTER */}
-          <footer className="mt-auto px-10 py-6 border-t border-white/5 bg-[#111111]/80 backdrop-blur text-center text-xs text-stone-600 font-mono flex flex-col sm:flex-row justify-between items-center gap-2">
+          <footer className="mt-auto px-10 py-6 border-t border-stone-200 bg-[#EAEAE5]/80 backdrop-blur text-center text-xs text-stone-600 font-mono flex flex-col sm:flex-row justify-between items-center gap-2">
             <span>Painel Administrativo da ARTOOLS.PRO © 2026</span>
             <span className="flex items-center gap-3">
-              <span className="hover:text-stone-400 cursor-pointer">Segurança</span>
+              <span className="hover:text-stone-500 cursor-pointer">Segurança</span>
               <span>·</span>
-              <span className="hover:text-stone-400 cursor-pointer">Ajuda</span>
+              <span className="hover:text-stone-500 cursor-pointer">Ajuda</span>
             </span>
           </footer>
         </div>
