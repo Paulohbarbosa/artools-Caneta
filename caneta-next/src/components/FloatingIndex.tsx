@@ -58,7 +58,7 @@ export default function FloatingIndex() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); 
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -115,14 +115,18 @@ export default function FloatingIndex() {
                     <div className="flex flex-col">
                       <span
                         className={`text-sm font-medium transition-colors ${
-                          isActive ? "text-white" : "text-stone-900 group-hover:text-stone-900"
+                          isActive
+                            ? "text-white"
+                            : "text-stone-900 group-hover:text-stone-900"
                         }`}
                       >
                         {section.title}
                       </span>
                       <span
                         className={`text-[10px] uppercase tracking-wider font-mono transition-colors ${
-                          isActive ? "text-stone-400" : "text-stone-500 group-hover:text-stone-600"
+                          isActive
+                            ? "text-stone-400"
+                            : "text-stone-500 group-hover:text-stone-600"
                         }`}
                       >
                         {section.subtitle}
@@ -138,19 +142,20 @@ export default function FloatingIndex() {
 
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-full flex items-center justify-center text-xl transition-all duration-300 shadow-2xl border
+        className={`rounded-full flex items-center justify-center text-xl transition-all duration-300 shadow-2xl border
           ${
             isOpen
-              ? "bg-white text-stone-900 border-stone-200 shadow-stone-200/50 rotate-90"
-              : "bg-stone-900 text-white border-stone-800 shadow-black/30 hover:scale-105 hover:bg-stone-800 hover:shadow-black/40"
+              ? " w-14 h-14 bg-white text-stone-900 border-stone-200 shadow-stone-200/50 rotate-90 transition-all duration-500 ease-out "
+              : "w-48 h-14 bg-stone-900 text-white border-stone-800 shadow-black/30 hover:scale-105 hover:bg-stone-800 hover:shadow-black/40 transition-all duration-500 ease-out"
           }
         `}
         aria-label="Abrir Sumário"
       >
-        <Icon
-          icon={isOpen ? "solar:close-square-linear" : "solar:hamburger-menu-linear"}
-          className="text-2xl"
-        />
+        {isOpen ? (
+          <Icon icon="solar:close-square-linear" className="text-2xl" />
+        ) : (
+          <span className="text-sm font-medium">Conheça meu Projeto</span>
+        )}
       </button>
     </div>
   );
