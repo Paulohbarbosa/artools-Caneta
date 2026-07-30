@@ -237,7 +237,7 @@ export default function AdminPanel() {
                 className="bg-transparent text-stone-900 border-0 outline-none w-full text-base placeholder:text-stone-500"
                 autoFocus
               />
-              <span className="text-[10px] bg-stone-800 text-stone-500 px-2 py-1 rounded">ESC</span>
+              <span className="text-[10px] bg-stone-200 text-stone-600 px-2 py-1 rounded">ESC</span>
             </div>
             
             <div className="max-h-[300px] overflow-y-auto p-2">
@@ -332,7 +332,7 @@ export default function AdminPanel() {
           {/* Footer User Profile (Sidebar) */}
           <div className="p-4 border-t border-stone-200">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-stone-800 border border-stone-300 flex items-center justify-center font-display font-semibold text-stone-900">
+              <div className="w-10 h-10 rounded-full bg-stone-200 border border-stone-300 flex items-center justify-center font-display font-semibold text-stone-900">
                 JP
               </div>
               {!sidebarCollapsed && (
@@ -345,7 +345,7 @@ export default function AdminPanel() {
             {!sidebarCollapsed && (
               <button
                 onClick={() => triggerToast("Logout", "Sessão encerrada com sucesso.", "info")}
-                className="mt-4 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-stone-900 border border-stone-200 text-xs text-stone-500 hover:bg-stone-800 hover:text-white transition"
+                className="mt-4 w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-white border border-stone-300 shadow-sm text-xs text-stone-500 hover:bg-stone-100 hover:text-stone-900 transition"
               >
                 <Icon icon="solar:logout-linear" />
                 <span>Sair da conta</span>
@@ -672,7 +672,7 @@ export default function AdminPanel() {
                               </td>
                               <td className="p-4">
                                 <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${
-                                  p.status === "Ativo" ? "bg-emerald-500/10 text-emerald-600" : "bg-stone-800 text-stone-500"
+                                  p.status === "Ativo" ? "bg-emerald-500/10 text-emerald-600" : "bg-stone-200 text-stone-600"
                                 }`}>
                                   <span className={`w-1.5 h-1.5 rounded-full ${p.status === "Ativo" ? "bg-emerald-400" : "bg-stone-500"}`} />
                                   {p.status}
@@ -686,7 +686,7 @@ export default function AdminPanel() {
                                       setProductForm(p);
                                       setProductFormOpen(true);
                                     }}
-                                    className="p-1.5 rounded bg-stone-900 border border-stone-200 text-stone-500 hover:text-white hover:bg-stone-800 transition"
+                                    className="p-1.5 rounded bg-white border border-stone-300 shadow-sm text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition"
                                   >
                                     <Icon icon="solar:pen-linear" />
                                   </button>
@@ -695,7 +695,7 @@ export default function AdminPanel() {
                                       setProducts(prev => prev.filter(prod => prod.id !== p.id));
                                       triggerToast("Produto Removido", `O produto ${p.name} foi removido.`, "success");
                                     }}
-                                    className="p-1.5 rounded bg-stone-900 border border-stone-200 text-rose-500 hover:bg-rose-950/30 transition"
+                                    className="p-1.5 rounded bg-white border border-stone-300 shadow-sm text-rose-500 hover:bg-rose-950/30 transition"
                                   >
                                     <Icon icon="solar:trash-bin-trash-linear" />
                                   </button>
@@ -823,7 +823,7 @@ export default function AdminPanel() {
                         </div>
 
                         <div className="pt-4 border-t border-stone-200 flex gap-2 justify-end">
-                          <button type="button" onClick={() => { setProductFormOpen(false); setSelectedProduct(null); }} className="px-4 py-2 rounded-xl bg-stone-900 border border-stone-200 text-xs hover:bg-stone-800 transition">
+                          <button type="button" onClick={() => { setProductFormOpen(false); setSelectedProduct(null); }} className="px-4 py-2 rounded-xl bg-white border border-stone-300 shadow-sm text-xs hover:bg-stone-100 transition">
                             Cancelar
                           </button>
                           <button type="submit" className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-stone-200 transition">
@@ -895,7 +895,7 @@ export default function AdminPanel() {
                               <td className="p-4 font-medium text-stone-900">{o.customerName}</td>
                               <td className="p-4 font-mono text-stone-900">R$ {o.value.toFixed(2)}</td>
                               <td className="p-4">
-                                <span className="px-2 py-0.5 bg-stone-900 border border-stone-200 rounded text-xs font-mono text-stone-500">{o.paymentMethod}</span>
+                                <span className="px-2 py-0.5 bg-white border border-stone-300 shadow-sm rounded text-xs font-mono text-stone-500">{o.paymentMethod}</span>
                               </td>
                               <td className="p-4">
                                 <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -903,7 +903,7 @@ export default function AdminPanel() {
                                   o.status === "Pendente" ? "bg-amber-500/10 text-amber-600" :
                                   o.status === "Enviado" ? "bg-blue-500/10 text-blue-400" :
                                   o.status === "Cancelado" ? "bg-rose-500/10 text-rose-600" :
-                                  "bg-stone-800 text-stone-500"
+                                  "bg-stone-200 text-stone-600"
                                 }`}>
                                   {o.status}
                                 </span>
@@ -912,7 +912,7 @@ export default function AdminPanel() {
                               <td className="p-4 text-right">
                                 <button
                                   onClick={() => setSelectedOrder(o)}
-                                  className="px-3 py-1 bg-stone-900 border border-stone-200 rounded-lg text-xs text-stone-500 hover:text-white hover:bg-stone-800 transition"
+                                  className="px-3 py-1 bg-white border border-stone-300 shadow-sm rounded-lg text-xs text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition"
                                 >
                                   Ver Detalhes
                                 </button>
@@ -954,7 +954,7 @@ export default function AdminPanel() {
                           <h4 className="text-xs font-mono uppercase text-stone-500 mb-2">Itens do Pedido</h4>
                           <div className="space-y-2">
                             {selectedOrder.items.map((item, idx) => (
-                              <div key={idx} className="flex justify-between items-center text-xs bg-stone-900/60 p-2.5 rounded-lg border border-stone-200">
+                              <div key={idx} className="flex justify-between items-center text-xs bg-stone-50 p-2.5 rounded-lg border border-stone-200">
                                 <div>
                                   <span className="font-semibold text-stone-900">{item.name}</span>
                                   <span className="text-stone-500 font-mono ml-2">x{item.qty}</span>
@@ -1175,7 +1175,7 @@ export default function AdminPanel() {
                                     triggerToast("Estoque Atualizado", `${p.name} (-1 un)`, "warning");
                                   }
                                 }}
-                                className="px-2.5 py-1 rounded bg-stone-900 border border-stone-200 text-stone-500 hover:text-white transition"
+                                className="px-2.5 py-1 rounded bg-white border border-stone-300 shadow-sm text-stone-500 hover:text-stone-900 transition"
                               >
                                 -1
                               </button>
@@ -1184,7 +1184,7 @@ export default function AdminPanel() {
                                   setProducts(prev => prev.map(prod => prod.id === p.id ? { ...prod, stock: prod.stock + 1 } : prod));
                                   triggerToast("Estoque Atualizado", `${p.name} (+1 un)`, "success");
                                 }}
-                                className="px-2.5 py-1 rounded bg-stone-900 border border-stone-200 text-stone-500 hover:text-white transition"
+                                className="px-2.5 py-1 rounded bg-white border border-stone-300 shadow-sm text-stone-500 hover:text-stone-900 transition"
                               >
                                 +1
                               </button>
@@ -1280,21 +1280,21 @@ export default function AdminPanel() {
                     <div className="grid grid-cols-3 gap-2">
                       <button
                         onClick={() => triggerToast("Relatório PDF", "Relatório PDF gerado e iniciado o download.", "success")}
-                        className="py-3 rounded-xl bg-stone-900 border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
+                        className="py-3 rounded-xl bg-white border border-stone-300 shadow-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition flex flex-col items-center justify-center gap-2"
                       >
                         <Icon icon="solar:file-text-linear" className="text-xl text-rose-600" />
                         <span className="text-xs font-medium">PDF</span>
                       </button>
                       <button
                         onClick={() => triggerToast("Relatório Excel", "Relatório XLSX gerado e iniciado o download.", "success")}
-                        className="py-3 rounded-xl bg-stone-900 border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
+                        className="py-3 rounded-xl bg-white border border-stone-300 shadow-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition flex flex-col items-center justify-center gap-2"
                       >
                         <Icon icon="solar:document-text-linear" className="text-xl text-emerald-600" />
                         <span className="text-xs font-medium">Excel</span>
                       </button>
                       <button
                         onClick={() => triggerToast("Relatório CSV", "Exportação de CSV finalizada com sucesso.", "success")}
-                        className="py-3 rounded-xl bg-stone-900 border border-stone-200 text-stone-600 hover:bg-stone-800 hover:text-white transition flex flex-col items-center justify-center gap-2"
+                        className="py-3 rounded-xl bg-white border border-stone-300 shadow-sm text-stone-600 hover:bg-stone-100 hover:text-stone-900 transition flex flex-col items-center justify-center gap-2"
                       >
                         <Icon icon="solar:code-file-linear" className="text-xl text-blue-400" />
                         <span className="text-xs font-medium">CSV</span>
@@ -1349,7 +1349,7 @@ export default function AdminPanel() {
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                           notif.type === "order" ? "bg-emerald-500/10 text-emerald-600" :
                           notif.type === "stock" ? "bg-rose-500/10 text-rose-600" :
-                          notif.type === "payment" ? "bg-blue-500/10 text-blue-400" : "bg-stone-800 text-stone-500"
+                          notif.type === "payment" ? "bg-blue-500/10 text-blue-400" : "bg-stone-200 text-stone-600"
                         }`}>
                           <Icon icon={
                             notif.type === "order" ? "solar:cart-large-linear" :
@@ -1368,7 +1368,7 @@ export default function AdminPanel() {
                           onClick={() => {
                             setNotifications(prev => prev.map(n => n.id === notif.id ? { ...n, unread: false } : n));
                           }}
-                          className="px-2 py-1 bg-stone-900 border border-stone-200 rounded text-[10px] text-stone-500 hover:text-white"
+                          className="px-2 py-1 bg-white border border-stone-300 shadow-sm rounded text-[10px] text-stone-500 hover:text-stone-900"
                         >
                           Marcar como lida
                         </button>
@@ -1432,7 +1432,7 @@ export default function AdminPanel() {
                                 setEmployees(prev => prev.map(e => e.id === emp.id ? { ...e, status: nextStatus } : e));
                                 triggerToast("Funcionário Modificado", `${emp.name} está agora ${nextStatus === "Ativo" ? "Ativo" : "Inativo"}.`, "info");
                               }}
-                              className="px-2.5 py-1 bg-stone-900 border border-stone-200 rounded text-xs text-stone-500 hover:text-white"
+                              className="px-2.5 py-1 bg-white border border-stone-300 shadow-sm rounded text-xs text-stone-500 hover:text-stone-900"
                             >
                               Tweak Status
                             </button>
@@ -1536,7 +1536,7 @@ export default function AdminPanel() {
                         </div>
 
                         <div className="pt-4 border-t border-stone-200 flex gap-2 justify-end">
-                          <button type="button" onClick={() => setEmployeeFormOpen(false)} className="px-4 py-2 rounded-xl bg-stone-900 border border-stone-200 text-xs hover:bg-stone-800 transition">
+                          <button type="button" onClick={() => setEmployeeFormOpen(false)} className="px-4 py-2 rounded-xl bg-white border border-stone-300 shadow-sm text-xs hover:bg-stone-100 transition">
                             Cancelar
                           </button>
                           <button type="submit" className="px-4 py-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-stone-200 transition">
@@ -1574,7 +1574,7 @@ export default function AdminPanel() {
                         <h4 className="text-xs font-semibold">Modo de Manutenção</h4>
                         <p className="text-[11px] text-stone-500">Suspende o e-commerce externo para atualizações estruturais.</p>
                       </div>
-                      <span className="w-9 h-5 bg-stone-800 rounded-full p-0.5 cursor-pointer flex items-center justify-start">
+                      <span className="w-9 h-5 bg-stone-300 rounded-full p-0.5 cursor-pointer flex items-center justify-start">
                         <span className="w-4 h-4 bg-stone-600 rounded-full" />
                       </span>
                     </div>
