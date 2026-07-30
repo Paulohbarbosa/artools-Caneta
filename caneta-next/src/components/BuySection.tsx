@@ -31,7 +31,7 @@ export default function BuySection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-6xl mx-auto">
-          {/* Standard */}
+          {/* Card Standard */}
           <div className="bg-[#1c1c1c]/80 backdrop-blur-md border border-white/10 p-8 rounded-2xl flex flex-col justify-between h-[420px] hover:border-white/30 transition-colors reveal-up delay-200">
             <div>
               <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white mb-6">
@@ -45,13 +45,13 @@ export default function BuySection() {
               </div>
               <p className="text-stone-400 text-sm leading-relaxed mb-8">
                 A Precision Pen original, feita em alumínio de grau
-                aeroespacial. Perfeita para quem busca o essencial com
-                qualidade impecável.
+                aeroespacial. Perfeita para quem busca o essencial com qualidade
+                impecável.
               </p>
             </div>
             <div className="mt-auto">
               <div className="text-3xl font-display text-white mb-4">
-                $89
+                $49
                 <span className="text-xs text-stone-500 font-mono ml-1 uppercase">
                   usd
                 </span>
@@ -65,7 +65,7 @@ export default function BuySection() {
             </div>
           </div>
 
-          {/* Pro */}
+          {/* Card Pro */}
           <div className="bg-[#111111]/90 backdrop-blur-xl border border-white/10 p-10 rounded-2xl flex flex-col justify-center items-center h-[480px] shadow-2xl shadow-black/80 relative transform md:-translate-y-6 hover:scale-[1.02] transition-transform duration-500 reveal-up delay-300 w-full">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -85,7 +85,13 @@ export default function BuySection() {
               </div>
             </div>
 
-            <div className="w-full mt-auto">
+            <div className="w-full mt-auto flex items-center flex-col justify-center">
+              <div className="text-3xl font-display text-white mb-4">
+                $100
+                <span className="text-xs text-stone-500 font-mono ml-1 uppercase">
+                  usd
+                </span>
+              </div>
               <Link
                 href="/compra"
                 className="w-full py-3.5 px-6 bg-white text-[#111] rounded-full text-[13px] font-medium hover:bg-stone-200 transition-colors flex items-center justify-center gap-2 group"
@@ -99,7 +105,7 @@ export default function BuySection() {
             </div>
           </div>
 
-          {/* Creator Club */}
+          {/* Card Creator Club */}
           <div className="bg-[#1c1c1c]/80 backdrop-blur-md border border-white/10 p-8 rounded-2xl flex flex-col justify-between h-[420px] hover:border-white/30 transition-colors reveal-up delay-500">
             <div>
               <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white mb-6">
@@ -121,7 +127,7 @@ export default function BuySection() {
               <div className="text-3xl font-display text-white mb-4">
                 $29
                 <span className="text-xs text-stone-500 font-mono ml-1 uppercase">
-                  /ano
+                  /mês
                 </span>
               </div>
               <Link
