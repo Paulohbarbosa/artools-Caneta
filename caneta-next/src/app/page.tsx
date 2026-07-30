@@ -277,13 +277,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Indicador de Rolagem Customizado */}
-      <div
-        ref={customScrollbarRef}
-        id="custom-scrollbar"
-        className="fixed right-[5px] top-20 w-[6px] bg-stone-400/50 hover:bg-stone-400/80 rounded-full z-[9999] transition-opacity duration-300 opacity-0 pointer-events-auto cursor-pointer"
-      />
-
       <Header />
 
       <main>
