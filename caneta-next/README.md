@@ -57,6 +57,19 @@ Simula o ecossistema pós-compra do cliente:
   - **Animações de Aba**: Ao alternar as abas, o GSAP executa uma animação de fade-in e desfoque suave (`reveal-content`) para apresentar a nova seção de forma extremamente fluida e premium.
   - **Notificações Toast**: Sistema integrado de alertas flutuantes no canto inferior direito para sinalizar as ações do usuário (ex: atualizar dados, alterar senhas).
 
+### 4. Painel Administrativo (`/admin`)
+
+Uma interface interna robusta e premium voltada para a gestão do e-commerce:
+
+- **Identidade Visual Refinada (Light Theme)**:
+  - O painel acompanha a identidade sofisticada da Landing Page principal (baseada em tons de pedra claros, off-white e detalhes em chumbo), mantendo a legibilidade impecável para uso prolongado em operações diárias.
+- **Módulos de Gestão Integrados**:
+  - **Dashboard Operacional**: Exibe simulações visuais de gráficos e cartões de desempenho diário (faturamento, pedidos, estoque).
+  - **Tabelas de Produtos e Relatórios**: Grids de dados responsivos com botões de ação e status (pílulas coloridas para status ativo/inativo).
+  - **Sidebar de Navegação**: Menu fixo de navegação elegante para organizar os diferentes módulos da empresa (Estoque, Pagamentos, Funcionários, Notificações).
+- **Interações UI/UX**:
+  - Transições suaves usando framer-motion/GSAP nas trocas de abas e botões com hover states adaptados à paleta minimalista da marca.
+
 ---
 
 ## 🛠️ Executando o Projeto Localmente

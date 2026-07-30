@@ -134,7 +134,7 @@ export default function FloatingIndex() {
           >
             <div className="p-4 pb-2 flex items-center justify-between border-b border-stone-100 mb-2">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-stone-500">
-                Sumário
+                Sumário do Meu Projeto
               </span>
               <button
                 onClick={() => setIsOpen(false)}
