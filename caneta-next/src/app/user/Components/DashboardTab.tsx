@@ -2,57 +2,235 @@ import React from "react";
 import { Icon } from "@iconify/react";
 
 export default function DashboardTab() {
+  const orders = [
+    {
+      id: "#98421-BR",
+      date: "14 Out 2023",
+      value: "R$ 459,90",
+      status: "ENTREGUE",
+      statusColor: "text-emerald-700 bg-emerald-50",
+      action: "Detalhes",
+    },
+    {
+      id: "#98399-BR",
+      date: "02 Out 2023",
+      value: "R$ 1.200,00",
+      status: "EM TRÂNSITO",
+      statusColor: "text-amber-700 bg-amber-50",
+      action: "Rastrear",
+    },
+    {
+      id: "#97120-BR",
+      date: "15 Set 2023",
+      value: "R$ 89,00",
+      status: "ENTREGUE",
+      statusColor: "text-emerald-700 bg-emerald-50",
+      action: "Recomprar",
+    },
+  ];
+
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-3xl font-display font-medium text-stone-900 mb-2">
-          Olá, Paulo
-        </h2>
-        <p className="text-stone-500 text-sm">
-          Bem-vindo à sua área exclusiva de controle.
-        </p>
+      {/* HEADER DA ABA */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-display font-medium text-stone-900 mb-1">
+            Olá, Paulo
+          </h2>
+          <p className="text-stone-500 text-sm">
+            Bem-vindo de volta ao seu painel exclusivo.
+          </p>
+        </div>
+        
+        {/* Profile Info (opcional se não quiser colocar no top header global) */}
+        <div className="hidden md:flex items-center gap-6">
+          <button className="text-stone-400 hover:text-stone-700 transition">
+            <Icon icon="solar:bell-linear" className="text-xl" />
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <div className="text-sm font-semibold text-stone-900">Paulo Souza</div>
+              <div className="text-[10px] font-mono tracking-wider text-stone-400 uppercase">Premium Partner</div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-stone-200 overflow-hidden border border-stone-300">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Paulo" alt="Avatar" className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-40">
-          <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center">
-            <Icon icon="solar:box-linear" className="text-xl" />
+      {/* TOP CARDS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Garantia */}
+        <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start">
+            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
+              <Icon icon="solar:verified-check-linear" className="text-xl" />
+            </div>
+            <span className="bg-stone-900 text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+              Ativa
+            </span>
           </div>
           <div>
-            <span className="text-xs text-stone-500 font-mono block">
-              Último Pedido
-            </span>
-            <span className="text-lg font-medium text-stone-900 mt-1 block">
-              #AR-2026-892
-            </span>
+            <p className="text-sm text-stone-500 mb-1">Garantia Estendida</p>
+            <h3 className="text-xl font-display font-bold text-stone-900 mb-3">24 Meses Restantes</h3>
+            <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
+              Ver detalhes <Icon icon="solar:alt-arrow-right-linear" />
+            </button>
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-40">
-          <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center">
-            <Icon icon="solar:shield-check-linear" className="text-xl" />
+        {/* Pontos */}
+        <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start">
+            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
+              <Icon icon="solar:wallet-money-linear" className="text-xl" />
+            </div>
+            <span className="bg-stone-200 text-stone-600 text-xs font-bold px-3 py-1 rounded-full">
+              R$ 1.250,00
+            </span>
           </div>
           <div>
-            <span className="text-xs text-stone-500 font-mono block">
-              Garantia
-            </span>
-            <span className="text-lg font-medium text-emerald-600 mt-1 block">
-              Vitalícia Ativa
-            </span>
+            <p className="text-sm text-stone-500 mb-1">Pontos Acumulados</p>
+            <h3 className="text-xl font-display font-bold text-stone-900 mb-3">12.450 pts</h3>
+            <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
+              Resgatar agora <Icon icon="solar:alt-arrow-right-linear" />
+            </button>
           </div>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-40">
-          <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center">
-            <Icon icon="solar:crown-linear" className="text-xl" />
+        {/* Status no Club */}
+        <div className="bg-[#1C1C1C] rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+          <Icon icon="solar:star-bold" className="absolute -bottom-6 -right-6 text-9xl text-white opacity-5 group-hover:opacity-10 transition-opacity" />
+          <div className="flex justify-between items-start relative z-10">
+            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm">
+              <Icon icon="solar:star-linear" className="text-xl" />
+            </div>
           </div>
-          <div>
-            <span className="text-xs text-stone-500 font-mono block">
-              Club Membership
-            </span>
-            <span className="text-lg font-medium text-stone-900 mt-1 block">
-              Creator Club
-            </span>
+          <div className="relative z-10">
+            <p className="text-sm text-stone-400 mb-1">Status no Club</p>
+            <h3 className="text-2xl font-display font-bold text-white mb-3">Nível Diamante</h3>
+            <button className="text-xs font-medium text-stone-400 hover:text-white flex items-center gap-1 transition">
+              Benefícios Exclusivos <Icon icon="solar:alt-arrow-right-linear" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* BOTTOM LAYOUT */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Historico de Pedidos */}
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-lg font-display font-bold text-stone-900">Histórico de Pedidos</h2>
+            <button className="px-4 py-1.5 border border-stone-200 rounded-lg text-sm font-medium text-stone-600 hover:bg-stone-50 transition">
+              Ver Todos
+            </button>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead>
+                <tr className="text-xs font-mono text-stone-400 border-b border-stone-100 uppercase tracking-wider">
+                  <th className="pb-4 font-medium">Pedido</th>
+                  <th className="pb-4 font-medium">Data</th>
+                  <th className="pb-4 font-medium">Valor</th>
+                  <th className="pb-4 font-medium">Status</th>
+                  <th className="pb-4 font-medium text-right">Ações</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-stone-100">
+                {orders.map((order, index) => (
+                  <tr key={index} className="group hover:bg-stone-50/50 transition-colors">
+                    <td className="py-5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-stone-100 flex items-center justify-center text-stone-500">
+                          <Icon icon="solar:bag-3-linear" className="text-lg" />
+                        </div>
+                        <span className="font-semibold text-stone-900">{order.id}</span>
+                      </div>
+                    </td>
+                    <td className="py-5 text-stone-500 w-24">
+                      <div className="flex flex-col">
+                        <span>{order.date.split(" ")[0]} {order.date.split(" ")[1]}</span>
+                        <span className="text-xs">{order.date.split(" ")[2]}</span>
+                      </div>
+                    </td>
+                    <td className="py-5 font-semibold text-stone-900">{order.value}</td>
+                    <td className="py-5">
+                      <span className={`px-2.5 py-1 text-[10px] font-bold rounded-full ${order.statusColor}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-5 text-right">
+                      <button className="text-sm font-semibold text-stone-700 hover:text-black transition">
+                        {order.action}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Suporte e Arquivos */}
+        <div className="space-y-6">
+          {/* Suporte Direto */}
+          <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <Icon icon="solar:headset-bold-duotone" className="text-xl text-stone-800" />
+              <h2 className="text-lg font-display font-bold text-stone-900">Suporte Direto</h2>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-stone-50 hover:bg-stone-100 transition cursor-pointer">
+                <div className="text-stone-700">
+                  <Icon icon="solar:chat-round-dots-linear" className="text-xl" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-stone-900">Chat em Tempo Real</h4>
+                  <p className="text-xs text-stone-500">Tempo de espera: 2 min</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-stone-50 hover:bg-stone-100 transition cursor-pointer">
+                <div className="text-stone-700">
+                  <Icon icon="solar:letter-linear" className="text-xl" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-stone-900">Envie um E-mail</h4>
+                  <p className="text-xs text-stone-500">Resposta em até 24h</p>
+                </div>
+              </div>
+            </div>
+
+            <button className="w-full py-3.5 bg-black text-white rounded-xl text-xs font-bold tracking-wider hover:bg-stone-800 transition">
+              FALAR COM UM CONSULTOR
+            </button>
+          </div>
+
+          {/* Arquivos Exclusivos */}
+          <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
+            <h2 className="text-lg font-display font-bold text-stone-900 mb-6">Arquivos Exclusivos</h2>
+            
+            <div className="space-y-4">
+              {[
+                { name: "Guia de Manutenção 2024", icon: "solar:document-text-linear" },
+                { name: "Catálogo Verão Premium", icon: "solar:notebook-linear" },
+                { name: "Certificado de Autenticidade", icon: "solar:medal-ribbon-linear" },
+              ].map((file, idx) => (
+                <div key={idx} className="flex items-center justify-between group cursor-pointer border-b border-stone-50 pb-4 last:border-0 last:pb-0">
+                  <div className="flex items-center gap-3">
+                    <Icon icon={file.icon} className="text-lg text-stone-400 group-hover:text-stone-900 transition" />
+                    <span className="text-sm text-stone-600 group-hover:text-stone-900 font-medium transition">{file.name}</span>
+                  </div>
+                  <button className="text-stone-400 group-hover:text-stone-900 transition p-1 hover:bg-stone-100 rounded-md">
+                    <Icon icon="solar:download-linear" className="text-lg" />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
