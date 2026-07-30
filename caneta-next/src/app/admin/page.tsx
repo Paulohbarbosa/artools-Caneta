@@ -518,11 +518,11 @@ export default function AdminPanel() {
                         { day: "Dom", val: 80 }
                       ].map((item, idx) => (
                         <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end">
-                          <div className="w-full bg-white/5 hover:bg-white/20 transition rounded-t-lg relative group flex items-end justify-center" style={{ height: `${(item.val / 130) * 100}%` }}>
-                            <div className="absolute -top-8 bg-black border border-stone-300 text-stone-900 text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition font-mono z-10 pointer-events-none">
+                          <div className="w-full bg-stone-100 hover:bg-stone-200 transition rounded-t-lg relative group flex items-start justify-center" style={{ height: `${(item.val / 130) * 100}%` }}>
+                            <div className="absolute -top-8 bg-stone-900 text-white shadow-md text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition font-mono z-10 pointer-events-none whitespace-nowrap">
                               R${(item.val * 35).toFixed(0)}
                             </div>
-                            <div className="w-full bg-white rounded-t-lg transition duration-300" style={{ height: "4px" }} />
+                            <div className="w-full bg-emerald-500 rounded-t-lg transition duration-300" style={{ height: "4px" }} />
                           </div>
                           <span className="text-[10px] text-stone-500 font-mono">{item.day}</span>
                         </div>
