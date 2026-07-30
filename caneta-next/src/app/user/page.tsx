@@ -5,6 +5,13 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import gsap from "gsap";
 
+import DashboardTab from "@/app/user/Components/DashboardTab";
+import OrdersTab from "@/app/user/Components/OrdersTab";
+import ProfileTab from "@/app/user/Components/ProfileTab";
+import AddressesTab from "@/app/user/Components/AddressesTab";
+import PaymentsTab from "@/app/user/Components/PaymentsTab";
+import SecurityTab from "@/app/user/Components/SecurityTab";
+
 type Tab =
   | "dashboard"
   | "orders"
@@ -112,7 +119,7 @@ export default function UserPage() {
           filter: "blur(0px)",
           duration: 0.8,
           ease: "power3.out",
-        }
+        },
       );
     }
   }, [isAuthenticated, activeTab]);
@@ -469,301 +476,22 @@ export default function UserPage() {
 
             {/* TAB CONTENT CONTAINER */}
             <div ref={activeContentRef} className="md:col-span-9">
-              {activeTab === "dashboard" && (
-                /* TAB: DASHBOARD */
-                <div className="space-y-8">
-                  <div>
-                    <h2 className="text-3xl font-display font-medium text-stone-900 mb-2">
-                      Olá, Paulo
-                    </h2>
-                    <p className="text-stone-500 text-sm">
-                      Bem-vindo à sua área exclusiva de controle.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-40">
-                      <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center">
-                        <Icon icon="solar:box-linear" className="text-xl" />
-                      </div>
-                      <div>
-                        <span className="text-xs text-stone-500 font-mono block">
-                          Último Pedido
-                        </span>
-                        <span className="text-lg font-medium text-stone-900 mt-1 block">
-                          #AR-2026-892
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-40">
-                      <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center">
-                        <Icon
-                          icon="solar:shield-check-linear"
-                          className="text-xl"
-                        />
-                      </div>
-                      <div>
-                        <span className="text-xs text-stone-500 font-mono block">
-                          Garantia
-                        </span>
-                        <span className="text-lg font-medium text-emerald-600 mt-1 block">
-                          Vitalícia Ativa
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-40">
-                      <div className="w-10 h-10 bg-black/5 rounded-xl flex items-center justify-center">
-                        <Icon icon="solar:crown-linear" className="text-xl" />
-                      </div>
-                      <div>
-                        <span className="text-xs text-stone-500 font-mono block">
-                          Club Membership
-                        </span>
-                        <span className="text-lg font-medium text-stone-900 mt-1 block">
-                          Creator Club
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "orders" && (
-                /* TAB: ORDERS */
-                <div>
-                  <h2 className="text-3xl font-display font-medium text-stone-900 mb-2">
-                    Pedidos
-                  </h2>
-                  <p className="text-stone-500 mb-8">
-                    Histórico de compras e envios.
-                  </p>
-
-                  <div className="glass-panel rounded-2xl overflow-hidden border border-black/10">
-                    <table className="w-full border-collapse text-left">
-                      <thead>
-                        <tr className="border-b border-black/10 text-xs font-mono uppercase tracking-widest text-stone-500">
-                          <th className="p-4 pl-6">Pedido</th>
-                          <th className="p-4">Data</th>
-                          <th className="p-4">Status</th>
-                          <th className="p-4 text-right pr-6">Total</th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-sm">
-                        <tr className="hover:bg-white/40 transition-colors">
-                          <td className="p-4 pl-6 font-mono font-medium">
-                            #AR-2026-892
-                          </td>
-                          <td className="p-4">18/07/2026</td>
-                          <td className="p-4 text-amber-600 font-medium">
-                            Em trânsito
-                          </td>
-                          <td className="p-4 text-right pr-6 font-medium">
-                            $149.00
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              )}
-
+              {activeTab === "dashboard" && <DashboardTab />}
+              {activeTab === "orders" && <OrdersTab />}
               {activeTab === "profile" && (
-                /* TAB: PROFILE */
-                <div className="max-w-2xl">
-                  <h2 className="text-3xl font-display font-medium text-stone-900 mb-2">
-                    Perfil
-                  </h2>
-                  <p className="text-stone-500 mb-8">
-                    Atualize suas informações pessoais.
-                  </p>
-
-                  <div className="glass-panel rounded-2xl p-8 border border-black/10">
-                    <form onSubmit={handleSaveProfile} className="space-y-6">
-                      <div className="input-group">
-                        <input
-                          type="text"
-                          id="prof-name"
-                          className="floating-input"
-                          placeholder=" "
-                          defaultValue="Paulo"
-                        />
-                        <label htmlFor="prof-name" className="floating-label">
-                          Nome
-                        </label>
-                      </div>
-
-                      <div className="input-group">
-                        <input
-                          type="email"
-                          id="prof-email"
-                          className="floating-input"
-                          placeholder=" "
-                          defaultValue="paulo@exemplo.com"
-                        />
-                        <label htmlFor="prof-email" className="floating-label">
-                          E-mail
-                        </label>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="input-group">
-                          <input
-                            type="tel"
-                            id="prof-phone"
-                            className="floating-input"
-                            placeholder=" "
-                            defaultValue="(11) 99999-9999"
-                          />
-                          <label
-                            htmlFor="prof-phone"
-                            className="floating-label"
-                          >
-                            Telefone
-                          </label>
-                        </div>
-                        <div className="input-group">
-                          <input
-                            type="text"
-                            id="prof-cpf"
-                            className="floating-input"
-                            placeholder=" "
-                            defaultValue="123.456.789-00"
-                          />
-                          <label htmlFor="prof-cpf" className="floating-label">
-                            CPF
-                          </label>
-                        </div>
-                      </div>
-
-                      <div className="pt-6 border-t border-black/10 flex justify-end">
-                        <button
-                          type="submit"
-                          className="px-8 py-3 bg-stone-900 text-white rounded-xl text-sm font-medium hover:bg-stone-800 transition-all shadow-xl"
-                        >
-                          Salvar Alterações
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
+                <ProfileTab handleSaveProfile={handleSaveProfile} />
               )}
-
               {activeTab === "addresses" && (
-                /* TAB: ADDRESSES */
-                <div className="text-center py-20">
-                  <Icon
-                    icon="solar:map-point-linear"
-                    className="text-6xl text-stone-600 mb-4 mx-auto"
-                  />
-                  <h3 className="text-xl text-stone-900 font-display mb-2">
-                    Nenhum endereço cadastrado
-                  </h3>
-                  <p className="text-stone-500 mb-6">
-                    Adicione um endereço para facilitar suas futuras compras.
-                  </p>
-                  <button
-                    onClick={() =>
-                      showToast("Endereço", "Recurso em desenvolvimento.")
-                    }
-                    className="px-6 py-3 bg-black/5 text-stone-900 rounded-xl text-sm font-medium hover:bg-black/10 transition-colors border border-black/10"
-                  >
-                    Adicionar Endereço
-                  </button>
-                </div>
+                <AddressesTab showToast={showToast} />
               )}
-
               {activeTab === "payments" && (
-                /* TAB: PAYMENTS */
-                <div className="text-center py-20">
-                  <Icon
-                    icon="solar:card-linear"
-                    className="text-6xl text-stone-600 mb-4 mx-auto"
-                  />
-                  <h3 className="text-xl text-stone-900 font-display mb-2">
-                    Nenhuma forma de pagamento
-                  </h3>
-                  <p className="text-stone-500 mb-6">
-                    Guarde seus cartões de forma criptografada para checkout em
-                    1 clique.
-                  </p>
-                  <button
-                    onClick={() =>
-                      showToast("Pagamento", "Recurso em desenvolvimento.")
-                    }
-                    className="px-6 py-3 bg-black/5 text-stone-900 rounded-xl text-sm font-medium hover:bg-black/10 transition-colors border border-black/10"
-                  >
-                    Adicionar Cartão
-                  </button>
-                </div>
+                <PaymentsTab showToast={showToast} />
               )}
-
               {activeTab === "security" && (
-                /* TAB: SECURITY */
-                <div className="max-w-2xl">
-                  <h2 className="text-3xl font-display font-medium text-stone-900 mb-2">
-                    Segurança
-                  </h2>
-                  <p className="text-stone-500 mb-10">
-                    Proteja o seu ecossistema.
-                  </p>
-
-                  <div className="glass-panel rounded-2xl p-8 border border-black/10 mb-6">
-                    <h3 className="text-lg font-medium text-stone-900 mb-4">
-                      Alterar Senha
-                    </h3>
-                    <div className="space-y-4 mb-6">
-                      <div className="input-group">
-                        <input
-                          type="password"
-                          id="sec-current"
-                          className="floating-input"
-                          placeholder=" "
-                        />
-                        <label htmlFor="sec-current" className="floating-label">
-                          Senha Atual
-                        </label>
-                      </div>
-                      <div className="input-group">
-                        <input
-                          type="password"
-                          id="sec-new"
-                          className="floating-input"
-                          placeholder=" "
-                        />
-                        <label htmlFor="sec-new" className="floating-label">
-                          Nova Senha
-                        </label>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() =>
-                        showToast("Segurança", "Senha atualizada com sucesso.")
-                      }
-                      className="px-6 py-3 bg-black/5 text-stone-900 rounded-xl text-sm font-medium hover:bg-black/10 transition-colors border border-black/10"
-                    >
-                      Atualizar Senha
-                    </button>
-                  </div>
-
-                  <div className="glass-panel rounded-2xl p-8 border border-black/10 flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-medium text-stone-900 mb-1">
-                        Sessões Ativas
-                      </h3>
-                      <p className="text-sm text-stone-500">
-                        Você está logado em 1 dispositivo.
-                      </p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="px-4 py-2 bg-red-500/10 text-red-400 rounded-lg text-sm font-medium hover:bg-red-500/20 transition-colors border border-red-500/20"
-                    >
-                      Encerrar Todas
-                    </button>
-                  </div>
-                </div>
+                <SecurityTab
+                  showToast={showToast}
+                  handleLogout={handleLogout}
+                />
               )}
             </div>
           </div>
