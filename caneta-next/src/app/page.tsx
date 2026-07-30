@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Header from "@/components/Header";
+import FloatingIndex from "@/components/FloatingIndex";
 
 // Registra o plugin ScrollTrigger no GSAP para possibilitar animações atreladas ao scroll da página
 gsap.registerPlugin(ScrollTrigger);
@@ -735,6 +736,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* SUMÁRIO FLUTUANTE */}
+      <FloatingIndex />
     </>
   );
 }
