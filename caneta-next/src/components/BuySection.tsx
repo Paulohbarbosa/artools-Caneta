@@ -66,42 +66,56 @@ export default function BuySection() {
           </div>
 
           {/* Card Pro */}
-          <div className="bg-[#111111]/90 backdrop-blur-xl border border-white/10 p-10 rounded-2xl flex flex-col justify-center items-center h-[480px] shadow-2xl shadow-black/80 relative transform md:-translate-y-6 hover:scale-[1.02] transition-transform duration-500 reveal-up delay-300 w-full">
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative group z-10 reveal-up delay-300 transform md:-translate-y-6 hover:scale-[1.02] transition-transform duration-500 w-full h-[480px]">
+            {/* Glow/Beam Effect Layers */}
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-stone-100 to-stone-500 rounded-2xl blur opacity-20 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
 
-            <div className="text-center w-full flex-grow flex flex-col justify-center items-center">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#111] mb-6 shadow-lg">
-                <Icon icon="solar:crown-bold" className="text-xl" />
-              </div>
-
-              <h3 className="text-[2.5rem] font-display text-white mb-6 tracking-tight leading-none">
-                Artools<span className="font-light">Pro</span>
-              </h3>
-
-              <div className="w-6 h-[1px] bg-stone-600 mb-4" />
-
-              <div className="text-[9px] font-mono uppercase tracking-[0.3em] text-stone-400 mb-10">
-                Signature Series • 2026
-              </div>
+            {/* Rotating Beam */}
+            <div className="absolute -inset-[2px] rounded-2xl overflow-hidden opacity-0 group-hover:opacity-100 transition duration-500">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] animate-[spin_8s_linear_infinite]"></div>
             </div>
 
-            <div className="w-full mt-auto flex items-center flex-col justify-center">
-              <div className="text-3xl font-display text-white mb-4">
-                $100
-                <span className="text-xs text-stone-500 font-mono ml-1 uppercase">
-                  usd
-                </span>
+            {/* Card Content */}
+            <div className="relative bg-[#111111]/90 backdrop-blur-xl border border-white/10 p-10 rounded-2xl flex flex-col justify-center items-center h-full shadow-2xl shadow-black/80 w-full">
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="text-center w-full flex-grow flex flex-col justify-center items-center">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#111] mb-6 shadow-lg">
+                  <Icon icon="solar:crown-bold" className="text-xl" />
+                </div>
+
+                <h3 className="text-[2.5rem] font-display text-white mb-6 tracking-tight leading-none">
+                  Artools<span className="font-light">Pro</span>
+                </h3>
+
+                <div className="w-6 h-[1px] bg-stone-600 mb-4" />
+
+                <div className="text-[9px] font-mono uppercase tracking-[0.3em] text-stone-400 mb-10">
+                  Signature Series • 2026
+                </div>
               </div>
-              <Link
-                href="/compra"
-                className="w-full py-3.5 px-6 bg-white text-[#111] rounded-full text-[13px] font-medium hover:bg-stone-200 transition-colors flex items-center justify-center gap-2 group"
-              >
-                Get Early Access
-                <Icon
-                  icon="solar:arrow-right-linear"
-                  className="text-lg group-hover:translate-x-1 transition-transform"
-                />
-              </Link>
+
+              <div className="w-full mt-auto flex items-center flex-col justify-center">
+                <div className="text-3xl font-display text-white mb-4">
+                  $100
+                  <span className="text-xs text-stone-500 font-mono ml-1 uppercase">
+                    usd
+                  </span>
+                </div>
+                <Link
+                  href="/compra"
+                  className="relative group/btn overflow-hidden w-full py-3.5 px-6 bg-white text-[#111] rounded-full text-[13px] font-medium transition-transform hover:scale-105 flex items-center justify-center"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Get Early Access
+                    <Icon
+                      icon="solar:arrow-right-linear"
+                      className="text-lg group-hover/btn:translate-x-1 transition-transform"
+                    />
+                  </span>
+                  <div className="absolute inset-0 bg-stone-200 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300"></div>
+                </Link>
+              </div>
             </div>
           </div>
 
