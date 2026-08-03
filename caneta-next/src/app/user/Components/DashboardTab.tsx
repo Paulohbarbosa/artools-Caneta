@@ -47,7 +47,7 @@ export default function DashboardTab() {
       status: "Ativa",
     },
     statusinfo: {
-      title: "Diamente",
+      title: "Diamante",
       status: "Ativa",
       points: "12.450",
     },
@@ -56,7 +56,7 @@ export default function DashboardTab() {
   // data de hoje é 03/08/2026, data de compra é 25/08/2025, então faltam 11 meses e 2 dias
   // para calcular isso, subtraia a data de compra da data de hoje
   // e converta o resultado para meses
-  function timeRemainingGarantia() {
+  function timeRemainingGarantia(date: string, type: string) {
     const [dia, mes, ano] = userInfo.garantiainfo.dataCompra.split("/");
     const dataCompra = new Date(Number(ano), Number(mes) - 1, Number(dia));
     const dataHoje = new Date();
@@ -109,23 +109,20 @@ export default function DashboardTab() {
         <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
           <div className="flex justify-between items-start">
             <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
-              <Icon icon="solar:verified-check-linear" className="text-xl" />
+              <Icon icon="solar:bag-linear" className="text-xl" />
             </div>
             <span className="bg-stone-900 text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
               {userInfo.garantiainfo.status}
             </span>
           </div>
           <div>
-            <p className="text-sm text-stone-500 mb-1">
-              {userInfo.garantiainfo.type}
-            </p>
+            <p className="text-sm text-stone-500 mb-1">Histórico de Pedidos</p>
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
-              {/* calcular o tempo restante da garantia em meses */}
-              {timeRemainingGarantia()}
-              <span className="ml-2 text-xs text-stone-500">Restantes</span>
+              {orders.length}
+              <span className="ml-2 text-xs text-stone-500">Pedidos</span>
             </h3>
             <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
-              Gerenci as suas Garantias
+              Ver todos os pedidos
               <Icon icon="solar:alt-arrow-right-linear" />
             </button>
           </div>
@@ -199,6 +196,7 @@ export default function DashboardTab() {
                   <th className="pb-4 font-medium">Data</th>
                   <th className="pb-4 font-medium">Valor</th>
                   <th className="pb-4 font-medium">Status</th>
+                  <th className="pb-4 font-medium">Garantia</th>
                   <th className="pb-4 font-medium text-right">Ações</th>
                 </tr>
               </thead>
@@ -238,6 +236,9 @@ export default function DashboardTab() {
                         {order.status}
                       </span>
                     </td>
+                    <td className="py-5 text-stone-500">
+                      {order.garantiaType}
+                    </td>
                     <td className="py-5 text-right">
                       <button className="text-sm font-semibold text-stone-700 hover:text-black transition">
                         {order.action}
@@ -247,94 +248,6 @@ export default function DashboardTab() {
                 ))}
               </tbody>
             </table>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Suporte e Arquivos */}
-        {/* Suporte Direto */}
-        <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
-          <div className="flex items-center gap-2 mb-6">
-            <Icon
-              icon="solar:headset-bold-duotone"
-              className="text-xl text-stone-800"
-            />
-            <h2 className="text-lg font-display font-bold text-stone-900">
-              Suporte Direto
-            </h2>
-          </div>
-
-          <div className="space-y-3 mb-6">
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-stone-50 hover:bg-stone-100 transition cursor-pointer">
-              <div className="text-stone-700">
-                <Icon icon="solar:chat-round-dots-linear" className="text-xl" />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-stone-900">
-                  Chat em Tempo Real
-                </h4>
-                <p className="text-xs text-stone-500">Tempo de espera: 2 min</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 p-4 rounded-xl bg-stone-50 hover:bg-stone-100 transition cursor-pointer">
-              <div className="text-stone-700">
-                <Icon icon="solar:letter-linear" className="text-xl" />
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-stone-900">
-                  Envie um E-mail
-                </h4>
-                <p className="text-xs text-stone-500">Resposta em até 24h</p>
-              </div>
-            </div>
-          </div>
-
-          <button className="w-full py-3.5 bg-black text-white rounded-xl text-xs font-bold tracking-wider hover:bg-stone-800 transition">
-            FALAR COM UM CONSULTOR
-          </button>
-        </div>
-
-        {/* Arquivos Exclusivos */}
-        <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
-          <h2 className="text-lg font-display font-bold text-stone-900 mb-6">
-            Arquivos Exclusivos
-          </h2>
-
-          <div className="space-y-4">
-            {[
-              {
-                name: "Guia de Manutenção 2024",
-                icon: "solar:document-text-linear",
-              },
-              {
-                name: "Catálogo Verão Premium",
-                icon: "solar:notebook-linear",
-              },
-              {
-                name: "Certificado de Autenticidade",
-                icon: "solar:medal-ribbon-linear",
-              },
-            ].map((file, idx) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between group cursor-pointer border-b border-stone-50 pb-4 last:border-0 last:pb-0"
-              >
-                <div className="flex items-center gap-3">
-                  <Icon
-                    icon={file.icon}
-                    className="text-lg text-stone-400 group-hover:text-stone-900 transition"
-                  />
-                  <span className="text-sm text-stone-600 group-hover:text-stone-900 font-medium transition">
-                    {file.name}
-                  </span>
-                </div>
-                <button className="text-stone-400 group-hover:text-stone-900 transition p-1 hover:bg-stone-100 rounded-md">
-                  <Icon icon="solar:download-linear" className="text-lg" />
-                </button>
-              </div>
-            ))}
           </div>
         </div>
       </div>
