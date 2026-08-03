@@ -11,6 +11,7 @@ import ProfileTab from "@/app/user/Components/ProfileTab";
 import AddressesTab from "@/app/user/Components/AddressesTab";
 import PaymentsTab from "@/app/user/Components/PaymentsTab";
 import SecurityTab from "@/app/user/Components/SecurityTab";
+import Footer from "@/app/user/Components/Footer";
 
 type Tab =
   | "dashboard"
@@ -497,6 +498,7 @@ export default function UserPage() {
           </div>
         </div>
       )}
+      <Footer />
     </>
   );
 }
