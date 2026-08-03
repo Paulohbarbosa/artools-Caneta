@@ -57,9 +57,14 @@ export default function DashboardTab() {
   // para calcular isso, subtraia a data de compra da data de hoje
   // e converta o resultado para meses
   function timeRemainingGarantia(date: string, type: string) {
-    const [dia, mes, ano] = userInfo.garantiainfo.dataCompra.split("/");
-    const dataCompra = new Date(Number(ano), Number(mes) - 1, Number(dia));
+    const [dia, mes, ano] = date.split("/");
+    let dataCompra = new Date(Number(ano), Number(mes) - 1, Number(dia));
     const dataHoje = new Date();
+
+    // se a garantia for estendida, some 1 ano à data de compra
+    if (type === "Extendida") {
+      dataCompra.setFullYear(dataCompra.getFullYear() + 1);
+    }
     const diff = dataHoje.getTime() - dataCompra.getTime();
     const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
     return `${dias} Dias`;
