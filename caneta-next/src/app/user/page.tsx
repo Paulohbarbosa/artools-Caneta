@@ -6,20 +6,7 @@ import { Icon } from "@iconify/react";
 import gsap from "gsap";
 
 import DashboardTab from "@/app/user/Components/DashboardTab";
-import OrdersTab from "@/app/user/Components/OrdersTab";
-import ProfileTab from "@/app/user/Components/ProfileTab";
-import AddressesTab from "@/app/user/Components/AddressesTab";
-import PaymentsTab from "@/app/user/Components/PaymentsTab";
-import SecurityTab from "@/app/user/Components/SecurityTab";
 import Footer from "@/app/user/Components/Footer";
-
-type Tab =
-  | "dashboard"
-  | "orders"
-  | "profile"
-  | "addresses"
-  | "payments"
-  | "security";
 
 interface Toast {
   show: boolean;
@@ -32,8 +19,6 @@ export default function UserPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // Alterna entre tela de 'login' e de 'register' (cadastro)
   const [authModal, setAuthModal] = useState<"login" | "register">("login");
-  // Aba ativa atual do painel administrativo
-  const [activeTab, setActiveTab] = useState<Tab>("dashboard");
   // Abre/fecha menu de navegação responsivo em dispositivos mobile
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // Controle de exibição e conteúdo do balão de alerta (toast)
@@ -123,7 +108,7 @@ export default function UserPage() {
         },
       );
     }
-  }, [isAuthenticated, activeTab]);
+  }, [isAuthenticated]);
 
   return (
     <>
@@ -196,34 +181,9 @@ export default function UserPage() {
       {isMobileMenuOpen && isAuthenticated && (
         <div className="md:hidden bg-stone-900 text-white p-6 border-b border-white/10">
           <nav className="flex flex-col gap-4">
-            {(
-              [
-                "dashboard",
-                "orders",
-                "profile",
-                "addresses",
-                "payments",
-                "security",
-              ] as Tab[]
-            ).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => {
-                  setActiveTab(tab);
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`text-left py-2 font-display text-lg capitalize ${
-                  activeTab === tab
-                    ? "text-white font-medium"
-                    : "text-stone-400"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
             <button
               onClick={handleLogout}
-              className="text-left py-2 font-display text-lg text-red-400 mt-4 border-t border-white/10 pt-4"
+              className="text-left py-2 font-display text-lg text-red-400"
             >
               Sair da Conta
             </button>
@@ -420,80 +380,16 @@ export default function UserPage() {
       ) : (
         /* ESTADO 2: LOGADO (PAINEL DO USUÁRIO) */
         <div className="flex-grow container mx-auto px-6 md:px-12 py-12 flex justify-center">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 w-full max-w-6xl">
-            {/* SIDEBAR */}
-            <aside className="md:col-span-3 flex flex-col gap-2">
-              <nav className="flex flex-col gap-1">
-                {(
-                  [
-                    "dashboard",
-                    "orders",
-                    "profile",
-                    "addresses",
-                    "payments",
-                    "security",
-                  ] as Tab[]
-                ).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      activeTab === tab
-                        ? "bg-white text-stone-900 shadow-sm"
-                        : "text-stone-500 hover:bg-black/5 hover:text-stone-950"
-                    }`}
-                  >
-                    <Icon
-                      icon={
-                        tab === "dashboard"
-                          ? "solar:widget-linear"
-                          : tab === "orders"
-                            ? "solar:box-linear"
-                            : tab === "profile"
-                              ? "solar:user-linear"
-                              : tab === "addresses"
-                                ? "solar:map-point-linear"
-                                : tab === "payments"
-                                  ? "solar:card-linear"
-                                  : "solar:shield-keyhole-linear"
-                      }
-                      className="text-lg"
-                    />
-                    <span className="capitalize">{tab}</span>
-                  </button>
-                ))}
-              </nav>
-
-              <div className="mt-auto pt-6 border-t border-black/10 hidden md:block">
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-sm font-medium text-red-500 hover:bg-red-500/10 transition-colors"
-                >
-                  <Icon icon="solar:logout-linear" className="text-lg" />
-                  Sair
-                </button>
-              </div>
-            </aside>
-
-            {/* TAB CONTENT CONTAINER */}
-            <div ref={activeContentRef} className="md:col-span-9">
-              {activeTab === "dashboard" && <DashboardTab />}
-              {activeTab === "orders" && <OrdersTab />}
-              {activeTab === "profile" && (
-                <ProfileTab handleSaveProfile={handleSaveProfile} />
-              )}
-              {activeTab === "addresses" && (
-                <AddressesTab showToast={showToast} />
-              )}
-              {activeTab === "payments" && (
-                <PaymentsTab showToast={showToast} />
-              )}
-              {activeTab === "security" && (
-                <SecurityTab
-                  showToast={showToast}
-                  handleLogout={handleLogout}
-                />
-              )}
+          <div ref={activeContentRef} className="w-full max-w-6xl">
+            <DashboardTab />
+            <div className="mt-12 flex justify-end">
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 px-6 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-colors border border-red-100"
+              >
+                <Icon icon="solar:logout-linear" className="text-lg" />
+                Sair da Conta
+              </button>
             </div>
           </div>
         </div>

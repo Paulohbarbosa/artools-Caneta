@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 
 export default function DashboardTab() {
-  const [activeSection, setActiveSection] = useState<"compras" | "perfil" | "pagamento" | "status">("compras");
+  const [activeSection, setActiveSection] = useState<
+    "compras" | "perfil" | "pagamento" | "status"
+  >("compras");
   const orders = [
     {
       id: "#98421-BR",
@@ -53,6 +55,36 @@ export default function DashboardTab() {
       points: "12.450",
     },
   };
+  const enderecos = [
+    {
+      id: 1,
+      isPrincipal: true,
+      nome: "Casa",
+      logradouro: "Avenida Paulista",
+      numero: "789",
+      complemento: "",
+      bairro: "Jardins",
+      cidade: "São Paulo",
+      estado: "SP",
+      cep: "01310-100",
+    },
+  ];
+  const [enderecoSelecionado, setEnderecoSelecionado] = useState(enderecos[0]);
+
+  const formasDePagamento = [
+    {
+      id: 1,
+      nome: "Cartão de Crédito",
+      numero: "4567",
+      tipo: "Visa",
+    },
+    {
+      id: 2,
+      nome: "Boleto",
+      numero: "1234",
+      tipo: "Boleto",
+    },
+  ];
 
   // data de hoje é 03/08/2026, data de compra é 25/08/2025, então faltam 11 meses e 2 dias
   // para calcular isso, subtraia a data de compra da data de hoje
@@ -112,7 +144,7 @@ export default function DashboardTab() {
       {/* TOP CARDS (MENU) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Compras */}
-        <div 
+        <div
           onClick={() => setActiveSection("compras")}
           className={`bg-white rounded-2xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "compras" ? "ring-2 ring-stone-900 border-transparent shadow-lg" : "border border-stone-100 hover:shadow-md"}`}
         >
@@ -121,12 +153,11 @@ export default function DashboardTab() {
             className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "compras" ? "text-stone-900 opacity-10" : "text-stone-900 opacity-5 group-hover:opacity-10"}`}
           />
           <div className="flex justify-between items-start relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "compras" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}>
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "compras" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}
+            >
               <Icon icon="solar:bag-linear" className="text-xl" />
             </div>
-            <span className="bg-stone-900 text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
-              {userInfo.garantiainfo.status}
-            </span>
           </div>
           <div className="relative z-10">
             <p className="text-sm text-stone-500 mb-1">Histórico de Pedidos</p>
@@ -134,7 +165,9 @@ export default function DashboardTab() {
               {orders.length}
               <span className="ml-2 text-xs text-stone-500">Pedidos</span>
             </h3>
-            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "compras" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}>
+            <div
+              className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "compras" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}
+            >
               Visualizar
               <Icon icon="solar:alt-arrow-right-linear" />
             </div>
@@ -142,7 +175,7 @@ export default function DashboardTab() {
         </div>
 
         {/* Perfil */}
-        <div 
+        <div
           onClick={() => setActiveSection("perfil")}
           className={`bg-white rounded-2xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "perfil" ? "ring-2 ring-stone-900 border-transparent shadow-lg" : "border border-stone-100 hover:shadow-md"}`}
         >
@@ -151,7 +184,9 @@ export default function DashboardTab() {
             className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "perfil" ? "text-stone-900 opacity-10" : "text-stone-900 opacity-5 group-hover:opacity-10"}`}
           />
           <div className="flex justify-between items-start relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "perfil" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}>
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "perfil" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}
+            >
               <Icon icon="solar:user-linear" className="text-xl" />
             </div>
           </div>
@@ -160,7 +195,9 @@ export default function DashboardTab() {
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
               {userInfo.name[0].firstName} {userInfo.name[0].lastName}
             </h3>
-            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "perfil" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}>
+            <div
+              className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "perfil" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}
+            >
               Editar perfil
               <Icon icon="solar:alt-arrow-right-linear" />
             </div>
@@ -168,7 +205,7 @@ export default function DashboardTab() {
         </div>
 
         {/* Pagamento */}
-        <div 
+        <div
           onClick={() => setActiveSection("pagamento")}
           className={`bg-white rounded-2xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "pagamento" ? "ring-2 ring-stone-900 border-transparent shadow-lg" : "border border-stone-100 hover:shadow-md"}`}
         >
@@ -177,7 +214,9 @@ export default function DashboardTab() {
             className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "pagamento" ? "text-stone-900 opacity-10" : "text-stone-900 opacity-5 group-hover:opacity-10"}`}
           />
           <div className="flex justify-between items-start relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "pagamento" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}>
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "pagamento" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}
+            >
               <Icon icon="solar:wallet-money-linear" className="text-xl" />
             </div>
           </div>
@@ -186,7 +225,9 @@ export default function DashboardTab() {
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
               Meus dados
             </h3>
-            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "pagamento" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}>
+            <div
+              className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "pagamento" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}
+            >
               Gerenciar
               <Icon icon="solar:alt-arrow-right-linear" />
             </div>
@@ -194,7 +235,7 @@ export default function DashboardTab() {
         </div>
 
         {/* Status no Club */}
-        <div 
+        <div
           onClick={() => setActiveSection("status")}
           className={`bg-[#1C1C1C] rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "status" ? "ring-2 ring-white border-transparent" : "border border-transparent hover:border-white/20"}`}
         >
@@ -203,7 +244,9 @@ export default function DashboardTab() {
             className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "status" ? "text-white opacity-10" : "text-white opacity-5 group-hover:opacity-10"}`}
           />
           <div className="flex justify-between items-center relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "status" ? "bg-white text-[#1C1C1C]" : "bg-white/10 text-white backdrop-blur-sm"}`}>
+            <div
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "status" ? "bg-white text-[#1C1C1C]" : "bg-white/10 text-white backdrop-blur-sm"}`}
+            >
               <Icon icon="solar:star-linear" className="text-xl" />
             </div>
             <span className="bg-stone-200 text-stone-600 text-xs font-bold px-3 py-1 rounded-full">
@@ -215,7 +258,9 @@ export default function DashboardTab() {
             <h3 className="text-2xl font-display font-bold text-white mb-3">
               {userInfo.statusinfo.title}
             </h3>
-            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "status" ? "text-white" : "text-stone-400 group-hover:text-white"}`}>
+            <div
+              className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "status" ? "text-white" : "text-stone-400 group-hover:text-white"}`}
+            >
               Benefícios
               <Icon icon="solar:alt-arrow-right-linear" />
             </div>
@@ -225,327 +270,349 @@ export default function DashboardTab() {
 
       {/* BOTTOM LAYOUT */}
       {activeSection === "compras" && (
-      <section className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8">
-        {/* Historico de Pedidos */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-lg font-display font-bold text-stone-900">
-              Histórico de Pedidos
-            </h2>
-            <button className="px-4 py-1.5 border border-stone-200 rounded-lg text-sm font-medium text-stone-600 hover:bg-stone-50 transition">
-              Ver Todos
-            </button>
-          </div>
+        <section className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8">
+          {/* Historico de Pedidos */}
+          <div className="lg:col-span-2 bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-lg font-display font-bold text-stone-900">
+                Histórico de Pedidos
+              </h2>
+              <button className="px-4 py-1.5 border border-stone-200 rounded-lg text-sm font-medium text-stone-600 hover:bg-stone-50 transition">
+                Ver Todos
+              </button>
+            </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead>
-                <tr className="text-xs font-mono text-stone-400 border-b border-stone-100 uppercase tracking-wider">
-                  <th className="pb-4 font-medium">Pedido</th>
-                  <th className="pb-4 font-medium">Data</th>
-                  <th className="pb-4 font-medium">Valor</th>
-                  <th className="pb-4 font-medium">Status</th>
-                  <th className="pb-4 font-medium">Garantia</th>
-                  <th className="pb-4 font-medium text-right">Ações</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-stone-100">
-                {orders.map((order, index) => (
-                  <tr
-                    key={index}
-                    className="group hover:bg-stone-50/50 transition-colors"
-                  >
-                    <td className="py-5">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-stone-100 flex items-center justify-center text-stone-500">
-                          <Icon icon="solar:bag-3-linear" className="text-lg" />
-                        </div>
-                        <span className="font-semibold text-stone-900">
-                          {order.id}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-5 text-stone-500 w-24">
-                      <div className="flex flex-col">
-                        <span>
-                          {order.date.split(" ")[0]} {order.date.split(" ")[1]}
-                        </span>
-                        <span className="text-xs">
-                          {order.date.split(" ")[2]}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-5 font-semibold text-stone-900">
-                      {order.value}
-                    </td>
-                    <td className="py-5">
-                      <span
-                        className={`px-2.5 py-1 text-[10px] font-bold rounded-full ${order.statusColor}`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-                    <td className="py-5 text-stone-500">
-                      {order.garantiaType}
-                    </td>
-                    <td className="py-5 text-right">
-                      <button className="text-sm font-semibold text-stone-700 hover:text-black transition">
-                        {order.action}
-                      </button>
-                    </td>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm text-left">
+                <thead>
+                  <tr className="text-xs font-mono text-stone-400 border-b border-stone-100 uppercase tracking-wider">
+                    <th className="pb-4 font-medium">Pedido</th>
+                    <th className="pb-4 font-medium">Data</th>
+                    <th className="pb-4 font-medium">Valor</th>
+                    <th className="pb-4 font-medium">Status</th>
+                    <th className="pb-4 font-medium">Garantia</th>
+                    <th className="pb-4 font-medium text-right">Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-stone-100">
+                  {orders.map((order, index) => (
+                    <tr
+                      key={index}
+                      className="group hover:bg-stone-50/50 transition-colors"
+                    >
+                      <td className="py-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-stone-100 flex items-center justify-center text-stone-500">
+                            <Icon
+                              icon="solar:bag-3-linear"
+                              className="text-lg"
+                            />
+                          </div>
+                          <span className="font-semibold text-stone-900">
+                            {order.id}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-5 text-stone-500 w-24">
+                        <div className="flex flex-col">
+                          <span>
+                            {order.date.split(" ")[0]}{" "}
+                            {order.date.split(" ")[1]}
+                          </span>
+                          <span className="text-xs">
+                            {order.date.split(" ")[2]}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-5 font-semibold text-stone-900">
+                        {order.value}
+                      </td>
+                      <td className="py-5">
+                        <span
+                          className={`px-2.5 py-1 text-[10px] font-bold rounded-full ${order.statusColor}`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                      <td className="py-5 text-stone-500">
+                        {order.garantiaType}
+                      </td>
+                      <td className="py-5 text-right">
+                        <button className="text-sm font-semibold text-stone-700 hover:text-black transition">
+                          {order.action}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
 
       {/* PERFIL E SEGURANÇA */}
       {activeSection === "perfil" && (
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
-        {/* Perfil Section */}
-        <div>
-          <div className="mb-6">
-            <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
-              Perfil
-            </h2>
-            <p className="text-stone-500 text-sm">
-              Atualize suas informações pessoais.
-            </p>
-          </div>
-
-          <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 space-y-6">
-            <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
-              <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
-                Nome
-              </label>
-              <input
-                type="text"
-                defaultValue="Paulo"
-                className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
-              />
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
+          {/* Perfil Section */}
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
+                Perfil
+              </h2>
+              <p className="text-stone-500 text-sm">
+                Atualize suas informações pessoais.
+              </p>
             </div>
 
-            <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
-              <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
-                E-mail
-              </label>
-              <input
-                type="email"
-                defaultValue="paulo@exemplo.com"
-                className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
-                <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
-                  Telefone
-                </label>
-                <input
-                  type="text"
-                  defaultValue="(11) 99999-9999"
-                  className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
-                />
-              </div>
-              <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
-                <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
-                  CPF
-                </label>
-                <input
-                  type="text"
-                  defaultValue="123.456.789-00"
-                  className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
-                />
-              </div>
-            </div>
-
-            <hr className="border-stone-200/80 my-2" />
-
-            <div className="flex justify-end">
-              <button className="bg-[#1a1a1a] text-white px-6 py-3.5 rounded-xl text-sm font-semibold hover:bg-black transition shadow-lg shadow-stone-900/10">
-                Salvar Alterações
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Segurança Section */}
-        <div>
-          <div className="mb-6">
-            <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
-              Segurança
-            </h2>
-            <p className="text-stone-500 text-sm">Proteja o seu ecossistema.</p>
-          </div>
-
-          <div className="space-y-6">
-            {/* Alterar Senha Card */}
             <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 space-y-6">
-              <h3 className="text-base font-semibold text-stone-900">
-                Alterar Senha
-              </h3>
+              <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
+                  Nome
+                </label>
+                <input
+                  type="text"
+                  defaultValue="Paulo"
+                  className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
+                />
+              </div>
 
-              <div className="space-y-4">
-                <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-3.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+              <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  defaultValue="paulo@exemplo.com"
+                  className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                  <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
+                    Telefone
+                  </label>
                   <input
-                    type="password"
-                    placeholder="Senha Atual"
-                    className="w-full bg-transparent border-none p-0 text-stone-900 placeholder:text-stone-500 focus:ring-0 outline-none text-sm font-medium"
+                    type="text"
+                    defaultValue="(11) 99999-9999"
+                    className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
                   />
                 </div>
-                <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-3.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-2.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                  <label className="block text-[10px] font-semibold tracking-wider text-stone-500 uppercase mb-0.5">
+                    CPF
+                  </label>
                   <input
-                    type="password"
-                    placeholder="Nova Senha"
-                    className="w-full bg-transparent border-none p-0 text-stone-900 placeholder:text-stone-500 focus:ring-0 outline-none text-sm font-medium"
+                    type="text"
+                    defaultValue="123.456.789-00"
+                    className="w-full bg-transparent border-none p-0 text-stone-900 focus:ring-0 outline-none text-sm font-medium"
                   />
                 </div>
               </div>
 
-              <div>
-                <button className="bg-stone-200/80 text-stone-800 border border-stone-200 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-stone-300 transition">
-                  Atualizar Senha
+              <hr className="border-stone-200/80 my-2" />
+
+              <div className="flex justify-end">
+                <button className="bg-[#1a1a1a] text-white px-6 py-3.5 rounded-xl text-sm font-semibold hover:bg-black transition shadow-lg shadow-stone-900/10">
+                  Salvar Alterações
                 </button>
               </div>
             </div>
+          </div>
 
-            {/* Sessões Ativas Card */}
-            <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-              <div>
-                <h3 className="text-base font-semibold text-stone-900 mb-1">
-                  Sessões Ativas
+          {/* Segurança Section */}
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
+                Segurança
+              </h2>
+              <p className="text-stone-500 text-sm">
+                Proteja o seu ecossistema.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {/* Alterar Senha Card */}
+              <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 space-y-6">
+                <h3 className="text-base font-semibold text-stone-900">
+                  Alterar Senha
                 </h3>
-                <p className="text-sm text-stone-500">
-                  Você está logado em 1 dispositivo.
-                </p>
+
+                <div className="space-y-4">
+                  <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-3.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                    <input
+                      type="password"
+                      placeholder="Senha Atual"
+                      className="w-full bg-transparent border-none p-0 text-stone-900 placeholder:text-stone-500 focus:ring-0 outline-none text-sm font-medium"
+                    />
+                  </div>
+                  <div className="bg-[#EAEAEA] border border-stone-200/60 rounded-xl px-4 py-3.5 transition-colors focus-within:border-stone-400 focus-within:bg-white">
+                    <input
+                      type="password"
+                      placeholder="Nova Senha"
+                      className="w-full bg-transparent border-none p-0 text-stone-900 placeholder:text-stone-500 focus:ring-0 outline-none text-sm font-medium"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <button className="bg-stone-200/80 text-stone-800 border border-stone-200 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-stone-300 transition">
+                    Atualizar Senha
+                  </button>
+                </div>
               </div>
-              <button className="bg-red-50 text-[#ff5a5f] border border-red-100/80 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-red-100 transition whitespace-nowrap">
-                Encerrar Todas
-              </button>
+
+              {/* Sessões Ativas Card */}
+              <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-base font-semibold text-stone-900 mb-1">
+                    Sessões Ativas
+                  </h3>
+                  <p className="text-sm text-stone-500">
+                    Você está logado em 1 dispositivo.
+                  </p>
+                </div>
+                <button className="bg-red-50 text-[#ff5a5f] border border-red-100/80 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-red-100 transition whitespace-nowrap">
+                  Encerrar Todas
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
 
       {/* ENDEREÇO E PAGAMENTO */}
       {activeSection === "pagamento" && (
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
-        {/* Endereço Section */}
-        <div>
-          <div className="mb-6">
-            <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
-              Endereços
-            </h2>
-            <p className="text-stone-500 text-sm">
-              Gerencie seus locais de entrega.
-            </p>
-          </div>
-
-          <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 space-y-6">
-            <div className="bg-[#EAEAEA] rounded-xl p-6 border border-stone-200/60 relative group hover:border-stone-300 transition-colors">
-              <div className="absolute top-6 right-6 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="text-stone-400 hover:text-stone-900 transition">
-                  <Icon icon="solar:pen-linear" className="text-lg" />
-                </button>
-                <button className="text-stone-400 hover:text-red-500 transition">
-                  <Icon
-                    icon="solar:trash-bin-trash-linear"
-                    className="text-lg"
-                  />
-                </button>
-              </div>
-              <span className="bg-[#1a1a1a] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
-                Principal
-              </span>
-              <h4 className="font-semibold text-stone-900 mt-4 mb-2">Casa</h4>
-              <p className="text-sm text-stone-500 leading-relaxed">
-                Av. Paulista, 1578 - Apto 32
-                <br />
-                Bela Vista
-                <br />
-                São Paulo, SP - 01310-200
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
+          {/* Endereço Section */}
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
+                Endereços
+              </h2>
+              <p className="text-stone-500 text-sm">
+                Gerencie seus locais de entrega.
               </p>
             </div>
 
-            <button className="w-full py-4 border-2 border-dashed border-stone-300 rounded-xl text-stone-500 font-medium hover:border-stone-400 hover:text-stone-800 transition flex items-center justify-center gap-2">
-              <Icon icon="solar:add-circle-linear" className="text-xl" />
-              Adicionar Novo Endereço
-            </button>
-          </div>
-        </div>
-
-        {/* Pagamento Section */}
-        <div>
-          <div className="mb-6">
-            <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
-              Pagamento
-            </h2>
-            <p className="text-stone-500 text-sm">
-              Gerencie seus cartões e métodos.
-            </p>
-          </div>
-
-          <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8">
-            <div className="bg-[#1C1C1C] rounded-[1.25rem] p-6 md:p-8 text-white relative overflow-hidden shadow-xl shadow-stone-900/10 group hover:-translate-y-1 transition-transform duration-300">
-              <Icon
-                icon="solar:card-bold"
-                className="absolute -bottom-6 -right-6 text-[10rem] text-white opacity-5"
-              />
-              <div className="flex justify-between items-start mb-10 relative z-10">
-                <div className="flex gap-2 relative">
-                  {/* Master Card overlap circles */}
-                  <div className="w-8 h-8 bg-red-500/80 rounded-full mix-blend-multiply"></div>
-                  <div className="w-8 h-8 bg-amber-500/80 rounded-full mix-blend-multiply -ml-4"></div>
+            <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 space-y-6">
+              {/* card endereços */}
+              <div className="bg-[#EAEAEA] rounded-xl p-6 border border-stone-200/60 relative group hover:border-stone-300 transition-colors">
+                <div className="absolute top-6 right-6 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button className="text-stone-400 hover:text-stone-900 transition">
+                    <Icon icon="solar:pen-linear" className="text-lg" />
+                  </button>
+                  <button className="text-stone-400 hover:text-red-500 transition">
+                    <Icon
+                      icon="solar:trash-bin-trash-linear"
+                      className="text-lg"
+                    />
+                  </button>
                 </div>
-                <button className="text-white/40 hover:text-red-400 transition">
-                  <Icon
-                    icon="solar:trash-bin-trash-linear"
-                    className="text-lg"
-                  />
-                </button>
-              </div>
-              <div className="relative z-10">
-                <p className="text-xl font-mono tracking-widest mb-3">
-                  **** **** **** 4242
+                <span className="bg-[#1a1a1a] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
+                  {enderecoSelecionado.isPrincipal ? "Principal" : ""}
+                </span>
+                <h4 className="font-semibold text-stone-900 mt-4 mb-2">
+                  {enderecoSelecionado.nome}
+                </h4>
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  {enderecoSelecionado.logradouro}, {enderecoSelecionado.numero}{" "}
+                  - {enderecoSelecionado.complemento}{" "}
+                  {enderecoSelecionado.bairro},
+                  <br />
+                  {enderecoSelecionado.cidade}- {enderecoSelecionado.estado}.{" "}
+                  {enderecoSelecionado.cep}
                 </p>
-                <div className="flex justify-between items-end text-sm text-white/60">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-widest mb-0.5">
-                      Nome no Cartão
-                    </p>
-                    <p className="font-medium text-white text-xs">
-                      PAULO SOUZA
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] uppercase tracking-widest mb-0.5">
-                      Validade
-                    </p>
-                    <p className="font-medium text-white text-xs">12/28</p>
-                  </div>
-                </div>
               </div>
+
+              <button className="w-full py-4 border-2 border-dashed border-stone-300 rounded-xl text-stone-500 font-medium hover:border-stone-400 hover:text-stone-800 transition flex items-center justify-center gap-2">
+                <Icon icon="solar:add-circle-linear" className="text-xl" />
+                Adicionar Novo Endereço
+              </button>
+            </div>
+          </div>
+
+          {/* Pagamento Section */}
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
+                Pagamento
+              </h2>
+              <p className="text-stone-500 text-sm">
+                Gerencie seus cartões e métodos.
+              </p>
             </div>
 
-            <button className="w-full py-4 border-2 border-dashed border-stone-300 rounded-xl text-stone-500 font-medium hover:border-stone-400 hover:text-stone-800 transition flex items-center justify-center gap-2 mt-6">
-              <Icon icon="solar:card-linear" className="text-xl" />
-              Adicionar Novo Cartão
-            </button>
+            <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8">
+              <div className="bg-[#1C1C1C] rounded-[1.25rem] p-6 md:p-8 text-white relative overflow-hidden shadow-xl shadow-stone-900/10 group hover:-translate-y-1 transition-transform duration-300">
+                <Icon
+                  icon="solar:card-bold"
+                  className="absolute -bottom-6 -right-6 text-[10rem] text-white opacity-5"
+                />
+                <div className="flex justify-between items-start mb-10 relative z-10">
+                  <div className="flex gap-2 relative">
+                    {/* Master Card overlap circles */}
+                    <div className="w-8 h-8 bg-red-500/80 rounded-full mix-blend-multiply"></div>
+                    <div className="w-8 h-8 bg-amber-500/80 rounded-full mix-blend-multiply -ml-4"></div>
+                  </div>
+                  <button className="text-white/40 hover:text-red-400 transition">
+                    <Icon
+                      icon="solar:trash-bin-trash-linear"
+                      className="text-lg"
+                    />
+                  </button>
+                </div>
+                <div className="relative z-10">
+                  <p className="text-xl font-mono tracking-widest mb-3">
+                    **** **** **** 4242
+                  </p>
+                  <div className="flex justify-between items-end text-sm text-white/60">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest mb-0.5">
+                        Nome no Cartão
+                      </p>
+                      <p className="font-medium text-white text-xs">
+                        PAULO SOUZA
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest mb-0.5">
+                        Validade
+                      </p>
+                      <p className="font-medium text-white text-xs">12/28</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button className="w-full py-4 border-2 border-dashed border-stone-300 rounded-xl text-stone-500 font-medium hover:border-stone-400 hover:text-stone-800 transition flex items-center justify-center gap-2 mt-6">
+                <Icon icon="solar:card-linear" className="text-xl" />
+                Adicionar Novo Cartão
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
 
       {/* STATUS NO CLUB */}
       {activeSection === "status" && (
         <section className="bg-[#1C1C1C] rounded-[1.5rem] p-8 md:p-12 mt-8 text-white flex flex-col items-center justify-center text-center min-h-[300px]">
-          <Icon icon="solar:star-bold" className="text-6xl text-amber-400 mb-6" />
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Seu Status: {userInfo.statusinfo.title}</h2>
-          <p className="text-stone-400 max-w-lg text-lg">Você tem <strong className="text-white">{userInfo.statusinfo.points} pontos</strong>. Continue acumulando para desbloquear benefícios exclusivos, convites vip e ofertas especiais em nosso ecossistema.</p>
+          <Icon
+            icon="solar:star-bold"
+            className="text-6xl text-amber-400 mb-6"
+          />
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">
+            Seu Status: {userInfo.statusinfo.title}
+          </h2>
+          <p className="text-stone-400 max-w-lg text-lg">
+            Você tem{" "}
+            <strong className="text-white">
+              {userInfo.statusinfo.points} pontos
+            </strong>
+            . Continue acumulando para desbloquear benefícios exclusivos,
+            convites vip e ofertas especiais em nosso ecossistema.
+          </p>
         </section>
       )}
     </div>
