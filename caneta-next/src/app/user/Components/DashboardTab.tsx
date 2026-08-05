@@ -209,7 +209,7 @@ export default function DashboardTab() {
       </div>
 
       {/* BOTTOM LAYOUT */}
-      <div className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+      <section className="grid grid-cols-1 lg:grid-cols-1 gap-6">
         {/* Historico de Pedidos */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
           <div className="flex justify-between items-center mb-8">
@@ -283,10 +283,10 @@ export default function DashboardTab() {
             </table>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* PERFIL E SEGURANÇA */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
         {/* Perfil Section */}
         <div>
           <div className="mb-6">
@@ -360,9 +360,7 @@ export default function DashboardTab() {
             <h2 className="text-2xl font-display font-medium text-stone-900 mb-1">
               Segurança
             </h2>
-            <p className="text-stone-500 text-sm">
-              Proteja o seu ecossistema.
-            </p>
+            <p className="text-stone-500 text-sm">Proteja o seu ecossistema.</p>
           </div>
 
           <div className="space-y-6">
@@ -412,10 +410,10 @@ export default function DashboardTab() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ENDEREÇO E PAGAMENTO */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
         {/* Endereço Section */}
         <div>
           <div className="mb-6">
@@ -434,7 +432,10 @@ export default function DashboardTab() {
                   <Icon icon="solar:pen-linear" className="text-lg" />
                 </button>
                 <button className="text-stone-400 hover:text-red-500 transition">
-                  <Icon icon="solar:trash-bin-trash-linear" className="text-lg" />
+                  <Icon
+                    icon="solar:trash-bin-trash-linear"
+                    className="text-lg"
+                  />
                 </button>
               </div>
               <span className="bg-[#1a1a1a] text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">
@@ -442,8 +443,10 @@ export default function DashboardTab() {
               </span>
               <h4 className="font-semibold text-stone-900 mt-4 mb-2">Casa</h4>
               <p className="text-sm text-stone-500 leading-relaxed">
-                Av. Paulista, 1578 - Apto 32<br />
-                Bela Vista<br />
+                Av. Paulista, 1578 - Apto 32
+                <br />
+                Bela Vista
+                <br />
                 São Paulo, SP - 01310-200
               </p>
             </div>
@@ -479,7 +482,10 @@ export default function DashboardTab() {
                   <div className="w-8 h-8 bg-amber-500/80 rounded-full mix-blend-multiply -ml-4"></div>
                 </div>
                 <button className="text-white/40 hover:text-red-400 transition">
-                  <Icon icon="solar:trash-bin-trash-linear" className="text-lg" />
+                  <Icon
+                    icon="solar:trash-bin-trash-linear"
+                    className="text-lg"
+                  />
                 </button>
               </div>
               <div className="relative z-10">
@@ -511,7 +517,7 @@ export default function DashboardTab() {
             </button>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
