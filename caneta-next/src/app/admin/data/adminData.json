@@ -1,0 +1,38 @@
+{
+  "products": [
+    { "id": "1", "sku": "ART-PEN-01", "name": "Precision Pen Black Edition", "category": "Canetas", "price": 499.00, "stock": 120, "status": "Ativo", "brand": "Artools" },
+    { "id": "2", "sku": "ART-PEN-02", "name": "Precision Pen Carbon Blue", "category": "Canetas", "price": 549.00, "stock": 5, "status": "Ativo", "brand": "Artools" },
+    { "id": "3", "sku": "ART-PEN-03", "name": "Precision Pen Gold Matte", "category": "Canetas", "price": 599.00, "stock": 0, "status": "Inativo", "brand": "Artools" },
+    { "id": "4", "sku": "ART-NIB-01", "name": "Refil de Pontas Titânio (3x)", "category": "Acessórios", "price": 89.00, "stock": 350, "status": "Ativo", "brand": "Artools" },
+    { "id": "5", "sku": "ART-CASE-01", "name": "Estojo de Couro Premium", "category": "Acessórios", "price": 199.00, "stock": 45, "status": "Ativo", "brand": "Artools" }
+  ],
+  "orders": [
+    { "id": "ORD-9482", "customerName": "Carlos Eduardo Santos", "value": 499.00, "paymentMethod": "PIX", "status": "Aprovado", "date": "2026-07-30", "deliveryCompany": "FedEx", "items": [{ "name": "Precision Pen Black Edition", "qty": 1, "price": 499.00 }], "address": "Av. Paulista, 1000 - Bela Vista, São Paulo - SP, 01310-100" },
+    { "id": "ORD-9481", "customerName": "Mariana Costa Ferraz", "value": 1198.00, "paymentMethod": "Cartão", "status": "Enviado", "date": "2026-07-30", "deliveryCompany": "DHL Express", "items": [{ "name": "Precision Pen Gold Matte", "qty": 2, "price": 599.00 }], "address": "Rua Garcia D'Avila, 50 - Ipanema, Rio de Janeiro - RJ, 22421-010" },
+    { "id": "ORD-9480", "customerName": "Roberto Mancini", "value": 89.00, "paymentMethod": "Boleto", "status": "Pendente", "date": "2026-07-29", "deliveryCompany": "Correios Sedex", "items": [{ "name": "Refil de Pontas Titânio (3x)", "qty": 1, "price": 89.00 }], "address": "Rua da Praia, 450 - Centro, Porto Alegre - RS, 90010-001" },
+    { "id": "ORD-9479", "customerName": "Ana Julia Silveira", "value": 588.00, "paymentMethod": "Cartão", "status": "Cancelado", "date": "2026-07-28", "deliveryCompany": "FedEx", "items": [{ "name": "Precision Pen Black Edition", "qty": 1, "price": 499.00 }, { "name": "Refil de Pontas Titânio", "qty": 1, "price": 89.00 }], "address": "Rua XV de Novembro, 1200 - Centro, Curitiba - PR, 80020-310" }
+  ],
+  "customers": [
+    { "id": "CST-01", "name": "Carlos Eduardo Santos", "email": "carlos.eduardo@gmail.com", "phone": "(11) 98765-4321", "city": "São Paulo", "totalSpent": 1450.00, "totalOrders": 3, "status": "Ativo" },
+    { "id": "CST-02", "name": "Mariana Costa Ferraz", "email": "mariana.ferraz@outlook.com", "phone": "(21) 97654-3210", "city": "Rio de Janeiro", "totalSpent": 2396.00, "totalOrders": 2, "status": "Ativo" },
+    { "id": "CST-03", "name": "Roberto Mancini", "email": "roberto.mancini@terra.com.br", "phone": "(51) 99887-7665", "city": "Porto Alegre", "totalSpent": 89.00, "totalOrders": 1, "status": "Ativo" },
+    { "id": "CST-04", "name": "Ana Julia Silveira", "email": "anajulia.silveira@gmail.com", "phone": "(41) 99112-2334", "city": "Curitiba", "totalSpent": 588.00, "totalOrders": 1, "status": "Bloqueado" }
+  ],
+  "employees": [
+    { "id": "EMP-01", "name": "João Pedro Silva", "cpf": "123.456.789-00", "email": "joao.pedro@artools.pro", "phone": "(11) 99999-8888", "role": "Administrador", "department": "Tecnologia", "status": "Ativo", "lastAccess": "Hoje, 12:35" },
+    { "id": "EMP-02", "name": "Beatriz Oliveira", "cpf": "987.654.321-11", "email": "beatriz.o@artools.pro", "phone": "(11) 98888-7777", "role": "Gerente", "department": "Operações", "status": "Ativo", "lastAccess": "Hoje, 11:20" },
+    { "id": "EMP-03", "name": "Marcus Souza", "cpf": "456.789.123-22", "email": "marcus.s@artools.pro", "phone": "(11) 97777-6666", "role": "Estoquista", "department": "Logística", "status": "Ativo", "lastAccess": "Ontem, 17:45" }
+  ],
+  "logs": [
+    { "id": "LOG-01", "date": "2026-07-30 12:35:12", "employee": "João Pedro Silva", "action": "Login efetuado com sucesso", "ip": "192.168.3.15", "module": "Autenticação", "result": "Sucesso" },
+    { "id": "LOG-02", "date": "2026-07-30 11:45:00", "employee": "Beatriz Oliveira", "action": "Alteração de preço: Precision Pen Gold Matte", "ip": "192.168.3.22", "module": "Produtos", "result": "Sucesso" },
+    { "id": "LOG-03", "date": "2026-07-30 10:15:33", "employee": "Marcus Souza", "action": "Baixa de estoque SKU ART-PEN-03 (-1 un)", "ip": "192.168.3.48", "module": "Estoque", "result": "Sucesso" },
+    { "id": "LOG-04", "date": "2026-07-29 16:30:10", "employee": "Atendente Comercial", "action": "Tentativa incorreta de login", "ip": "177.34.122.9", "module": "Autenticação", "result": "Erro" }
+  ],
+  "notifications": [
+    { "id": 1, "text": "Novo pedido ORD-9482 recebido", "type": "order", "time": "5 min atrás", "unread": true },
+    { "id": 2, "text": "Alerta: Baixo estoque de Precision Pen Carbon Blue", "type": "stock", "time": "25 min atrás", "unread": true },
+    { "id": 3, "text": "Pagamento aprovado para o pedido ORD-9481", "type": "payment", "time": "1h atrás", "unread": false },
+    { "id": 4, "text": "Novo funcionário Marcus Souza cadastrado", "type": "system", "time": "1d atrás", "unread": false }
+  ]
+}
