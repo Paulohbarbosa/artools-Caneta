@@ -1,0 +1,80 @@
+{
+  "orders": [
+    {
+      "id": "#98421-BR",
+      "date": "14 Out 2023",
+      "value": "R$ 459,90",
+      "garantiaType": "Normal",
+      "status": "ENTREGUE",
+      "statusColor": "text-emerald-700 bg-emerald-50",
+      "action": "Detalhes"
+    },
+    {
+      "id": "#98399-BR",
+      "date": "02 Out 2023",
+      "value": "R$ 1.200,00",
+      "garantiaType": "Extendida",
+      "status": "EM TRÂNSITO",
+      "statusColor": "text-amber-700 bg-amber-50",
+      "action": "Rastrear"
+    },
+    {
+      "id": "#97120-BR",
+      "date": "15 Set 2023",
+      "value": "R$ 89,00",
+      "garantiaType": "Normal",
+      "status": "ENTREGUE",
+      "statusColor": "text-emerald-700 bg-emerald-50",
+      "action": "Recomprar"
+    }
+  ],
+  "userInfo": {
+    "name": [
+      {
+        "firstName": "Paulo",
+        "lastName": "Souza"
+      }
+    ],
+    "avatar": "https://api.dicebear.com/10.x/miniavs/svg?seed=Aneka",
+    "status": "Premium Partner",
+    "points": "12.450 pts",
+    "garantiainfo": {
+      "type": "Garantia Estendida",
+      "dataCompra": "25/08/2025",
+      "status": "Ativa"
+    },
+    "statusinfo": {
+      "title": "Diamante",
+      "status": "Ativa",
+      "points": "12.450"
+    }
+  },
+  "enderecos": [
+    {
+      "id": 1,
+      "isPrincipal": true,
+      "nome": "Casa",
+      "logradouro": "Avenida Paulista",
+      "numero": "789",
+      "complemento": "",
+      "bairro": "Jardins",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "cep": "01310-100"
+    }
+  ],
+  "formasDePagamento": [
+    {
+      "id": 1,
+      "nome": "Cartão de Crédito",
+      "numero": "4567",
+      "tipo": "Visa"
+    },
+    {
+      "id": 2,
+      "nome": "Boleto",
+      "numero": "1234",
+      "tipo": "Boleto"
+    }
+  ]
+}
