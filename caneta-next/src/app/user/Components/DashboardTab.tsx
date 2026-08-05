@@ -111,7 +111,11 @@ export default function DashboardTab() {
       {/* TOP CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Compras */}
-        <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+          <Icon
+            icon="solar:bag-bold"
+            className="absolute -bottom-6 -right-6 text-9xl text-stone-900 opacity-5 group-hover:opacity-10 transition-opacity"
+          />
           <div className="flex justify-between items-start">
             <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
               <Icon icon="solar:bag-linear" className="text-xl" />
@@ -134,22 +138,46 @@ export default function DashboardTab() {
         </div>
 
         {/* Perfil */}
-        <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+          <Icon
+            icon="solar:user-bold"
+            className="absolute -bottom-6 -right-6 text-9xl text-stone-900 opacity-5 group-hover:opacity-10 transition-opacity"
+          />
+          <div className="flex justify-between items-start">
+            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
+              <Icon icon="solar:user-linear" className="text-xl" />
+            </div>
+          </div>
+          <div>
+            <p className="text-sm text-stone-500 mb-1">Perfil e Segurança</p>
+            <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
+              {userInfo.name[0].firstName} {userInfo.name[0].lastName}
+            </h3>
+            <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
+              Editar perfil <Icon icon="solar:alt-arrow-right-linear" />
+            </button>
+          </div>
+        </div>
+
+        {/* Pagamento */}
+        <div className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+          <Icon
+            icon="solar:wallet-money-bold"
+            className="absolute -bottom-6 -right-6 text-9xl text-stone-900 opacity-5 group-hover:opacity-10 transition-opacity"
+          />
           <div className="flex justify-between items-start">
             <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
               <Icon icon="solar:wallet-money-linear" className="text-xl" />
             </div>
-            <span className="bg-stone-200 text-stone-600 text-xs font-bold px-3 py-1 rounded-full">
-              R$ 1.250,00
-            </span>
           </div>
           <div>
-            <p className="text-sm text-stone-500 mb-1">Pontos Acumulados</p>
+            <p className="text-sm text-stone-500 mb-1">Formas de Pagamento</p>
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
-              12.450 pts
+              Meus dados
             </h3>
             <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
-              Resgatar agora <Icon icon="solar:alt-arrow-right-linear" />
+              Suas formas de pagamento
+              <Icon icon="solar:alt-arrow-right-linear" />
             </button>
           </div>
         </div>
