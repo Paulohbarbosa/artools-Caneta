@@ -384,12 +384,17 @@ export default function DashboardTab() {
                           {order.id}
                         </span>
                         <span className="text-xs text-stone-500 mt-1">
-                          {order.date} • <span className="capitalize">{order.status.toLowerCase()}</span>
+                          {order.date} •{" "}
+                          <span className="capitalize">
+                            {order.status.toLowerCase()}
+                          </span>
                         </span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className={`font-bold text-sm ${order.status === "ENTREGUE" ? "text-stone-900" : "text-amber-600"}`}>
+                      <span
+                        className={`font-bold text-sm ${order.status === "ENTREGUE" ? "text-stone-900" : "text-amber-600"}`}
+                      >
                         {order.value}
                       </span>
                     </div>
@@ -525,6 +530,20 @@ export default function DashboardTab() {
                 </div>
                 <button className="bg-red-50 text-[#ff5a5f] border border-red-100/80 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-red-100 transition whitespace-nowrap">
                   Encerrar Todas
+                </button>
+              </div>
+              {/* Excluir conta Card */}
+              <div className="bg-[#F5F5F4] rounded-[1.5rem] p-6 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-base font-semibold text-stone-900 mb-1">
+                    Excluir conta
+                  </h3>
+                  <p className="text-sm text-stone-500">
+                    Ao excluir sua conta, você perderá todos os seus dados.
+                  </p>
+                </div>
+                <button className="bg-red-50 text-[#ff5a5f] border border-red-100/80 px-6 py-3 rounded-xl text-sm font-semibold hover:bg-red-100 transition whitespace-nowrap">
+                  Excluir conta
                 </button>
               </div>
             </div>
