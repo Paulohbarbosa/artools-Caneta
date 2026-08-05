@@ -110,7 +110,7 @@ export default function DashboardTab() {
 
       {/* TOP CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* orders */}
+        {/* Compras */}
         <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
           <div className="flex justify-between items-start">
             <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
@@ -133,7 +133,7 @@ export default function DashboardTab() {
           </div>
         </div>
 
-        {/* Pontos */}
+        {/* Perfil */}
         <div className="bg-white rounded-2xl p-6 border border-stone-100 shadow-sm relative flex flex-col justify-between h-48 hover:shadow-md transition-shadow">
           <div className="flex justify-between items-start">
             <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
