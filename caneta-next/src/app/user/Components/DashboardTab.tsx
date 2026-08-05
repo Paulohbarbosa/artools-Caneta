@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Icon } from "@iconify/react";
 
 export default function DashboardTab() {
+  const [activeSection, setActiveSection] = useState<"compras" | "perfil" | "pagamento" | "status">("compras");
   const orders = [
     {
       id: "#98421-BR",
@@ -108,88 +109,101 @@ export default function DashboardTab() {
         </div>
       </div>
 
-      {/* TOP CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* TOP CARDS (MENU) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Compras */}
-        <div className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+        <div 
+          onClick={() => setActiveSection("compras")}
+          className={`bg-white rounded-2xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "compras" ? "ring-2 ring-stone-900 border-transparent shadow-lg" : "border border-stone-100 hover:shadow-md"}`}
+        >
           <Icon
             icon="solar:bag-bold"
-            className="absolute -bottom-6 -right-6 text-9xl text-stone-900 opacity-5 group-hover:opacity-10 transition-opacity"
+            className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "compras" ? "text-stone-900 opacity-10" : "text-stone-900 opacity-5 group-hover:opacity-10"}`}
           />
-          <div className="flex justify-between items-start">
-            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
+          <div className="flex justify-between items-start relative z-10">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "compras" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}>
               <Icon icon="solar:bag-linear" className="text-xl" />
             </div>
             <span className="bg-stone-900 text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
               {userInfo.garantiainfo.status}
             </span>
           </div>
-          <div>
+          <div className="relative z-10">
             <p className="text-sm text-stone-500 mb-1">Histórico de Pedidos</p>
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
               {orders.length}
               <span className="ml-2 text-xs text-stone-500">Pedidos</span>
             </h3>
-            <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
-              Ver todos os pedidos
+            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "compras" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}>
+              Visualizar
               <Icon icon="solar:alt-arrow-right-linear" />
-            </button>
+            </div>
           </div>
         </div>
 
         {/* Perfil */}
-        <div className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+        <div 
+          onClick={() => setActiveSection("perfil")}
+          className={`bg-white rounded-2xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "perfil" ? "ring-2 ring-stone-900 border-transparent shadow-lg" : "border border-stone-100 hover:shadow-md"}`}
+        >
           <Icon
             icon="solar:user-bold"
-            className="absolute -bottom-6 -right-6 text-9xl text-stone-900 opacity-5 group-hover:opacity-10 transition-opacity"
+            className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "perfil" ? "text-stone-900 opacity-10" : "text-stone-900 opacity-5 group-hover:opacity-10"}`}
           />
-          <div className="flex justify-between items-start">
-            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
+          <div className="flex justify-between items-start relative z-10">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "perfil" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}>
               <Icon icon="solar:user-linear" className="text-xl" />
             </div>
           </div>
-          <div>
+          <div className="relative z-10">
             <p className="text-sm text-stone-500 mb-1">Perfil e Segurança</p>
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
               {userInfo.name[0].firstName} {userInfo.name[0].lastName}
             </h3>
-            <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
-              Editar perfil <Icon icon="solar:alt-arrow-right-linear" />
-            </button>
+            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "perfil" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}>
+              Editar perfil
+              <Icon icon="solar:alt-arrow-right-linear" />
+            </div>
           </div>
         </div>
 
         {/* Pagamento */}
-        <div className="bg-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+        <div 
+          onClick={() => setActiveSection("pagamento")}
+          className={`bg-white rounded-2xl p-6 shadow-sm relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "pagamento" ? "ring-2 ring-stone-900 border-transparent shadow-lg" : "border border-stone-100 hover:shadow-md"}`}
+        >
           <Icon
             icon="solar:wallet-money-bold"
-            className="absolute -bottom-6 -right-6 text-9xl text-stone-900 opacity-5 group-hover:opacity-10 transition-opacity"
+            className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "pagamento" ? "text-stone-900 opacity-10" : "text-stone-900 opacity-5 group-hover:opacity-10"}`}
           />
-          <div className="flex justify-between items-start">
-            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-700">
+          <div className="flex justify-between items-start relative z-10">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "pagamento" ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-700"}`}>
               <Icon icon="solar:wallet-money-linear" className="text-xl" />
             </div>
           </div>
-          <div>
+          <div className="relative z-10">
             <p className="text-sm text-stone-500 mb-1">Formas de Pagamento</p>
             <h3 className="text-xl font-display font-bold text-stone-900 mb-3">
               Meus dados
             </h3>
-            <button className="text-xs font-medium text-stone-500 hover:text-stone-900 flex items-center gap-1 transition">
-              Suas formas de pagamento
+            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "pagamento" ? "text-stone-900" : "text-stone-500 group-hover:text-stone-900"}`}>
+              Gerenciar
               <Icon icon="solar:alt-arrow-right-linear" />
-            </button>
+            </div>
           </div>
         </div>
 
         {/* Status no Club */}
-        <div className="bg-[#1C1C1C] rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-transform duration-300">
+        <div 
+          onClick={() => setActiveSection("status")}
+          className={`bg-[#1C1C1C] rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between h-48 group hover:scale-[1.02] transition-all duration-300 cursor-pointer ${activeSection === "status" ? "ring-2 ring-white border-transparent" : "border border-transparent hover:border-white/20"}`}
+        >
           <Icon
             icon="solar:star-bold"
-            className="absolute -bottom-6 -right-6 text-9xl text-white opacity-5 group-hover:opacity-10 transition-opacity"
+            className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${activeSection === "status" ? "text-white opacity-10" : "text-white opacity-5 group-hover:opacity-10"}`}
           />
           <div className="flex justify-between items-center relative z-10">
-            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white backdrop-blur-sm">
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeSection === "status" ? "bg-white text-[#1C1C1C]" : "bg-white/10 text-white backdrop-blur-sm"}`}>
               <Icon icon="solar:star-linear" className="text-xl" />
             </div>
             <span className="bg-stone-200 text-stone-600 text-xs font-bold px-3 py-1 rounded-full">
@@ -201,15 +215,17 @@ export default function DashboardTab() {
             <h3 className="text-2xl font-display font-bold text-white mb-3">
               {userInfo.statusinfo.title}
             </h3>
-            <button className="text-xs font-medium text-stone-400 hover:text-white flex items-center gap-1 transition">
-              Benefícios Exclusivos <Icon icon="solar:alt-arrow-right-linear" />
-            </button>
+            <div className={`text-xs font-medium flex items-center gap-1 transition ${activeSection === "status" ? "text-white" : "text-stone-400 group-hover:text-white"}`}>
+              Benefícios
+              <Icon icon="solar:alt-arrow-right-linear" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* BOTTOM LAYOUT */}
-      <section className="grid grid-cols-1 lg:grid-cols-1 gap-6">
+      {activeSection === "compras" && (
+      <section className="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8">
         {/* Historico de Pedidos */}
         <div className="lg:col-span-2 bg-white rounded-2xl border border-stone-100 shadow-sm p-6 md:p-8">
           <div className="flex justify-between items-center mb-8">
@@ -284,8 +300,10 @@ export default function DashboardTab() {
           </div>
         </div>
       </section>
+      )}
 
       {/* PERFIL E SEGURANÇA */}
+      {activeSection === "perfil" && (
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
         {/* Perfil Section */}
         <div>
@@ -411,8 +429,10 @@ export default function DashboardTab() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ENDEREÇO E PAGAMENTO */}
+      {activeSection === "pagamento" && (
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mt-8">
         {/* Endereço Section */}
         <div>
@@ -518,6 +538,16 @@ export default function DashboardTab() {
           </div>
         </div>
       </section>
+      )}
+
+      {/* STATUS NO CLUB */}
+      {activeSection === "status" && (
+        <section className="bg-[#1C1C1C] rounded-[1.5rem] p-8 md:p-12 mt-8 text-white flex flex-col items-center justify-center text-center min-h-[300px]">
+          <Icon icon="solar:star-bold" className="text-6xl text-amber-400 mb-6" />
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-3">Seu Status: {userInfo.statusinfo.title}</h2>
+          <p className="text-stone-400 max-w-lg text-lg">Você tem <strong className="text-white">{userInfo.statusinfo.points} pontos</strong>. Continue acumulando para desbloquear benefícios exclusivos, convites vip e ofertas especiais em nosso ecossistema.</p>
+        </section>
+      )}
     </div>
   );
 }
