@@ -4,7 +4,9 @@ import { Icon } from "@iconify/react";
 export interface MenuCardsProps {
   id: "compras" | "perfil" | "pagamento" | "status";
   isActive: boolean;
-  setActiveSection: (section: "compras" | "perfil" | "pagamento" | "status") => void;
+  setActiveSection: (
+    section: "compras" | "perfil" | "pagamento" | "status",
+  ) => void;
   stausPontos?: string | number;
   tituloPrincipal: string | number;
   sufixoPrincipal?: string;
@@ -67,11 +69,11 @@ export default function MenuCards({
     >
       <Icon
         icon={icon}
-        className={`hidden md:block absolute -bottom-6 -right-6 text-9xl transition-opacity ${iconColorClass}`}
+        className={`absolute -bottom-6 -right-6 text-9xl transition-opacity ${iconColorClass}`}
       />
       <div className="flex justify-center md:justify-between items-start md:items-center relative z-10 w-full mb-2 md:mb-0">
         <div
-          className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors mx-auto md:mx-0 ${smallIconBgClass}`}
+          className={`hidden md:flex w-10 h-10 rounded-full items-center justify-center transition-colors mx-auto md:mx-0 ${smallIconBgClass}`}
         >
           <Icon icon={icon} className="text-xl" />
         </div>
@@ -85,7 +87,9 @@ export default function MenuCards({
         <p
           className={`text-[11px] md:text-sm font-semibold md:font-normal md:mb-1 uppercase md:capitalize tracking-wider md:tracking-normal ${subTitleColorClass}`}
         >
-          <span className="md:hidden">{subTituloResumido}</span>
+          <span className="md:hidden text-lg font-bold">
+            {subTituloResumido}
+          </span>
           <span className="hidden md:inline">{subTitulo}</span>
         </p>
         <h3
