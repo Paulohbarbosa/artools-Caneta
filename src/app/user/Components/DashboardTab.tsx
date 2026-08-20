@@ -9,7 +9,7 @@ import ComprasSection from "./Sections/ComprasSection";
 import PerfilSection from "./Sections/PerfilSection";
 import PagamentoSection from "./Sections/PagamentoSection";
 import StatusSection from "./Sections/StatusSection";
-import MenuCards from "./MenuCards";
+import MenuCards, { MenuCardsProps } from "./MenuCards";
 
 export default function DashboardTab() {
   const [activeSection, setActiveSection] = useState<
@@ -17,6 +17,51 @@ export default function DashboardTab() {
   >("compras");
 
   const { orders, userInfo, enderecos } = dashboardData;
+
+  const cardsData: MenuCardsProps[] = [
+    {
+      id: "compras",
+      isActive: activeSection === "compras",
+      setActiveSection,
+      tituloPrincipal: orders.length,
+      sufixoPrincipal: "Pedidos",
+      subTitulo: "Histórico de Pedidos",
+      subTituloResumido: "Pedidos",
+      icon: "solar:bag-bold",
+      isEspecial: false,
+    },
+    {
+      id: "perfil",
+      isActive: activeSection === "perfil",
+      setActiveSection,
+      tituloPrincipal: `${userInfo.name[0].firstName} ${userInfo.name[0].lastName}`,
+      subTitulo: "Perfil e Segurança",
+      subTituloResumido: "Perfil",
+      icon: "solar:user-bold",
+      isEspecial: false,
+    },
+    {
+      id: "pagamento",
+      isActive: activeSection === "pagamento",
+      setActiveSection,
+      tituloPrincipal: "Meus dados",
+      subTitulo: "Formas de Pagamento",
+      subTituloResumido: "Pagamento",
+      icon: "solar:wallet-money-bold",
+      isEspecial: false,
+    },
+    {
+      id: "status",
+      isActive: activeSection === "status",
+      setActiveSection,
+      tituloPrincipal: userInfo.statusinfo.title,
+      stausPontos: userInfo.statusinfo.points,
+      subTitulo: "Status no Club",
+      subTituloResumido: "Status",
+      icon: "solar:star-bold",
+      isEspecial: true,
+    },
+  ];
 
   return (
     <div className="space-y-8">
@@ -57,12 +102,11 @@ export default function DashboardTab() {
       </div>
 
       {/* TOP CARDS (MENU) */}
-      <MenuCards
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-        ordersCount={orders.length}
-        userInfo={userInfo}
-      />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {cardsData.map((card) => (
+          <MenuCards key={card.id} {...card} />
+        ))}
+      </div>
 
       {/* BOTTOM LAYOUT */}
       {activeSection === "compras" && <ComprasSection orders={orders} />}
