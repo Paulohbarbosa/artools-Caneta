@@ -1,8 +1,8 @@
 # Artools Precision Pen - Modernização para Next.js
 
-![Artools Precision Pen](https://github.com/Paulohbarbosa/artools-Caneta-Lab)
-
 Projeto **Artools Precision Pen**, laboratório de criação de software, do curso Webdesinger com IA do [Asimov Academy](https://www.asimov.academy/). Originalmente uma página estática, usando o Gemini,foi totalmente modernizado para uma aplicação web performática, escalável e de alto padrão desenvolvida com o ecossistema moderno do **Node.js**, **Next.js** e **React**. A escolha das tecnologias foi feita com base nas melhores práticas do mercado de desenvolvimento frontend para projetos de portfólio premium e plataformas de e-commerce de alta conversão.
+
+![Artools Precision Pen](https://github.com/Paulohbarbosa/artools-Caneta-Lab)
 
 ---
 
