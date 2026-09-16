@@ -8,7 +8,7 @@ Projeto **Artools Precision Pen**, laboratório de criação de software, do cur
 
 ---
 
-## 🚀 Tecnologias Utilizadas & Motivação
+## 🚀 Tecnologias
 
 - **[Next.js (v16 App Router)](https://nextjs.org/)**: Framework React industrial. A motivação para o uso do Next.js está no suporte nativo ao **Static Site Generation (SSG)** para a Landing Page (garantindo carregamento inicial instantâneo e pontuação máxima no Lighthouse de SEO), aliado ao roteamento otimizado de pastas para as páginas dinâmicas de checkout e painel de usuário.
 - **[React.js](https://react.dev/)**: Utilizado para componentizar elementos repetidos (como a navegação de cabeçalho global) e para gerenciar o estado da aplicação de forma declarativa e limpa.
