@@ -10,12 +10,12 @@ Projeto **Artools Precision Pen**, laboratório de criação de software, do cur
 
 ## 🚀 Tecnologias
 
-- **[Next.js (v16 App Router)](https://nextjs.org/)**: Framework React industrial. A motivação para o uso do Next.js está no suporte nativo ao **Static Site Generation (SSG)** para a Landing Page (garantindo carregamento inicial instantâneo e pontuação máxima no Lighthouse de SEO), aliado ao roteamento otimizado de pastas para as páginas dinâmicas de checkout e painel de usuário.
-- **[React.js](https://react.dev/)**: Utilizado para componentizar elementos repetidos (como a navegação de cabeçalho global) e para gerenciar o estado da aplicação de forma declarativa e limpa.
-- **[TypeScript](https://www.typescriptlang.org/)**: Tipagem estática que previne erros em tempo de desenvolvimento e facilita refatorações, além de prover auto-completar inteligente nos componentes e hooks.
-- **[Tailwind CSS (v4)](https://tailwindcss.com/)**: Nova versão da ferramenta de estilos utilitários. Substitui o uso do Tailwind por CDN estático. Agora, os estilos são compilados e minimizados durante o build do projeto, gerando um bundle CSS extremamente leve e eliminando o "flash" de renderização sem estilos (FOUC).
-- **[GSAP (GreenSock Animation Platform) & @gsap/react](https://gsap.com/)**: O padrão da indústria para animações robustas. Integrado nativamente no React por meio do hook `useGSAP`, garantindo que todas as animações de scroll e de entrada sejam limpas da memória automaticamente ao trocar de rotas.
-- **[Iconify React](https://iconify.design/)**: Permite usar a biblioteca de ícones sem carregar fontes de ícones completas, importando sob demanda somente os ícones renderizados na tela.
+- [Next.js (v16 App Router)](https://nextjs.org/): Framework React industrial. A motivação para o uso do Next.js está no suporte nativo ao **Static Site Generation (SSG)** para a Landing Page (garantindo carregamento inicial instantâneo e pontuação máxima no Lighthouse de SEO), aliado ao roteamento otimizado de pastas para as páginas dinâmicas de checkout e painel de usuário.
+- [React.js](https://react.dev/): Utilizado para componentizar elementos repetidos (como a navegação de cabeçalho global) e para gerenciar o estado da aplicação de forma declarativa e limpa.
+- [TypeScript](https://www.typescriptlang.org/): Tipagem estática que previne erros em tempo de desenvolvimento e facilita refatorações, além de prover auto-completar inteligente nos componentes e hooks.
+- [Tailwind CSS (v4)](https://tailwindcss.com/): Nova versão da ferramenta de estilos utilitários. Substitui o uso do Tailwind por CDN estático. Agora, os estilos são compilados e minimizados durante o build do projeto, gerando um bundle CSS extremamente leve e eliminando o "flash" de renderização sem estilos (FOUC).
+- [GSAP (GreenSock Animation Platform) & @gsap/react](https://gsap.com/): O padrão da indústria para animações robustas. Integrado nativamente no React por meio do hook `useGSAP`, garantindo que todas as animações de scroll e de entrada sejam limpas da memória automaticamente ao trocar de rotas.
+- [Iconify React](https://iconify.design/): Permite usar a biblioteca de ícones sem carregar fontes de ícones completas, importando sob demanda somente os ícones renderizados na tela.
 
 ---
 
